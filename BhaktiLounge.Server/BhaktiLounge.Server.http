@@ -1,0 +1,32 @@
+@BhaktiLounge.Server_HostAddress = https://localhost:7106
+
+GET {{BhaktiLounge.Server_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
+
+GET {{BhaktiLounge.Server_HostAddress}}/api/activity
+
+###
+
+GET {{BhaktiLounge.Server_HostAddress}}/api/event
+
+###
+
+POST {{BhaktiLounge.Server_HostAddress}}/api/activity
+Content-Type: application/json
+
+{
+  //Activity
+}
+
+###
+
+PUT {{BhaktiLounge.Server_HostAddress}}/api/activity
+Content-Type: application/json
+
+{
+  //Activity
+}
+
+###

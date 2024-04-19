@@ -1,0 +1,33 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.8.34330.188
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BhaktiLounge.Server", "BhaktiLounge.Server\BhaktiLounge.Server.csproj", "{465B93D6-C862-4055-9FCB-D6E9F1A6BBC1}"
+EndProject
+Project("{54A90642-561A-4BB1-A94E-469ADEE60C69}") = "bhaktilounge.client", "bhaktilounge.client\bhaktilounge.client.esproj", "{1E6312D7-A507-49CD-8BAE-B3893CE43FA7}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{465B93D6-C862-4055-9FCB-D6E9F1A6BBC1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{465B93D6-C862-4055-9FCB-D6E9F1A6BBC1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{465B93D6-C862-4055-9FCB-D6E9F1A6BBC1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{465B93D6-C862-4055-9FCB-D6E9F1A6BBC1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1E6312D7-A507-49CD-8BAE-B3893CE43FA7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1E6312D7-A507-49CD-8BAE-B3893CE43FA7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1E6312D7-A507-49CD-8BAE-B3893CE43FA7}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{1E6312D7-A507-49CD-8BAE-B3893CE43FA7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1E6312D7-A507-49CD-8BAE-B3893CE43FA7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1E6312D7-A507-49CD-8BAE-B3893CE43FA7}.Release|Any CPU.Deploy.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {1D854008-1B67-48EC-9E2E-86E07E3B7739}
+	EndGlobalSection
+EndGlobal
