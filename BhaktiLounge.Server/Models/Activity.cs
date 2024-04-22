@@ -2,11 +2,11 @@
 
     public class Activity {
         public int Id { get; set; }
-        public string Type { get; set; } = string.Empty;//将所有的组合都单独列出来
+        public string Name { get; set; } = "New Activity";
         public double Price { get; set; } = 0;
         public TimeOnly? StartTime { get; set; }
         public TimeOnly? EndTime { get; set; }
-        public DayOfWeek DayOfWeek { get; set; }
-        public bool? SoulFeast { get; set; } = false;
+        public HashSet<DayOfWeek>? DaysOfWeek { get; set; }
+        public bool? SoulFeast { get; set; }
     }
 }

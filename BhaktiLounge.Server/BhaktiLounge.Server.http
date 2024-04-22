@@ -5,7 +5,7 @@ Accept: application/json
 
 ###
 
-GET {{BhaktiLounge.Server_HostAddress}}/api/activity
+GET {{BhaktiLounge.Server_HostAddress}}/activity
 
 ###
 

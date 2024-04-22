@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace BhaktiLounge.Server.Controllers {
 
-    [Route("api/[controller]")]
+    [Route("[controller]")]
     [ApiController]
     public class ActivityController : ControllerBase {
         private readonly ApplicationDbContext _context;
@@ -37,11 +37,11 @@ namespace BhaktiLounge.Server.Controllers {
             if (activity is null) {
                 return NotFound("Item Not Found");
             }
-            activity.Type = updateActivity.Type;
+            activity.Name = updateActivity.Name;
             activity.Price = updateActivity.Price;
             activity.StartTime = updateActivity.StartTime;
             activity.EndTime = updateActivity.EndTime;
-            activity.DayOfWeek = updateActivity.DayOfWeek;
+            activity.DaysOfWeek = updateActivity.DaysOfWeek;
             activity.SoulFeast = updateActivity.SoulFeast;
             _context.Activity.Update(activity);
             await _context.SaveChangesAsync();

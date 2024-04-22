@@ -7,8 +7,7 @@
         public string Email { get; set; } = string.Empty;
         public Sex? Gender { get; set; }
         public string? Acquisition { get; set; }
-        public MemberClass? MemberClass { get; set; }
-        public DateTime? InitialSubscribed { get; set; }
+        public DateTime? InitialRegisted { get; set; }
         public DateOnly? SubStartDate { get; set; }
         public DateOnly? SubEndDate { get; set; }
         public int? PassCredit { get; set; }

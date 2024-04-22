@@ -10,6 +10,9 @@ namespace BhaktiLounge.Server.Data {
         }
 
         public DbSet<Activity> Activity { get; set; } = default!;
+        public DbSet<CheckInRecord> CheckInRecord { get; set; } = default!;
+        public DbSet<Customer> Customer { get; set; } = default!;
         public DbSet<Event> Event { get; set; } = default!;
+        public DbSet<MemberClass> MemberClass { get; set; } = default!;
     }
 }
