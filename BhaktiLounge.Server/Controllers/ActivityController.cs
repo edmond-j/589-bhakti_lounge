@@ -42,7 +42,6 @@ namespace BhaktiLounge.Server.Controllers {
             activity.StartTime = updateActivity.StartTime;
             activity.EndTime = updateActivity.EndTime;
             activity.DaysOfWeek = updateActivity.DaysOfWeek;
-            activity.SoulFeast = updateActivity.SoulFeast;
             _context.Activity.Update(activity);
             await _context.SaveChangesAsync();
             return Ok(activity);

@@ -11,9 +11,9 @@ namespace BhaktiLounge.Server.Models {
         [ForeignKey("CustomerId")]
         public required Customer Customer { get; set; }
 
-        public required string PaymentMethod { get; set; }//数组
-        public required string[] ActivityName { get; set; }
-        public required string EventName { get; set; }
+        public required string PaymentMethod { get; set; }
+        public required HashSet<string>? ActivityName { get; set; }
+        public required string? EventName { get; set; }
         public double TotalPrice { get; set; }
         public bool IsFirstTime { get; set; }
     }

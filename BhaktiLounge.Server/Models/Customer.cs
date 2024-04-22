@@ -5,13 +5,13 @@
         public string FirstName { get; set; } = string.Empty;
         public string LastName { get; set; } = string.Empty;
         public string Email { get; set; } = string.Empty;
-        public Sex? Gender { get; set; }
+        public Gender? Pronoun { get; set; }
         public string? Acquisition { get; set; }
         public DateTime? InitialRegisted { get; set; }
         public DateOnly? SubStartDate { get; set; }
         public DateOnly? SubEndDate { get; set; }
         public int? PassCredit { get; set; }
 
-        public enum Sex { Male, Female, UniSex }
+        public enum Gender { He, She, They, Other }
     }
 }
