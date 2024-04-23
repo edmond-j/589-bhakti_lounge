@@ -48,7 +48,7 @@ namespace BhaktiLounge.Server.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Activity");
+                    b.ToTable("Activity", (string)null);
                 });
 
             modelBuilder.Entity("BhaktiLounge.Server.Models.CheckInRecord", b =>
@@ -88,7 +88,7 @@ namespace BhaktiLounge.Server.Migrations
 
                     b.HasIndex("CustomerId");
 
-                    b.ToTable("CheckInRecord");
+                    b.ToTable("CheckInRecord", (string)null);
                 });
 
             modelBuilder.Entity("BhaktiLounge.Server.Models.Customer", b =>
@@ -131,7 +131,7 @@ namespace BhaktiLounge.Server.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Customer");
+                    b.ToTable("Customer", (string)null);
                 });
 
             modelBuilder.Entity("BhaktiLounge.Server.Models.Event", b =>
@@ -160,7 +160,7 @@ namespace BhaktiLounge.Server.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Event");
+                    b.ToTable("Event", (string)null);
                 });
 
             modelBuilder.Entity("BhaktiLounge.Server.Models.MemberClass", b =>
@@ -186,7 +186,7 @@ namespace BhaktiLounge.Server.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("MemberClass");
+                    b.ToTable("MemberClass", (string)null);
                 });
 
             modelBuilder.Entity("BhaktiLounge.Server.Models.CheckInRecord", b =>

@@ -12,7 +12,7 @@ namespace BhaktiLounge.Server.Models {
         public required Customer Customer { get; set; }
 
         public required string PaymentMethod { get; set; }
-        public required HashSet<string>? ActivityName { get; set; }
+        public required List<string>? ActivityName { get; set; }
         public required string? EventName { get; set; }
         public double TotalPrice { get; set; }
         public bool IsFirstTime { get; set; }

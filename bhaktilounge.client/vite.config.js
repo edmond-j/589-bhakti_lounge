@@ -48,9 +48,14 @@ export default defineConfig({
         proxy: {
             '^/weatherforecast': {
                 target: 'https://localhost:7106/',
+                //target: 'https://bhaktiloungeserver20240422192158.azurewebsites.net/',
                 secure: false
             },
-            '^/event': {  
+            '^/api/event': {
+                target: 'https://localhost:7106/',
+                secure: false
+            },
+            '^/api/activity': {
                 target: 'https://localhost:7106/',
                 secure: false
             }

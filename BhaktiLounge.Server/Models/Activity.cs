@@ -6,6 +6,9 @@
         public double Price { get; set; } = 0;
         public TimeOnly? StartTime { get; set; }
         public TimeOnly? EndTime { get; set; }
-        public HashSet<DayOfWeek>? DaysOfWeek { get; set; }
+        public List<DayOfWeek>? DaysOfWeek { get; set; }
+
+        //public bool? IncludeDinner { get; set; }
+        //public bool? IncludeYoga { get; set; }
     }
 }

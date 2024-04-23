@@ -42,7 +42,7 @@ function CheckIn() {
         );
 
     async function populateWeatherData() {
-        const response = await fetch("event");
+        const response = await fetch("/api/event");
         const data = await response.json();
         setEvents(data);
     }
