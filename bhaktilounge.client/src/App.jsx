@@ -8,6 +8,7 @@ function App() {
             <p>This component demonstrates fetching data from the server.</p>
 
             <Link to="/check-in">Login</Link>
+            <br />
             <Link to="/management/activity">Activity</Link>
         </div>
     );
