@@ -7,12 +7,13 @@ import UpdateForm from "./components/management/UpdateForm";
 
 function Activity() {
   const [activities, setActivity] = useState([]);
+  const [selectedItem, setSelectedItem] = useState(null);
   useEffect(() => {
     populateActivityData();
   }, []);
 
   async function populateActivityData() {
-    const response = await fetch("/api/activity");
+    const response = await fetch("/api/v1/activity");
     const data = await response.json();
     console.log("data:" , data);
     setActivity(data);
@@ -20,10 +21,15 @@ function Activity() {
   console.log(activities[0]);
   console.log(activities);
 
+  function handleSelectItem(item) {
+    setSelectedItem(item);
+    console.log(item.name)
+  }
+
   return (
     <>
-      <ItemList items={activities} />
-      <UpdateForm items={activities} />
+      <ItemList items={activities} onSelectItem={handleSelectItem}/>
+      <UpdateForm selectedItem={(selectedItem==null)?activities[0]:selectedItem} />
     </>
   );
 }

@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace BhaktiLounge.Server.Controllers {
 
-    [Route("api/[controller]")]
+    [Route("api/v1/[controller]")]
     [ApiController]
     public class ActivityController : ControllerBase {
         private readonly ApplicationDbContext _context;

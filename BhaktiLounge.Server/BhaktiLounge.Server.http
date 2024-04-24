@@ -1,9 +1,9 @@
 @BhaktiLounge.Server_HostAddress = https://localhost:7106
 
-GET {{BhaktiLounge.Server_HostAddress}}/api/event
+GET {{BhaktiLounge.Server_HostAddress}}/api/v1/activity
 
 ###
 
-GET {{BhaktiLounge.Server_HostAddress}}/api/activity
+GET {{BhaktiLounge.Server_HostAddress}}/api/v1/event
 
 ###
