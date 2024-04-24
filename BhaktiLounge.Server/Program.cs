@@ -19,7 +19,7 @@ namespace BhaktiLounge.Server {
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
             builder.Services.AddDbContext<ApplicationDbContext>(option => {
-                option.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
+                option.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection"));
             });
 
             var app = builder.Build();
