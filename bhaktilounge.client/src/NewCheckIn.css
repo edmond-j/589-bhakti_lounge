@@ -5,6 +5,12 @@ body {
     padding: 0;
     background: #f7f7f7;
   }
+
+  .page-container {
+    width: 500px;
+    margin: 0 auto;
+    padding: 20px;
+  }
   
   .header {
     display: flex;
@@ -36,7 +42,6 @@ body {
   }
   
   .main-content {
-    max-width: 600px;
     margin: 50px auto;
     padding: 20px;
     background-color: white;
@@ -75,8 +80,24 @@ body {
     border-radius: 5px;
     box-sizing: border-box;
   }
+
+  /* .form-group select option:first-of-type {
+    color: #999;
+} */
+
   
-  .submit-button {
+.button-container button:hover {
+    background-color: #ec971f;
+  }
+
+  .button-container {
+    display: flex;      
+    justify-content: space-around; 
+    margin-top: 20px;
+    padding: 10px; 
+  } 
+
+  .button-container button {
     padding: 10px 20px;
     font-size: 16px;
     background-color: #f0ad4e;
@@ -84,12 +105,7 @@ body {
     border-radius: 5px;
     color: white;
     cursor: pointer;
-    display: block;
-    width: 100%;
-  }
-  
-  .submit-button:hover {
-    background-color: #ec971f;
+    width: auto;
   }
   
   .info-value {

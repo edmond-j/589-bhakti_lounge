@@ -21,7 +21,7 @@ const NewCheckIn = () => {
     };
 
     return (
-        <div>
+        <div className='page-container'>
             <img src={imageUrl} alt="Description" />
             <header className="header">
                 <h1>BHAKTI Lounge</h1>
@@ -55,7 +55,24 @@ const NewCheckIn = () => {
                             <option value="other">Other</option>
                         </select>
                     </div>
-                    <button className="submit-button" type="submit">Sign Up</button>
+
+                    <div className="form-group" >
+                        <label for="channel">How did you hear about us?</label>
+                        <select id="channel" name="channel" required>
+                            <option value="" selected disabled hidden>Choose one</option>
+                            <option value="Facebook">Facebook</option>
+                            <option value="Instagram">Instagram</option>
+                            <option value="Flyer">Flyer</option>
+                            <option value="Bhakti_Website">Bhakti Website</option>
+                            <option value="friend_family">Friend/Family Referral</option>
+                            <option value="Google_Search">Google Search</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+                    <div className='button-container'>
+                        <button  type="submit">Sign Up</button>
+                        <button  type="submit">Back</button>
+                    </div>
                 </form>
             </div>
         </div>
