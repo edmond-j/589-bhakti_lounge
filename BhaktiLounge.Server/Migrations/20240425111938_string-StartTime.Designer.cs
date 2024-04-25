@@ -4,6 +4,7 @@ using BhaktiLounge.Server.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BhaktiLounge.Server.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240425111938_string-StartTime")]
+    partial class stringStartTime
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -54,7 +57,7 @@ namespace BhaktiLounge.Server.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Activity", (string)null);
+                    b.ToTable("Activity");
                 });
 
             modelBuilder.Entity("BhaktiLounge.Server.Models.CheckInRecord", b =>
@@ -94,7 +97,7 @@ namespace BhaktiLounge.Server.Migrations
 
                     b.HasIndex("CustomerId");
 
-                    b.ToTable("CheckInRecord", (string)null);
+                    b.ToTable("CheckInRecord");
                 });
 
             modelBuilder.Entity("BhaktiLounge.Server.Models.Customer", b =>
@@ -137,7 +140,7 @@ namespace BhaktiLounge.Server.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Customer", (string)null);
+                    b.ToTable("Customer");
                 });
 
             modelBuilder.Entity("BhaktiLounge.Server.Models.Event", b =>
@@ -166,7 +169,7 @@ namespace BhaktiLounge.Server.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Event", (string)null);
+                    b.ToTable("Event");
                 });
 
             modelBuilder.Entity("BhaktiLounge.Server.Models.MemberClass", b =>
@@ -192,7 +195,7 @@ namespace BhaktiLounge.Server.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("MemberClass", (string)null);
+                    b.ToTable("MemberClass");
                 });
 
             modelBuilder.Entity("BhaktiLounge.Server.Models.CheckInRecord", b =>
