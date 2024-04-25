@@ -2,7 +2,7 @@ import React from "react";
 import MultiDaysSelectDropdown from "./MultiDaysSelectDropdown";
 import { useState, useEffect } from "react";
 
-function UpdateForm({ item, onDelete }) {
+function UpdateActivity({ item, onDelete }) {
   if (!item) {
     return <p>Loading...</p>;
   }
@@ -133,4 +133,4 @@ function UpdateForm({ item, onDelete }) {
   );
 }
 
-export default UpdateForm;
+export default UpdateActivity;
