@@ -17,9 +17,7 @@ namespace BhaktiLounge.Server.Controllers {
 
         [HttpGet]
         public async Task<ActionResult> GetAllActivity() {
-            //var activities = new List<Activity>();
-            //activities.Add(new Activity { Id = 1, Price = 12, Type = "Workshop" });
-            var activities = await _context.Activity.ToArrayAsync();
+            var activities = await _context.Activity.OrderBy(a => a.Id).ToArrayAsync();
             return Ok(activities);
         }
 
@@ -42,6 +40,8 @@ namespace BhaktiLounge.Server.Controllers {
             activity.StartTime = updateActivity.StartTime;
             activity.EndTime = updateActivity.EndTime;
             activity.DaysOfWeek = updateActivity.DaysOfWeek;
+            activity.IncludeYoga = updateActivity.IncludeYoga;
+            activity.IncludeDinner = updateActivity.IncludeDinner;
             _context.Activity.Update(activity);
             await _context.SaveChangesAsync();
             return Ok(activity);
@@ -49,7 +49,6 @@ namespace BhaktiLounge.Server.Controllers {
 
         [HttpDelete]
         public async Task<ActionResult> DeleteActivity(int Id) {
-            //Activity activity = new Activity { Id = 0, Type = "soulfeast", Price = 12, StartTime = new TimeOnly(18, 15), EndTime = new TimeOnly(0, 0), SoulFeast = true, DayOfWeek = 0 };
             var activities = await _context.Activity.FindAsync(Id);
             if (activities is null) {
                 return NotFound("Item Not Found");
