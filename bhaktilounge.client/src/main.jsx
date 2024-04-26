@@ -9,9 +9,10 @@ import Register from "./Register.jsx";
 import TopUp from "./TopUp.jsx";
 import NewCheckIn from "./NewCheckIn.jsx";
 import SearchName from "./SearchName.jsx";
+import Activity from "./Activity.jsx";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
-  <React.StrictMode>
+    <React.StrictMode>
 
     <BrowserRouter>
       <Routes>
@@ -19,10 +20,11 @@ ReactDOM.createRoot(document.getElementById("root")).render(
         <Route path="/check-in" element={<CheckIn />} />
         <Route path="/register" element={<Register />} />
         <Route path="/top-up" element={<TopUp />} />
+        <Route path="/management/activity" element={<Activity />} />
         <Route path="/new-check-in" element={<NewCheckIn />} />
         <Route path="/search-name" element={<SearchName />} />
       </Routes>
     </BrowserRouter>
 
-  </React.StrictMode>
+    </React.StrictMode>
 );

@@ -5,7 +5,7 @@ function CheckIn() {
     const [events, setEvents] = useState();
 
     useEffect(() => {
-        populateWeatherData();
+        populateEventData();
     }, []);
 
     const contents =
@@ -41,8 +41,8 @@ function CheckIn() {
             </table>
         );
 
-    async function populateWeatherData() {
-        const response = await fetch("event");
+    async function populateEventData() {
+        const response = await fetch("/api/v1/event");
         const data = await response.json();
         setEvents(data);
     }
