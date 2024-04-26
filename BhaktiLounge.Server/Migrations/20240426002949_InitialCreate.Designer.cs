@@ -13,7 +13,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace BhaktiLounge.Server.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240424101142_InitialCreate")]
+    [Migration("20240426002949_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -37,8 +37,14 @@ namespace BhaktiLounge.Server.Migrations
                     b.Property<int[]>("DaysOfWeek")
                         .HasColumnType("integer[]");
 
-                    b.Property<TimeOnly?>("EndTime")
-                        .HasColumnType("time without time zone");
+                    b.Property<string>("EndTime")
+                        .HasColumnType("text");
+
+                    b.Property<bool?>("IncludeDinner")
+                        .HasColumnType("boolean");
+
+                    b.Property<bool?>("IncludeYoga")
+                        .HasColumnType("boolean");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -47,8 +53,8 @@ namespace BhaktiLounge.Server.Migrations
                     b.Property<double>("Price")
                         .HasColumnType("double precision");
 
-                    b.Property<TimeOnly?>("StartTime")
-                        .HasColumnType("time without time zone");
+                    b.Property<string>("StartTime")
+                        .HasColumnType("text");
 
                     b.HasKey("Id");
 

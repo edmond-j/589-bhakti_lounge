@@ -13,7 +13,8 @@ namespace BhaktiLounge.Server {
 
             builder.Services.AddControllers().AddJsonOptions(options => {
                 options.JsonSerializerOptions.Converters.Add(new TimeOnlyConverter());
-                //options.JsonSerializerOptions.Converters.Add(new DateOnlyConverter());//�������֮��ᵼ��ǰ��weather�����ڽ���������
+                options.JsonSerializerOptions.Converters.Add(new DayOfWeekConverter());
+                //options.JsonSerializerOptions.Converters.Add(new DateOnlyConverter());
             });
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
@@ -42,8 +43,6 @@ namespace BhaktiLounge.Server {
             app.MapFallbackToFile("/index.html");
 
             app.Run();
-
-
         }
     }
 }

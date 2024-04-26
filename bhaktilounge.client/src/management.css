@@ -18,6 +18,10 @@ body {
     width: 200px;
 }
 
+.mgt-list-item:focus{
+    background-color: burlywood;
+}
+
 .mgt-form {
     border: 1px solid #ccc;
     padding: 20px;

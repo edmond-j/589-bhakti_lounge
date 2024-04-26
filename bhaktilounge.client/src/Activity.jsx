@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import "./management.css";
 
 import ItemList from "./components/management/ItemList";
-import UpdateForm from "./components/management/UpdateForm";
+import UpdateActivity from "./components/management/UpdateActivity";
 
 function Activity() {
   const [activities, setActivity] = useState([]);
@@ -15,7 +15,7 @@ function Activity() {
   async function populateActivityData() {
     const response = await fetch("/api/v1/activity");
     const data = await response.json();
-    console.log("data:" , data);
+    console.log("data:", data);
     setActivity(data);
   }
   console.log(activities[0]);
@@ -23,55 +23,33 @@ function Activity() {
 
   function handleSelectItem(item) {
     setSelectedItem(item);
-    console.log(item.name)
+    // console.log(item.name);
+  }
+
+  function handleDelete(itemToDelete) {
+    setActivity((currentItems) =>
+      currentItems.filter((item) => item !== itemToDelete)
+    );
+  }
+
+  function handleAdd(itemToAdd) {
+    setActivity(activities.concat(itemToAdd))
   }
 
   return (
-    <>
-      <ItemList items={activities} onSelectItem={handleSelectItem}/>
-      <UpdateForm selectedItem={(selectedItem==null)?activities[0]:selectedItem} />
-    </>
+    <div className="container">
+      <ItemList
+        items={activities}
+        setActivity={setActivity}
+        onSelectItem={handleSelectItem}
+        onAdd={handleAdd}
+      />
+      <UpdateActivity
+        item={selectedItem == null ? activities[0] : selectedItem}
+        onDelete={handleDelete}
+      />
+    </div>
   );
 }
-//const activities =
-//    [
-//        {
-//            "id": 1,
-//            "name": "5.31-Yoga",
-//            "price": 10,
-//            "startTime": {
-//                "hour": 5,
-//                "minute": 30
-//            },
-//            "endTime": {
-//                "hour": 6,
-//                "minute": 15
-//            },
-//            "daysOfWeek": [
-//                1,
-//                2,
-//                3,
-//                5
-//            ]
-//        },
-//        {
-//            "id": 2,
-//            "name": "6.15-Yoga",
-//            "price": 10,
-//            "startTime": {
-//                "hour": 6,
-//                "minute": 15
-//            },
-//            "endTime": {
-//                "hour": 7,
-//                "minute": 0
-//            },
-//            "daysOfWeek": [
-//                1,
-//                2,
-//                3,
-//                5
-//            ]
-//        }
-//    ];
+
 export default Activity;

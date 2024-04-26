@@ -1,39 +1,35 @@
-﻿using System;
-using System.Collections.Generic;
-using Microsoft.EntityFrameworkCore.Migrations;
+﻿using Microsoft.EntityFrameworkCore.Migrations;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
 
-namespace BhaktiLounge.Server.Migrations
-{
+namespace BhaktiLounge.Server.Migrations {
+
     /// <inheritdoc />
-    public partial class InitialCreate : Migration
-    {
+    public partial class InitialCreate : Migration {
+
         /// <inheritdoc />
-        protected override void Up(MigrationBuilder migrationBuilder)
-        {
+        protected override void Up(MigrationBuilder migrationBuilder) {
             migrationBuilder.CreateTable(
                 name: "Activity",
-                columns: table => new
-                {
+                columns: table => new {
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     Name = table.Column<string>(type: "text", nullable: false),
                     Price = table.Column<double>(type: "double precision", nullable: false),
-                    StartTime = table.Column<TimeOnly>(type: "time without time zone", nullable: true),
-                    EndTime = table.Column<TimeOnly>(type: "time without time zone", nullable: true),
-                    DaysOfWeek = table.Column<int[]>(type: "integer[]", nullable: true)
+                    StartTime = table.Column<string>(type: "text", nullable: true),
+                    EndTime = table.Column<string>(type: "text", nullable: true),
+                    DaysOfWeek = table.Column<int[]>(type: "integer[]", nullable: true),
+                    IncludeDinner = table.Column<bool>(type: "boolean", nullable: true),
+                    IncludeYoga = table.Column<bool>(type: "boolean", nullable: true)
                 },
-                constraints: table =>
-                {
+                constraints: table => {
                     table.PrimaryKey("PK_Activity", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
                 name: "Customer",
-                columns: table => new
-                {
+                columns: table => new {
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     FirstName = table.Column<string>(type: "text", nullable: false),
@@ -46,15 +42,13 @@ namespace BhaktiLounge.Server.Migrations
                     SubEndDate = table.Column<DateOnly>(type: "date", nullable: true),
                     PassCredit = table.Column<int>(type: "integer", nullable: true)
                 },
-                constraints: table =>
-                {
+                constraints: table => {
                     table.PrimaryKey("PK_Customer", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
                 name: "Event",
-                columns: table => new
-                {
+                columns: table => new {
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     Name = table.Column<string>(type: "text", nullable: false),
@@ -63,15 +57,13 @@ namespace BhaktiLounge.Server.Migrations
                     EndTime = table.Column<TimeOnly>(type: "time without time zone", nullable: true),
                     Price = table.Column<double>(type: "double precision", nullable: false)
                 },
-                constraints: table =>
-                {
+                constraints: table => {
                     table.PrimaryKey("PK_Event", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
                 name: "MemberClass",
-                columns: table => new
-                {
+                columns: table => new {
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     Name = table.Column<string>(type: "text", nullable: false),
@@ -79,15 +71,13 @@ namespace BhaktiLounge.Server.Migrations
                     Pass = table.Column<int>(type: "integer", nullable: true),
                     Price = table.Column<double>(type: "double precision", nullable: false)
                 },
-                constraints: table =>
-                {
+                constraints: table => {
                     table.PrimaryKey("PK_MemberClass", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
                 name: "CheckInRecord",
-                columns: table => new
-                {
+                columns: table => new {
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     Date = table.Column<DateOnly>(type: "date", nullable: false),
@@ -99,8 +89,7 @@ namespace BhaktiLounge.Server.Migrations
                     TotalPrice = table.Column<double>(type: "double precision", nullable: false),
                     IsFirstTime = table.Column<bool>(type: "boolean", nullable: false)
                 },
-                constraints: table =>
-                {
+                constraints: table => {
                     table.PrimaryKey("PK_CheckInRecord", x => x.Id);
                     table.ForeignKey(
                         name: "FK_CheckInRecord_Customer_CustomerId",
@@ -117,8 +106,7 @@ namespace BhaktiLounge.Server.Migrations
         }
 
         /// <inheritdoc />
-        protected override void Down(MigrationBuilder migrationBuilder)
-        {
+        protected override void Down(MigrationBuilder migrationBuilder) {
             migrationBuilder.DropTable(
                 name: "Activity");
 

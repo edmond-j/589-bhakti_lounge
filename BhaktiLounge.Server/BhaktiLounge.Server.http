@@ -4,6 +4,25 @@ GET {{BhaktiLounge.Server_HostAddress}}/api/v1/activity
 
 ###
 
-GET {{BhaktiLounge.Server_HostAddress}}/api/v1/event
+
+POST {{BhaktiLounge.Server_HostAddress}}/api/v1/activity
+Content-Type: application/json
+
+{
+  //Activity
+}
+
+###
+
+PUT {{BhaktiLounge.Server_HostAddress}}/api/v1/activity
+Content-Type: application/json
+
+{
+  //Activity
+}
+
+###
+
+DELETE {{BhaktiLounge.Server_HostAddress}}/api/v1/activity?Id=0
 
 ###
