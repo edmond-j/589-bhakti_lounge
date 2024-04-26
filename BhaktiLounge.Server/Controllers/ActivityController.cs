@@ -29,6 +29,14 @@ namespace BhaktiLounge.Server.Controllers {
             return Ok(await _context.Activity.ToListAsync());
         }
 
+        [HttpPost("CreateDefault")]
+        public async Task<ActionResult> AddDefaultActivity() {
+            var newActivity = new Activity();
+            _context.Activity.Add(newActivity);
+            await _context.SaveChangesAsync();
+            return Ok(newActivity);
+        }
+
         [HttpPut]
         public async Task<ActionResult> UpdateActivity([FromBody] Activity updateActivity) {
             var activity = await _context.Activity.FindAsync(updateActivity.Id);
@@ -49,11 +57,11 @@ namespace BhaktiLounge.Server.Controllers {
 
         [HttpDelete]
         public async Task<ActionResult> DeleteActivity(int Id) {
-            var activities = await _context.Activity.FindAsync(Id);
-            if (activities is null) {
+            var activitiy = await _context.Activity.FindAsync(Id);
+            if (activitiy is null) {
                 return NotFound("Item Not Found");
             }
-            _context.Activity.Remove(activities);
+            _context.Activity.Remove(activitiy);
             await _context.SaveChangesAsync();
             return Ok("Item Deleted");
         }
