@@ -14,7 +14,6 @@ const NewCheckIn = () => {
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        // Process check-in data, like sending to an API
         console.log('Customer Name:', customerName);
         console.log('Email:', email);
         // Reset form or give feedback to the user
@@ -32,7 +31,7 @@ const NewCheckIn = () => {
                 <form onSubmit={handleSubmit}>
                     <div className="form-group">
                         <label>Customer Name</label>
-                        <div className="info-value">Johnny</div>
+                        <div className="info-value">{clientName}</div>
                     </div>
                     <div className="form-group" >
                         <label htmlFor="email">Email</label>
