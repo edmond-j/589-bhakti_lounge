@@ -1,7 +1,7 @@
 import React from "react";
 import { useState, useEffect } from "react";
 
-function UpdateActivity({ item, onDelete }) {
+function UpdateEvent({ item, onDelete }) {
   if (!item) {
     return <p>Loading...</p>;
   }
@@ -9,19 +9,15 @@ function UpdateActivity({ item, onDelete }) {
     //导致问题：Internal React error: Expected static flag was missing.
     setName(item.name);
     setPrice(item.price);
+    setDate(item.date);
     setStartTime(item.startTime);
     setEndTime(item.endTime);
-    setDaysOfWeek(item.daysOfWeek[0]);
-    setYoga(item.includeYoga);
-    setDinner(item.includeDinner);
   }, [item]);
   const [name, setName] = useState(item.name);
   const [price, setPrice] = useState(item.price);
+  const [date, setDate] = useState(item.date);
   const [startTime, setStartTime] = useState(item.startTime);
   const [endTime, setEndTime] = useState(item.endTime);
-  const [daysOfWeek, setDaysOfWeek] = useState(item.daysOfWeek[0]);
-  const [includeYoga, setYoga] = useState(item.includeYoga || false);
-  const [includeDinner, setDinner] = useState(item.includeDinner || false);
 
   function handleNameChange(event) {
     setName(event.target.value);
@@ -29,7 +25,9 @@ function UpdateActivity({ item, onDelete }) {
   function handlePriceChange(event) {
     setPrice(event.target.value);
   }
-
+  function handleDateChange(event) {
+    setDate(event.target.value);
+  }
   function handleStartTimeChange(event) {
     setStartTime(event.target.value);
   }
@@ -37,26 +35,15 @@ function UpdateActivity({ item, onDelete }) {
   function handleEndTimeChange(event) {
     setEndTime(event.target.value);
   }
-  function handleDaysOfWeek(event) {
-    setDaysOfWeek(event.target.value);
-  }
-  function handleIncludeYoga(event) {
-    setYoga(event.target.checked);
-  }
-  function handleIncludeDinner(event) {
-    setDinner(event.target.checked);
-  }
 
   function writeNewData() {
     let newData = {
       id: item.id,
       name: name,
       price: price,
+      date: date,
       startTime: startTime,
       endTime: endTime,
-      daysOfWeek: [daysOfWeek],
-      includeYoga: includeYoga,
-      includeDinner: includeDinner,
     };
 
     const requestOptions = {
@@ -64,14 +51,14 @@ function UpdateActivity({ item, onDelete }) {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(newData),
     };
-    fetch("/api/v1/activity", requestOptions)
+    fetch("/api/v1/event", requestOptions)
       .then((response) => response.json())
       .then((data) => console.log("Update Succesful:", data))
       .catch((error) => console.error("Error:", error));
   }
 
   function deleteData() {
-    const url = "/api/v1/activity?Id=" + item.id;
+    const url = "/api/v1/event?Id=" + item.id;
     const requestOptions = {
       method: "DELETE",
       headers: { "Content-Type": "application/json" },
@@ -85,7 +72,7 @@ function UpdateActivity({ item, onDelete }) {
   return (
     <div className="mgt-form">
       <h2>{name}</h2>
-      <label htmlFor="mgt-name">Activity Name*</label>
+      <label htmlFor="mgt-name">Event Name*</label>
       <input
         type="text"
         id="mgt-name"
@@ -99,20 +86,8 @@ function UpdateActivity({ item, onDelete }) {
         value={price}
         onChange={handlePriceChange}
       />
-      <label htmlFor="days">Days</label>
-      <select
-        id="days"
-        value={daysOfWeek == null ? "Monday" : daysOfWeek}
-        onChange={handleDaysOfWeek}
-      >
-        <option>Monday</option>
-        <option>Tuesday</option>
-        <option>Wednesday</option>
-        <option>Thursday</option>
-        <option>Friday</option>
-        <option>Saturday</option>
-        <option>Sunday</option>
-      </select>
+      <label htmlFor="date">Date</label>
+      <input type="date" id="date" value={date} onChange={handleDateChange} />
       {/* <MultiDaysSelectDropdown initialDays={daysOfWeek}/> */}
 
       <label htmlFor="start-time">Start Time</label>
@@ -130,20 +105,6 @@ function UpdateActivity({ item, onDelete }) {
         value={endTime == null ? "00:00" : endTime}
         onChange={handleEndTimeChange}
       />
-      <label htmlFor="include-yoga">Include Yoga</label>
-      <input
-        type="checkbox"
-        id="include-yoga"
-        checked={includeYoga}
-        onChange={handleIncludeYoga}
-      />
-      <label htmlFor="include-dinner">Include Dinner</label>
-      <input
-        type="checkbox"
-        id="include-dinner"
-        checked={includeDinner}
-        onChange={handleIncludeDinner}
-      />
 
       <button onClick={writeNewData}>Update</button>
       <button onClick={deleteData}>Delete</button>
@@ -151,4 +112,4 @@ function UpdateActivity({ item, onDelete }) {
   );
 }
 
-export default UpdateActivity;
+export default UpdateEvent;
