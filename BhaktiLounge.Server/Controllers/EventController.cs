@@ -30,6 +30,14 @@ namespace BhaktiLounge.Server.Controllers {
             return Ok(await _context.Event.ToListAsync());
         }
 
+        [HttpPost("CreateDefault")]
+        public async Task<ActionResult> AddDefaultEvent() {
+            var newEvent = new Event();
+            _context.Event.Add(newEvent);
+            await _context.SaveChangesAsync();
+            return Ok(newEvent);
+        }
+
         [HttpPut]
         public async Task<ActionResult> UpdateEvent([FromBody] Event updateEvent) {
             var oneEvent = await _context.Event.FindAsync(updateEvent.Id);

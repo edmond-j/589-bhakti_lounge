@@ -6,21 +6,21 @@ namespace BhaktiLounge.Server.Models {
         public int Id { get; set; }
         public string Name { get; set; } = "New Activity";
         public double Price { get; set; } = 0;
-        private TimeOnly? startTime;
+        private TimeOnly? startTime = TimeOnly.MinValue;
 
         public string? StartTime {
             get => startTime?.ToString("HH:mm", CultureInfo.InvariantCulture);
             set => startTime = value == null ? (TimeOnly?)null : TimeOnly.ParseExact(value, "HH:mm", CultureInfo.InvariantCulture);
         }
 
-        private TimeOnly? endTime;
+        private TimeOnly? endTime = TimeOnly.MaxValue;
 
         public string? EndTime {
             get => endTime?.ToString("HH:mm", CultureInfo.InvariantCulture);
             set => endTime = value == null ? (TimeOnly?)null : TimeOnly.ParseExact(value, "HH:mm", CultureInfo.InvariantCulture);
         }
 
-        public List<DayOfWeek>? DaysOfWeek { get; set; } = new List<DayOfWeek>();
+        public List<DayOfWeek>? DaysOfWeek { get; set; } = new List<DayOfWeek> { DayOfWeek.Monday };
 
         //public List<string>? DaysOfWeek {
         //    get {

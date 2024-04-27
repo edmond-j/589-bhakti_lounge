@@ -1,12 +1,13 @@
 import React from "react";
 
-function ItemList({ items, setSelectedItem, refreshData }) {
+function ItemList({ type, items, setItem, setSelectedItem }) {
   if (!items || items.length === 0) {
     return (
-      <div className="mgt-list">
-        <p>Loading...</p>
+      <div>
+        <p>Empty</p>
+        <button onClick={createNew}>Add New</button>
       </div>
-    ); // 或其他加载指示器
+    );
   }
 
   function createNew() {
@@ -21,21 +22,21 @@ function ItemList({ items, setSelectedItem, refreshData }) {
       method: "POST",
       headers: { "Content-Type": "application/json" },
     };
-    fetch("/api/v1/activity/createdefault", requestOptions)
+    fetch(`/api/v1/${type}/createdefault`, requestOptions)
       .then((response) => response.json())
       .then((data) => {
-        // setItem((prevActivities) => [...prevActivities, data]);
         console.log("New Activity Created:", data);
-        refreshData().then(() => {
-          setSelectedItem(data); // Ensure refreshData() is complete
-        });
+        // refreshData().then(() => {
+        // });
+        setItem((prevItems) => [...prevItems, data]);
+        setSelectedItem(data); // Ensure refreshData() is complete
       })
       .catch((error) => console.error("Error:", error));
     // onAdd(newData);
   }
 
   return (
-    <div className="mgt-list">
+    <div>
       {/* <p>{items[0].name}</p> */}
       {items.map((item) => (
         <div

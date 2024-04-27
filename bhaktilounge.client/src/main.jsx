@@ -7,8 +7,8 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import CheckIn from "./CheckIn.jsx";
 import Register from "./Register.jsx";
 import TopUp from "./TopUp.jsx";
-import Activity from "./Activity.jsx";
-import OneOffEvent from "./OneOffEvent.jsx";
+import Activity from "./management-part/Activity.jsx";
+import OneOffEvent from "./management-part/Event.jsx";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
     <React.StrictMode>
