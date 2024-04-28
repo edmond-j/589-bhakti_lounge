@@ -22,25 +22,6 @@ namespace BhaktiLounge.Server.Models {
 
         public List<DayOfWeek>? DaysOfWeek { get; set; } = new List<DayOfWeek> { DayOfWeek.Monday };
 
-        //public List<string>? DaysOfWeek {
-        //    get {
-        //        List<string> dayName = new List<string>();
-        //        foreach (DayOfWeek day in daysOfWeek) {
-        //            dayName.Add(day.ToString());
-        //        }
-        //        return dayName;
-        //    }
-        //    //get { return ["tonday"]; }
-        //    set {
-        //        if (value == null) {
-        //            daysOfWeek = null;
-        //        } else {
-        //            daysOfWeek = value.ConvertAll(day =>
-        //                (DayOfWeek)Enum.Parse(typeof(DayOfWeek), day, ignoreCase: true));
-        //        }
-        //    }
-        //}
-
         public bool? IncludeDinner { get; set; } = false;
         public bool? IncludeYoga { get; set; } = false;
 
@@ -50,6 +31,14 @@ namespace BhaktiLounge.Server.Models {
 
         public void SetStartTime(TimeOnly? startTime) {
             this.startTime = startTime;
+        }
+
+        public TimeOnly? GetEndTime() {
+            return endTime;
+        }
+
+        public void SetEndTime(TimeOnly? endTime) {
+            this.endTime = endTime;
         }
     }
 }

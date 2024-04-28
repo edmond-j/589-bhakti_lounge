@@ -3,7 +3,6 @@ import { useEffect, useState } from "react";
 import "./management.css";
 
 import ItemList from "../components/management/ItemList";
-import MgtHeader from "../components/management/MgtHeader";
 
 function Activity() {
   const [activities, setActivity] = useState([]);
@@ -109,6 +108,7 @@ function Activity() {
         .then((response) => response.json())
         .then((data) => {
           console.log("Update Succesful:", data);
+          alert(data.name+" has been updated!")
           // populateActivityData();
           const updatedActivities = activities.map((item) =>
             item.id === data.id ? data : item
@@ -202,7 +202,6 @@ function Activity() {
 
   return (
     <>
-      <MgtHeader />
       <div className="container">
         <div className="mgt-list">
           <ItemList

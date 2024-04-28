@@ -3,7 +3,6 @@ import { useEffect, useState } from "react";
 import "./management.css";
 
 import ItemList from "../components/management/ItemList";
-import MgtHeader from "../components/management/MgtHeader";
 
 function Event() {
   const [events, setEvent] = useState([]);
@@ -90,6 +89,7 @@ function Event() {
         .then((response) => response.json())
         .then((data) => {
           console.log("Update Succesful:", data);
+          alert(data.name+" has been updated!")
           const updatedItems = events.map((item) =>
             item.id === data.id ? data : item
           );
@@ -156,7 +156,6 @@ function Event() {
 
   return (
     <>
-      <MgtHeader />
       <div className="container">
         <div className="mgt-list">
           <ItemList
