@@ -52,3 +52,7 @@ Content-Type: application/json
 DELETE {{BhaktiLounge.Server_HostAddress}}/api/v1/event?Id=0
 
 ###
+
+GET {{BhaktiLounge.Server_HostAddress}}/api/customer?name=string
+
+###

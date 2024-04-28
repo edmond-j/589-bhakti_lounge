@@ -2,7 +2,7 @@ import React from "react";
 import { useEffect, useState } from "react";
 import "./management.css";
 
-import ItemList from "./components/management/ItemList";
+import ItemList from "../components/management/ItemList";
 
 function Activity() {
   const [activities, setActivity] = useState([]);
@@ -22,18 +22,21 @@ function Activity() {
   }, [selectedItem]);
 
   async function populateActivityData() {
-    const response = await fetch("/api/v1/activity");
-    const data = await response.json();
-    // console.log("data:", data);
-    setActivity(data);
+    // const response = await fetch("/api/v1/activity");
+    // const data = await response.json();
+    // setActivity(data);
+    //设定selectedItem
+    fetch("/api/v1/activity")
+      .then((response) => response.json())
+      .then((data) => {
+        console.log("popu", data);
+        //如果没有data该怎么办？
+        if (data) {
+          setActivity(data);
+          setSelectedItem(data[0]);
+        }
+      });
   }
-  // console.log(activities[0]);
-  // console.log(activities);
-
-  // function handleSelectItem(item) {
-  //   setSelectedItem(item);
-  //   console.log(item.id);
-  // }
 
   function handleDelete(itemToDelete) {
     const index = activities.indexOf(itemToDelete);
@@ -43,7 +46,10 @@ function Activity() {
     if (index > 0) {
       setSelectedItem(activities[index - 1]);
     } else {
-      setSelectedItem(activities[index]);
+      if (activities.length == 1)
+        //删除最后一个元素
+        setSelectedItem(null);
+      else setSelectedItem(activities[index]);
     }
   }
 
@@ -53,9 +59,13 @@ function Activity() {
 
   function UpdateActivity() {
     if (!selectedItem) {
-      return <p>Loading...</p>;
+      return (
+        <div className="mgt-form" style={{ textAlign: "center" }}>
+          <p>No Data</p>
+        </div>
+      );
     }
-    console.log(selectedItem.id);
+    // console.log(selectedItem.id);
     useEffect(() => {
       //导致问题：Internal React error: Expected static flag was missing.
       setName(selectedItem.name);
@@ -76,30 +86,6 @@ function Activity() {
       selectedItem.includeDinner || false
     );
 
-    function handleNameChange(event) {
-      setName(event.target.value);
-    }
-    function handlePriceChange(event) {
-      setPrice(event.target.value);
-    }
-
-    function handleStartTimeChange(event) {
-      setStartTime(event.target.value);
-    }
-
-    function handleEndTimeChange(event) {
-      setEndTime(event.target.value);
-    }
-    function handleDaysOfWeek(event) {
-      setDaysOfWeek(event.target.value);
-    }
-    function handleIncludeYoga(event) {
-      setYoga(event.target.checked);
-    }
-    function handleIncludeDinner(event) {
-      setDinner(event.target.checked);
-    }
-
     function writeNewData() {
       let newData = {
         id: selectedItem.id,
@@ -117,12 +103,17 @@ function Activity() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(newData),
       };
-      console.log(JSON.stringify(newData));
+      // console.log(JSON.stringify(newData));
       fetch("/api/v1/activity", requestOptions)
         .then((response) => response.json())
         .then((data) => {
           console.log("Update Succesful:", data);
-          populateActivityData();
+          alert(data.name+" has been updated!")
+          // populateActivityData();
+          const updatedActivities = activities.map((item) =>
+            item.id === data.id ? data : item
+          );
+          setActivity(updatedActivities);
           setSelectedItem(data);
         })
         .catch((error) => console.error("Error:", error));
@@ -142,26 +133,26 @@ function Activity() {
 
     return (
       <div className="mgt-form">
-        <h2>{name}</h2>
+        <h2>{selectedItem.name}</h2>
         <label htmlFor="mgt-name">Activity Name*</label>
         <input
           type="text"
           id="mgt-name"
           value={name}
-          onChange={handleNameChange}
+          onChange={(e) => setName(e.target.value)}
         />
         <label htmlFor="price">Price (NZD)*</label>
         <input
           type="number"
           id="price"
           value={price}
-          onChange={handlePriceChange}
+          onChange={(e) => setPrice(e.target.value)}
         />
         <label htmlFor="days">Days</label>
         <select
           id="days"
-          value={daysOfWeek == null ? "Monday" : daysOfWeek}
-          onChange={handleDaysOfWeek}
+          value={daysOfWeek}
+          onChange={(e) => setDaysOfWeek(e.target.value)}
         >
           <option>Monday</option>
           <option>Tuesday</option>
@@ -177,30 +168,30 @@ function Activity() {
         <input
           type="time"
           id="start-time"
-          value={startTime == null ? "00:00" : startTime}
-          onChange={handleStartTimeChange}
+          value={startTime || "00:00"}
+          onChange={(e) => setStartTime(e.target.value)}
         />
 
         <label htmlFor="end-time">End Time</label>
         <input
           type="time"
           id="end-time"
-          value={endTime == null ? "00:00" : endTime}
-          onChange={handleEndTimeChange}
+          value={endTime || "00:00"}
+          onChange={(e) => setEndTime(e.target.value)}
         />
         <label htmlFor="include-yoga">Include Yoga</label>
         <input
           type="checkbox"
           id="include-yoga"
           checked={includeYoga}
-          onChange={handleIncludeYoga}
+          onChange={(e) => setYoga(e.target.checked)}
         />
         <label htmlFor="include-dinner">Include Dinner</label>
         <input
           type="checkbox"
           id="include-dinner"
           checked={includeDinner}
-          onChange={handleIncludeDinner}
+          onChange={(e) => setDinner(e.target.checked)}
         />
 
         <button onClick={writeNewData}>Update</button>
@@ -210,19 +201,24 @@ function Activity() {
   }
 
   return (
-    <div className="container">
-      <ItemList
-        items={activities}
-        setSelectedItem={setSelectedItem}
-        refreshData={populateActivityData}
-        // onAdd={handleAdd}
-      />
-      {/* <UpdateActivity
+    <>
+      <div className="container">
+        <div className="mgt-list">
+          <ItemList
+            type={"activity"}
+            items={activities}
+            setItem={setActivity}
+            setSelectedItem={setSelectedItem}
+            // onAdd={handleAdd}
+          />
+        </div>
+        {/* <UpdateActivity
         item={selectedItem == null ? activities[0] : selectedItem}
         onDelete={handleDelete}
       /> */}
-      <UpdateActivity />
-    </div>
+        <UpdateActivity />
+      </div>
+    </>
   );
 }
 
