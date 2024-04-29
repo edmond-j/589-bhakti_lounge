@@ -1,7 +1,7 @@
-import "../../management-part/management.css";
+
 import { NavLink } from "react-router-dom";
 
-function MgtHeader() {
+function MgmtHeader() {
     const linkClass=({isActive})=>isActive?"background-blue":"background-black";
     return (
         <div className="header">
@@ -26,4 +26,4 @@ function MgtHeader() {
     
 }
 
-export default MgtHeader;
+export default MgmtHeader;
