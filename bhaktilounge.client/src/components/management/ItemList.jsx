@@ -1,43 +1,50 @@
 import React from "react";
 
-function ItemList({ items, setActivity, onSelectItem, onAdd }) {
+function ItemList({ type, items, setItem, setSelectedItem }) {
   if (!items || items.length === 0) {
-    return <p>Loading...</p>; // 或其他加载指示器
+    return (
+      <div>
+        <p>Empty</p>
+        <button onClick={createNew}>Add New</button>
+      </div>
+    );
   }
 
   function createNew() {
-    const newData = {
-      name: "new activity",
-      price: 0,
-      startTime: "00:00",
-      endTime: "00:00",
-      daysOfWeek: ["Monday"]
-    };
+    // const newData = {
+    //   name: "new activity",
+    //   price: 0,
+    //   startTime: "00:00",
+    //   endTime: "00:00",
+    //   daysOfWeek: ["Monday"]
+    // };
     const requestOptions = {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(newData),
     };
-    fetch("/api/v1/activity", requestOptions)
+    fetch(`/api/v1/${type}/createdefault`, requestOptions)
       .then((response) => response.json())
       .then((data) => {
-        setActivity((prevActivities) => [...prevActivities, data]);
         console.log("New Activity Created:", data);
+        // refreshData().then(() => {
+        // });
+        setItem((prevItems) => [...prevItems, data]);
+        setSelectedItem(data); // Ensure refreshData() is complete
       })
       .catch((error) => console.error("Error:", error));
-    onAdd(newData);
-    onSelectItem(newData);
+    // onAdd(newData);
   }
 
   return (
-    <div className="mgt-list">
+    <div>
       {/* <p>{items[0].name}</p> */}
       {items.map((item) => (
         <div
           className="mgt-list-item"
+          id={`item-${item.id}`}
           tabIndex="0"
           key={item.id}
-          onClick={() => onSelectItem(item)}
+          onClick={() => setSelectedItem(item)}
         >
           {item.name}
         </div>
