@@ -74,6 +74,7 @@ td {
 
 .button-class.disabled {
     background-color: rgb(195, 192, 192);
+    cursor: not-allowed;
 }
 
 

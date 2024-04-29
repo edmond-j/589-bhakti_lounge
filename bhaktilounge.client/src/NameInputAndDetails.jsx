@@ -1,57 +1,59 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import './App.css';
 import EventSelector from './EventSelector';
 import PaymentSelector from './PaymentSelector';
+import { debounce } from 'lodash';
+
 
 function NameInput() {
     const [customerName, setCustomerName] = useState('');
     const [suggestions, setSuggestions] = useState([]);
     const [selectedCustomer, setSelectedCustomer] = useState(null);
     const [showDetails, setShowDetails] = useState(false);
-
     const [selectedEvents, setSelectedEvents] = useState([]);
     const [selectedPayment, setSelectedPayment] = useState(null);
 
-    // const [options, setOptions] = useState([]); // 初始化为空数组
-    // // 假设 fetchData 是一个异步函数，用来从后端获取数据
-    // useEffect(() => {
-    //     const fetchData = async () => {
-    //         try {
-    //             // 此处以一个假设的API调用替代
-    //             const response = await fetch('https://your-api-url.com/api/customers');
-    //             const data = await response.json();
-    //             setOptions(data);
-    //         } catch (error) {
-    //             console.error('Failed to fetch data:', error);
-    //         }
-    //     };
+    const fetchOptions = async (value) => {
+        try {
+            const response = await fetch(`https://your-api-url.com/api/customers?search=${value}`);
+            const data = await response.json();
+            setSuggestions(data);
+        } catch (error) {
+            console.error('Failed to fetch data:', error);
+            setSuggestions([]); // 错误处理，清空建议列表
+        }
+    };
 
-    //     fetchData();
-    // }, []); // 空依赖数组表示此effect只在组件挂载时运行一次
+    const debouncedFetchOptions = debounce(fetchOptions, 2000);
 
-    // 直接定义 options 为一个数组
-    const options = [
-        { id: 1, firstName: 'Violet', lastName: 'Zhang', email: '123@gmail.com' },
-        { id: 2, firstName: 'Vivian', lastName: 'Law', email: '456@hotmail.com' },
-        { id: 3, firstName: 'Henry', lastName: 'Birt', email: '789@foxmail.com' }
-    ];
+    // // 直接定义 options 为一个数组
+    // const options = [
+    //     { id: 1, firstName: 'Violet', lastName: 'Zhang', email: '123@gmail.com' },
+    //     { id: 2, firstName: 'Vivian', lastName: 'Law', email: '456@hotmail.com' },
+    //     { id: 3, firstName: 'Henry', lastName: 'Birt', email: '789@foxmail.com' }
+    // ];
 
     const handleInputChange = (e) => {
         const value = e.target.value.toLowerCase();
         setCustomerName(value);
         if (value.length > 0) {
+            debouncedFetchOptions(value);
+        } else {
+            setSuggestions([]); // 如果输入为空，则清空建议列表
+        }
+    };
+
+    useEffect(() => {
+        if (customerName.length > 0) {
             const filteredSuggestions = options.filter(option =>
-                option.firstName.toLowerCase().includes(value) || option.lastName.toLowerCase().includes(value)
+                option.firstName.toLowerCase().includes(customerName) || option.lastName.toLowerCase().includes(customerName)
             );
-            if (filteredSuggestions.length > 0) {
-                setSuggestions(filteredSuggestions);
-            } else {
-                setSuggestions([{ id: 0, firstName: "No Existing Customer", lastName: " - New Drop In", email: "" }]); // 当没有匹配项时添加
-            }
+            setSuggestions(filteredSuggestions.length > 0 ? filteredSuggestions : [{ id: 0, firstName: "No Existing Customer", lastName: " - New Drop In", email: "" }]);
         } else {
             setSuggestions([]);
         }
-    };
+    }, [options, customerName]); // 监听 options 和 customerName 的变化
+
 
     const handleSuggestionClick = (suggestion) => {
         if (suggestion.id === 0) {
@@ -106,11 +108,7 @@ function NameInput() {
                         <ul className="suggestions-list">
                             {suggestions.map((suggestion) => (
                                 <li key={suggestion.id} onClick={() => handleSuggestionClick(suggestion)}>
-                                    {suggestion.id === 0 ? (
-                                        <span className="new-customer">{`${suggestion.firstName} ${suggestion.lastName}`}</span>
-                                    ) : (
-                                        `${suggestion.firstName} ${suggestion.lastName} (${suggestion.email})`
-                                    )}
+                                    {suggestion.firstName} {suggestion.lastName} ({suggestion.email})
                                 </li>
                             ))}
                         </ul>
