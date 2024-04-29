@@ -51,14 +51,11 @@ export default defineConfig({
                 //target: 'https://bhaktiloungeserver20240422192158.azurewebsites.net/',
                 secure: false
             },
-            '^/api/v1/event': {
+            '^/api/v1/*': {
                 target: 'https://localhost:7106/',
                 secure: false
             },
-            '^/api/v1/activity': {
-                target: 'https://localhost:7106/',
-                secure: false
-            }
+        
         },
         port: 5173,
         https: {

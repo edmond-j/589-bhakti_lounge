@@ -14,5 +14,6 @@ namespace BhaktiLounge.Server.Data {
         public DbSet<Customer> Customer { get; set; } = default!;
         public DbSet<Event> Event { get; set; } = default!;
         public DbSet<MemberClass> MemberClass { get; set; } = default!;
+        public DbSet<Acquisition> Acquisition { get; set; } = default!;
     }
 }
