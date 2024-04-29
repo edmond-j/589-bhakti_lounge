@@ -43,16 +43,7 @@ function NameInput() {
         }
     };
 
-    useEffect(() => {
-        if (customerName.length > 0) {
-            const filteredSuggestions = options.filter(option =>
-                option.firstName.toLowerCase().includes(customerName) || option.lastName.toLowerCase().includes(customerName)
-            );
-            setSuggestions(filteredSuggestions.length > 0 ? filteredSuggestions : [{ id: 0, firstName: "No Existing Customer", lastName: " - New Drop In", email: "" }]);
-        } else {
-            setSuggestions([]);
-        }
-    }, [options, customerName]); // 监听 options 和 customerName 的变化
+
 
 
     const handleSuggestionClick = (suggestion) => {
