@@ -1,5 +1,7 @@
 using BhaktiLounge.Server.Data;
 using BhaktiLounge.Server.Data.Conveters;
+using BhaktiLounge.Server.Models;
+using BhaktiLounge.Server.Services;
 using Microsoft.EntityFrameworkCore;
 
 namespace BhaktiLounge.Server {
@@ -10,18 +12,21 @@ namespace BhaktiLounge.Server {
             var builder = WebApplication.CreateBuilder(args);
 
             // Add services to the container.
-
-            builder.Services.AddControllers().AddJsonOptions(options => {
-                options.JsonSerializerOptions.Converters.Add(new TimeOnlyConverter());
-                options.JsonSerializerOptions.Converters.Add(new DayOfWeekConverter());
-                //options.JsonSerializerOptions.Converters.Add(new DateOnlyConverter());
-            });
-            // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-            builder.Services.AddEndpointsApiExplorer();
-            builder.Services.AddSwaggerGen();
             builder.Services.AddDbContext<ApplicationDbContext>(option => {
                 option.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection"));
             });
+            builder.Services.AddControllers().AddJsonOptions(options => {
+                options.JsonSerializerOptions.Converters.Add(new TimeOnlyConverter());
+                options.JsonSerializerOptions.Converters.Add(new DayOfWeekConverter());
+                options.JsonSerializerOptions.Converters.Add(new DateOnlyConverter());
+            });
+            // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+            builder.Services.AddScoped<IActivityService, ActivityService>();
+            builder.Services.AddScoped<ICheckinService, CheckinService>();
+            builder.Services.AddEndpointsApiExplorer();
+            builder.Services.AddSwaggerGen();
+    
+   
 
             var app = builder.Build();
 

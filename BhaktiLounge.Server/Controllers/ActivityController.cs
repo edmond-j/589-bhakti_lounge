@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using BhaktiLounge.Server.Models;
 using BhaktiLounge.Server.Data;
+using BhaktiLounge.Server.Services;
 using Microsoft.EntityFrameworkCore;
 
 namespace BhaktiLounge.Server.Controllers {
@@ -11,24 +12,26 @@ namespace BhaktiLounge.Server.Controllers {
     public class ActivityController : ControllerBase {
         private readonly ApplicationDbContext _context;
         private readonly ILogger<ActivityController> _logger;
+        private readonly IActivityService _service;
 
-        public ActivityController(ApplicationDbContext context, ILogger<ActivityController> logger) {
+        public ActivityController(ApplicationDbContext context, ILogger<ActivityController> logger, IActivityService service) {
             _context = context;
             _logger = logger;
+            _service = service;
         }
 
         [HttpGet]
         public async Task<ActionResult> GetAllActivity() {
-            var activities = await _context.Activity.OrderBy(a => a.Id).ToArrayAsync();
+            var activities = await _service.GetAllActivity();
             return Ok(activities);
         }
 
         [HttpPost]
-        public async Task<ActionResult> AddActivity([FromBody] Activity newActivity) {
-            newActivity ??= new Activity();
-            _context.Activity.Add(newActivity);
-            await _context.SaveChangesAsync();
-            return Ok(newActivity);
+        public async Task<ActionResult> AddActivity([FromBody] Activity? newActivity) {
+            if (newActivity == null) {
+                return BadRequest("Activity data is required.");
+            }
+            return await _service.AddActivity(newActivity)? Ok(newActivity) : BadRequest("Failed to add activity.") ;
         }
 
         [HttpPut]

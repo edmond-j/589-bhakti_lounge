@@ -26,8 +26,10 @@ namespace BhaktiLounge.Server.Controllers {
         }
 
         [HttpPost]
-        public async Task<ActionResult> AddEvent([FromBody] Event newEvent) {
-            newEvent ??= new Event();
+        public async Task<ActionResult> AddEvent([FromBody] Event? newEvent) {
+            if (newEvent == null) {
+                return BadRequest("Activity data is required.");
+            }
             _context.Event.Add(newEvent);
             await _context.SaveChangesAsync();
             return Ok(newEvent);

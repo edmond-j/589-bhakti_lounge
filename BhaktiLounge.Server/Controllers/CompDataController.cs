@@ -42,11 +42,6 @@ namespace BhaktiLounge.Server.Controllers {
             };
             return Ok(result);
         }
-
-        [HttpGet("Acquisition")]
-        public async Task<IActionResult> GetAcquisition() {
-            var allAcqu = await _context.Acquisition.OrderBy(a => a.Id).ToArrayAsync();
-            return Ok(allAcqu);
-        }
+        
     }
 }
