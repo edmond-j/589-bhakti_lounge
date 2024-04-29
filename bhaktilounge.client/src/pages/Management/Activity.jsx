@@ -1,14 +1,14 @@
 import React from "react";
 import { useEffect, useState } from "react";
-import "./management.css";
 
-import ItemList from "../components/management/ItemList";
 
-function Event() {
-  const [events, setEvent] = useState([]);
+import ItemList from "../../components/management/ItemList";
+
+function Activity() {
+  const [activities, setActivity] = useState([]);
   const [selectedItem, setSelectedItem] = useState(null);
   useEffect(() => {
-    populateEventData();
+    populateActivityData();
   }, []);
 
   useEffect(() => {
@@ -21,33 +21,43 @@ function Event() {
     }
   }, [selectedItem]);
 
-  async function populateEventData() {
-    fetch("/api/v1/event")
+  async function populateActivityData() {
+    // const response = await fetch("/api/v1/activity");
+    // const data = await response.json();
+    // setActivity(data);
+    //设定selectedItem
+    fetch("/api/v1/activity")
       .then((response) => response.json())
       .then((data) => {
         console.log("popu", data);
         //如果没有data该怎么办？
         if (data) {
-          setEvent(data);
+          setActivity(data);
           setSelectedItem(data[0]);
         }
       });
   }
 
   function handleDelete(itemToDelete) {
-    const index = events.indexOf(itemToDelete);
-    setEvent((currentItems) =>
+    const index = activities.indexOf(itemToDelete);
+    setActivity((currentItems) =>
       currentItems.filter((item) => item !== itemToDelete)
     );
     if (index > 0) {
-      setSelectedItem(events[index - 1]);
+      setSelectedItem(activities[index - 1]);
     } else {
-      if (events.length == 1) setSelectedItem(null);
-      else setSelectedItem(events[index]);
+      if (activities.length == 1)
+        //删除最后一个元素
+        setSelectedItem(null);
+      else setSelectedItem(activities[index]);
     }
   }
 
-  function UpdateEvent() {
+  // function handleAdd(itemToAdd) {
+  //   setActivity(activities.concat(itemToAdd))
+  // }
+
+  function UpdateActivity() {
     if (!selectedItem) {
       return (
         <div className="mgt-form" style={{ textAlign: "center" }}>
@@ -57,26 +67,35 @@ function Event() {
     }
     // console.log(selectedItem.id);
     useEffect(() => {
+      //导致问题：Internal React error: Expected static flag was missing.
       setName(selectedItem.name);
       setPrice(selectedItem.price);
       setStartTime(selectedItem.startTime);
       setEndTime(selectedItem.endTime);
-      setDate(selectedItem.date);
+      setDaysOfWeek(selectedItem.daysOfWeek[0]);
+      setYoga(selectedItem.includeYoga);
+      setDinner(selectedItem.includeDinner);
     }, [selectedItem]);
     const [name, setName] = useState(selectedItem.name);
     const [price, setPrice] = useState(selectedItem.price);
-    const [date, setDate] = useState(selectedItem.date);
     const [startTime, setStartTime] = useState(selectedItem.startTime);
     const [endTime, setEndTime] = useState(selectedItem.endTime);
+    const [daysOfWeek, setDaysOfWeek] = useState(selectedItem.daysOfWeek[0]);
+    const [includeYoga, setYoga] = useState(selectedItem.includeYoga || false);
+    const [includeDinner, setDinner] = useState(
+      selectedItem.includeDinner || false
+    );
 
     function writeNewData() {
       let newData = {
         id: selectedItem.id,
         name: name,
         price: price,
-        date: date,
         startTime: startTime,
         endTime: endTime,
+        daysOfWeek: [daysOfWeek],
+        includeYoga: includeYoga,
+        includeDinner: includeDinner,
       };
 
       const requestOptions = {
@@ -85,34 +104,37 @@ function Event() {
         body: JSON.stringify(newData),
       };
       // console.log(JSON.stringify(newData));
-      fetch("/api/v1/event", requestOptions)
+      fetch("/api/v1/activity", requestOptions)
         .then((response) => response.json())
         .then((data) => {
           console.log("Update Succesful:", data);
           alert(data.name+" has been updated!")
-          const updatedItems = events.map((item) =>
+          // populateActivityData();
+          const updatedActivities = activities.map((item) =>
             item.id === data.id ? data : item
           );
-          setEvent(updatedItems);
+          setActivity(updatedActivities);
           setSelectedItem(data);
         })
         .catch((error) => console.error("Error:", error));
     }
 
     function deleteData() {
-      const url = "/api/v1/event?Id=" + selectedItem.id;
+      const url = "/api/v1/activity?Id=" + selectedItem.id;
       const requestOptions = {
         method: "DELETE",
         headers: { "Content-Type": "application/json" },
       };
       fetch(url, requestOptions).then((response) => console.log(response));
+      // .then(data => console.log('Delete Succesful:', data))
+      // .catch(error => console.error('Error:', error));
       handleDelete(selectedItem);
     }
 
     return (
       <div className="mgt-form">
         <h2>{selectedItem.name}</h2>
-        <label htmlFor="mgt-name">Event Name*</label>
+        <label htmlFor="mgt-name">Activity Name*</label>
         <input
           type="text"
           id="mgt-name"
@@ -126,13 +148,22 @@ function Event() {
           value={price}
           onChange={(e) => setPrice(e.target.value)}
         />
-        <label htmlFor="date">Date</label>
-        <input
-          type="date"
-          id="date"
-          value={date}
-          onChange={(e) => setDate(e.target.value)}
-        />
+        <label htmlFor="days">Days</label>
+        <select
+          id="days"
+          value={daysOfWeek}
+          onChange={(e) => setDaysOfWeek(e.target.value)}
+        >
+          <option>Monday</option>
+          <option>Tuesday</option>
+          <option>Wednesday</option>
+          <option>Thursday</option>
+          <option>Friday</option>
+          <option>Saturday</option>
+          <option>Sunday</option>
+        </select>
+        {/* <MultiDaysSelectDropdown initialDays={daysOfWeek}/> */}
+
         <label htmlFor="start-time">Start Time</label>
         <input
           type="time"
@@ -140,12 +171,27 @@ function Event() {
           value={startTime || "00:00"}
           onChange={(e) => setStartTime(e.target.value)}
         />
+
         <label htmlFor="end-time">End Time</label>
         <input
           type="time"
           id="end-time"
           value={endTime || "00:00"}
           onChange={(e) => setEndTime(e.target.value)}
+        />
+        <label htmlFor="include-yoga">Include Yoga</label>
+        <input
+          type="checkbox"
+          id="include-yoga"
+          checked={includeYoga}
+          onChange={(e) => setYoga(e.target.checked)}
+        />
+        <label htmlFor="include-dinner">Include Dinner</label>
+        <input
+          type="checkbox"
+          id="include-dinner"
+          checked={includeDinner}
+          onChange={(e) => setDinner(e.target.checked)}
         />
 
         <button onClick={writeNewData}>Update</button>
@@ -159,15 +205,21 @@ function Event() {
       <div className="container">
         <div className="mgt-list">
           <ItemList
-            type={"event"}
-            items={events}
-            setItem={setEvent}
+            type={"activity"}
+            items={activities}
+            setItem={setActivity}
             setSelectedItem={setSelectedItem}
+            // onAdd={handleAdd}
           />
         </div>
-        <UpdateEvent />
+        {/* <UpdateActivity
+        item={selectedItem == null ? activities[0] : selectedItem}
+        onDelete={handleDelete}
+      /> */}
+        <UpdateActivity />
       </div>
     </>
   );
 }
-export default Event;
+
+export default Activity;
