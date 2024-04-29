@@ -10,7 +10,7 @@
         public DateTime? InitialRegisted { get; set; }
         public DateOnly? SubStartDate { get; set; }
         public DateOnly? SubEndDate { get; set; }
-        public int? PassCredit { get; set; }
+        public int? PassRemain { get; set; }
 
         public enum Gender { He, She, They, Other }
     }

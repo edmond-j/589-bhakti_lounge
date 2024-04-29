@@ -22,9 +22,9 @@ namespace BhaktiLounge.Server.Controllers {
         }
 
         [HttpPost]
-        public async Task<ActionResult> AddActivity([FromBody] Activity activity) {
-            //Activity activity = new Activity { Id = 0, Type = "soulfeast", Price = 12, StartTime = new TimeOnly(18, 15), EndTime = new TimeOnly(0, 0), SoulFeast = true, DayOfWeek = 0 };
-            _context.Activity.Add(activity);
+        public async Task<ActionResult> AddActivity([FromBody] Activity newNctivity) {
+            //Activity newNctivity = new Activity { Id = 0, Type = "soulfeast", Price = 12, StartTime = new TimeOnly(18, 15), EndTime = new TimeOnly(0, 0), SoulFeast = true, DayOfWeek = 0 };
+            _context.Activity.Add(newNctivity);
             await _context.SaveChangesAsync();
             return Ok(await _context.Activity.ToListAsync());
         }
@@ -38,18 +38,18 @@ namespace BhaktiLounge.Server.Controllers {
         }
 
         [HttpPut]
-        public async Task<ActionResult> UpdateActivity([FromBody] Activity updateActivity) {
-            var activity = await _context.Activity.FindAsync(updateActivity.Id);
+        public async Task<ActionResult> UpdateActivity([FromBody] Activity newActivity) {
+            var activity = await _context.Activity.FindAsync(newActivity.Id);
             if (activity is null) {
                 return NotFound("Item Not Found");
             }
-            activity.Name = updateActivity.Name;
-            activity.Price = updateActivity.Price;
-            activity.StartTime = updateActivity.StartTime;
-            activity.EndTime = updateActivity.EndTime;
-            activity.DaysOfWeek = updateActivity.DaysOfWeek;
-            activity.IncludeYoga = updateActivity.IncludeYoga;
-            activity.IncludeDinner = updateActivity.IncludeDinner;
+            activity.Name = newActivity.Name;
+            activity.Price = newActivity.Price;
+            activity.StartTime = newActivity.StartTime;
+            activity.EndTime = newActivity.EndTime;
+            activity.DaysOfWeek = newActivity.DaysOfWeek;
+            activity.IncludeYoga = newActivity.IncludeYoga;
+            activity.IncludeDinner = newActivity.IncludeDinner;
             _context.Activity.Update(activity);
             await _context.SaveChangesAsync();
             return Ok(activity);
