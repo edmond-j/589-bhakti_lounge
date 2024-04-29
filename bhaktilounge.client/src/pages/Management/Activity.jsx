@@ -1,8 +1,8 @@
 import React from "react";
 import { useEffect, useState } from "react";
-import "./management.css";
 
-import ItemList from "../components/management/ItemList";
+
+import ItemList from "../../components/management/ItemList";
 
 function Activity() {
   const [activities, setActivity] = useState([]);
