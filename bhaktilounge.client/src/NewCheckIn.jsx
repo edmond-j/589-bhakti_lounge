@@ -5,7 +5,7 @@ import { useLocation } from 'react-router-dom';
 const NewCheckIn = () => {
     const [customerName, setCustomerName] = useState('');
     const [email, setEmail] = useState('');
-    const imageUrl = '/assets/logo.jpg'
+    // const imageUrl = './assets/logo.jpg'
 
     //get name data from previous page
     const location = useLocation();
@@ -16,12 +16,36 @@ const NewCheckIn = () => {
         event.preventDefault();
         console.log('Customer Name:', customerName);
         console.log('Email:', email);
-        // Reset form or give feedback to the user
+
+        let newData = {
+            name: customerName,
+            price: email,
+            date: date,
+            startTime: startTime,
+            endTime: endTime,
+          };
+    
+          const requestOptions = {
+            method: "PUT",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(newData),
+          };
+          fetch("/api/v1/event", requestOptions)
+            .then((response) => response.json())
+            .then((data) => {
+              console.log("Update Succesful:", data);
+              alert(data.name+" has been updated!")
+              const updatedItems = events.map((item) =>
+                item.id === data.id ? data : item
+              );
+              setEvent(updatedItems);
+              setSelectedItem(data);
+            })
+            .catch((error) => console.error("Error:", error));
     };
 
     return (
         <div className='page-container'>
-            <img src={imageUrl} alt="Description" />
             <header className="header">
                 <h1>BHAKTI Lounge</h1>
                 <button onClick={() => console.log('Log out')}>Log out</button>
@@ -65,7 +89,7 @@ const NewCheckIn = () => {
                             <option value="Bhakti_Website">Bhakti Website</option>
                             <option value="friend_family">Friend/Family Referral</option>
                             <option value="Google_Search">Google Search</option>
-                            <option value="other">Other</option>
+                            <option value="other">Other11</option>
                         </select>
                     </div>
                     <div className='button-container'>
