@@ -56,6 +56,8 @@ function CheckIn() {
             <Link to="/register">New User?</Link>
             <br />
             <Link to="/top-up">Top Up</Link>
+            <br />
+            <Link to="/management/activity">Management</Link>
         </div>
     );
 }
