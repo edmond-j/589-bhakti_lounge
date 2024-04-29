@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import './App.css';
+
 import EventSelector from './EventSelector';
 import PaymentSelector from './PaymentSelector';
 import { debounce } from 'lodash';

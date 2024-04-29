@@ -1,6 +1,6 @@
 import React from 'react';
-import logo from './assets/BhaktiLounge-Logo.png'; // 假设你有一个logo图像
-import './App.css'; // Header组件的样式文件
+import logo from '@/assets/BhaktiLounge-Logo.png'; // 假设你有一个logo图像
+
 
 const Header = ({ pageNumber }) => {
     return (

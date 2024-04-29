@@ -1,6 +1,6 @@
-import Header from "./Header";
-import Footer from "./Footer";
-import NameInput from "./NameInputAndDetails";
+import Header from "../components/Header";
+import Footer from "../components/Footer";
+import NameInput from "../components/NameInputAndDetails";
 
 function CheckIn() {
     return (
