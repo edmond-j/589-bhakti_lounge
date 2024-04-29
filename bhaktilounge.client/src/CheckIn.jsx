@@ -5,7 +5,7 @@ import NameInput from "./NameInputAndDetails";
 function CheckIn() {
     return (
         <div className="CheckIn">
-            <Header />
+            <Header pageNumber={1} />
             <h2>Customer Check-in</h2>
             <NameInput />
             <Footer />

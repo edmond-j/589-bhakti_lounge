@@ -15,7 +15,7 @@ function NameInput() {
 
     const fetchOptions = async (value) => {
         try {
-            const response = await fetch(`https://your-api-url.com/api/customers?search=${value}`);
+            const response = await fetch(`/api/customer?name=${value}`);
             const data = await response.json();
             setSuggestions(data);
         } catch (error) {
