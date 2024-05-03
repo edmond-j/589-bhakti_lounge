@@ -10,9 +10,11 @@ namespace BhaktiLounge.Server.Controllers {
     [ApiController]
     public class EventController : ControllerBase {
         private ApplicationDbContext _context;
+        private readonly ILogger<ActivityController> _logger;
 
-        public EventController(ApplicationDbContext context) {
+        public EventController(ApplicationDbContext context, ILogger<ActivityController> logger) {
             _context = context;
+            _logger = logger;
         }
 
         [HttpGet]
@@ -25,14 +27,7 @@ namespace BhaktiLounge.Server.Controllers {
 
         [HttpPost]
         public async Task<ActionResult> AddEvent([FromBody] Event newEvent) {
-            _context.Event.Add(newEvent);
-            await _context.SaveChangesAsync();
-            return Ok(await _context.Event.ToListAsync());
-        }
-
-        [HttpPost("CreateDefault")]
-        public async Task<ActionResult> AddDefaultEvent() {
-            var newEvent = new Event();
+            newEvent ??= new Event();
             _context.Event.Add(newEvent);
             await _context.SaveChangesAsync();
             return Ok(newEvent);

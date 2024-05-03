@@ -1,5 +1,6 @@
 
 import { NavLink } from "react-router-dom";
+import logo from "../../assets/BhaktiLounge-Logo.png"
 
 function MgmtHeader() {
     const linkClass=({isActive})=>isActive?"background-blue":"background-black";
@@ -7,7 +8,7 @@ function MgmtHeader() {
         <div className="header">
         <div className="header-left">
             <a href="/check-in" className="back-link">To Check In</a>
-            <img src="../../../public/BhaktiLounge-Logo.png" height={"34px"} className="logo"/>
+            <img src={logo} height={"34px"} className="logo"/>
         </div>
         <div className="menu">
             <NavLink className={linkClass} to="report">Report</NavLink>

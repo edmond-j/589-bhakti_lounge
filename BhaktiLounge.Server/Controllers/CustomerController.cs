@@ -10,11 +10,14 @@ namespace BhaktiLounge.Server.Controllers {
     [ApiController]
     public class CustomerController : ControllerBase {
         private readonly ApplicationDbContext _context;
+        private readonly ILogger<ActivityController> _logger;
 
-        public CustomerController(ApplicationDbContext context) {
+        public CustomerController(ApplicationDbContext context, ILogger<ActivityController> logger) {
             _context = context;
+            _logger = logger;
         }
 
+        //Search a customer
         [HttpGet]
         public async Task<IActionResult> Search(string name) {
             var lowName = name.ToLower();
@@ -27,6 +30,7 @@ namespace BhaktiLounge.Server.Controllers {
             return Ok(customers);
         }
 
+        //New Customer registration
         [HttpPost]
         public async Task<IActionResult> Register([FromBody] Customer newCustomer) {
             _context.Customer.Add(newCustomer);
@@ -34,6 +38,7 @@ namespace BhaktiLounge.Server.Controllers {
             return Ok(newCustomer);
         }
 
+        //Subscribe, extend membership or modify profile
         [HttpPut]
         public async Task<IActionResult> Modifiy([FromBody] Customer newCustomer) {
             var customer = await _context.Customer.FindAsync(newCustomer.Id);

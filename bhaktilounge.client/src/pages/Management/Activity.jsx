@@ -7,7 +7,25 @@ import ItemList from "../../components/management/ItemList";
 function Activity() {
   const [activities, setActivity] = useState([]);
   const [selectedItem, setSelectedItem] = useState(null);
+  const [loading, setLoading] = useState(true);
   useEffect(() => {
+    async function populateActivityData() {
+      // const response = await fetch("/api/v1/activity");
+      // const data = await response.json();
+      // setActivity(data);
+      //设定selectedItem
+      fetch("/api/v1/activity")
+        .then((response) => response.json())
+        .then((data) => {
+          console.log("popu", data);
+          //如果没有data该怎么办？
+          setLoading(false);
+          if (data) {
+            setActivity(data);
+            setSelectedItem(data[0]);
+          }
+        });
+    }
     populateActivityData();
   }, []);
 
@@ -20,42 +38,6 @@ function Activity() {
       }
     }
   }, [selectedItem]);
-
-  async function populateActivityData() {
-    // const response = await fetch("/api/v1/activity");
-    // const data = await response.json();
-    // setActivity(data);
-    //设定selectedItem
-    fetch("/api/v1/activity")
-      .then((response) => response.json())
-      .then((data) => {
-        console.log("popu", data);
-        //如果没有data该怎么办？
-        if (data) {
-          setActivity(data);
-          setSelectedItem(data[0]);
-        }
-      });
-  }
-
-  function handleDelete(itemToDelete) {
-    const index = activities.indexOf(itemToDelete);
-    setActivity((currentItems) =>
-      currentItems.filter((item) => item !== itemToDelete)
-    );
-    if (index > 0) {
-      setSelectedItem(activities[index - 1]);
-    } else {
-      if (activities.length == 1)
-        //删除最后一个元素
-        setSelectedItem(null);
-      else setSelectedItem(activities[index]);
-    }
-  }
-
-  // function handleAdd(itemToAdd) {
-  //   setActivity(activities.concat(itemToAdd))
-  // }
 
   function UpdateActivity() {
     if (!selectedItem) {
@@ -89,13 +71,13 @@ function Activity() {
     function writeNewData() {
       let newData = {
         id: selectedItem.id,
-        name: name,
-        price: price,
-        startTime: startTime,
-        endTime: endTime,
+        name, // name:name,
+        price,
+        startTime,
+        endTime,
         daysOfWeek: [daysOfWeek],
-        includeYoga: includeYoga,
-        includeDinner: includeDinner,
+        includeYoga,
+        includeDinner,
       };
 
       const requestOptions = {
@@ -108,12 +90,11 @@ function Activity() {
         .then((response) => response.json())
         .then((data) => {
           console.log("Update Succesful:", data);
-          alert(data.name+" has been updated!")
-          // populateActivityData();
+          alert(data.name + " has been updated!");
           const updatedActivities = activities.map((item) =>
             item.id === data.id ? data : item
           );
-          setActivity(updatedActivities);
+          setActivity(updatedActivities); //update the frontend activities after backend data updated
           setSelectedItem(data);
         })
         .catch((error) => console.error("Error:", error));
@@ -126,9 +107,18 @@ function Activity() {
         headers: { "Content-Type": "application/json" },
       };
       fetch(url, requestOptions).then((response) => console.log(response));
-      // .then(data => console.log('Delete Succesful:', data))
-      // .catch(error => console.error('Error:', error));
-      handleDelete(selectedItem);
+      const index = activities.indexOf(selectedItem);
+      setActivity((currentItems) =>
+        currentItems.filter((item) => item !== selectedItem)
+      ); //remove the deleted activity
+      if (index > 0) {
+        setSelectedItem(activities[index - 1]);
+      } else {
+        if (activities.length == 1)
+          //when the activities has only 1 element
+          setSelectedItem(null);
+        else setSelectedItem(activities[index]);
+      }
     }
 
     return (
@@ -162,7 +152,6 @@ function Activity() {
           <option>Saturday</option>
           <option>Sunday</option>
         </select>
-        {/* <MultiDaysSelectDropdown initialDays={daysOfWeek}/> */}
 
         <label htmlFor="start-time">Start Time</label>
         <input
@@ -200,7 +189,9 @@ function Activity() {
     );
   }
 
-  return (
+  return loading ? (
+    <p>Loading</p>
+  ) : (
     <>
       <div className="container">
         <div className="mgt-list">
@@ -209,13 +200,8 @@ function Activity() {
             items={activities}
             setItem={setActivity}
             setSelectedItem={setSelectedItem}
-            // onAdd={handleAdd}
           />
         </div>
-        {/* <UpdateActivity
-        item={selectedItem == null ? activities[0] : selectedItem}
-        onDelete={handleDelete}
-      /> */}
         <UpdateActivity />
       </div>
     </>
