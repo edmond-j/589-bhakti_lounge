@@ -10,9 +10,11 @@ namespace BhaktiLounge.Server.Controllers {
     [ApiController]
     public class ActivityController : ControllerBase {
         private readonly ApplicationDbContext _context;
+        private readonly ILogger<ActivityController> _logger;
 
-        public ActivityController(ApplicationDbContext context) {
+        public ActivityController(ApplicationDbContext context, ILogger<ActivityController> logger) {
             _context = context;
+            _logger = logger;
         }
 
         [HttpGet]
@@ -22,16 +24,8 @@ namespace BhaktiLounge.Server.Controllers {
         }
 
         [HttpPost]
-        public async Task<ActionResult> AddActivity([FromBody] Activity newNctivity) {
-            //Activity newNctivity = new Activity { Id = 0, Type = "soulfeast", Price = 12, StartTime = new TimeOnly(18, 15), EndTime = new TimeOnly(0, 0), SoulFeast = true, DayOfWeek = 0 };
-            _context.Activity.Add(newNctivity);
-            await _context.SaveChangesAsync();
-            return Ok(await _context.Activity.ToListAsync());
-        }
-
-        [HttpPost("CreateDefault")]
-        public async Task<ActionResult> AddDefaultActivity() {
-            var newActivity = new Activity();
+        public async Task<ActionResult> AddActivity([FromBody] Activity newActivity) {
+            newActivity ??= new Activity();
             _context.Activity.Add(newActivity);
             await _context.SaveChangesAsync();
             return Ok(newActivity);
