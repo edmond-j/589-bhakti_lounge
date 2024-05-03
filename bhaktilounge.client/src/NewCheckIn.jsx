@@ -1,11 +1,15 @@
 import React, { useState } from 'react';
 import './NewCheckIn.css';
 import { useLocation } from 'react-router-dom';
+import Header from './components/Header.jsx';
 
 const NewCheckIn = () => {
-    const [customerName, setCustomerName] = useState('');
+    const [FirstName, setFirstName] = useState('');
+    const [LastName, setLastName] = useState('');
     const [email, setEmail] = useState('');
-    // const imageUrl = './assets/logo.jpg'
+    const [pronouns, setPronouns] = useState('');
+    const currentTimestamp = new Date().toISOString(); //get current timestamp
+    const [acquisition , setAcquisition] = useState('');
 
     //get name data from previous page
     const location = useLocation();
@@ -14,15 +18,16 @@ const NewCheckIn = () => {
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        console.log('Customer Name:', customerName);
+        console.log('Customer Name:', FirstName);
         console.log('Email:', email);
 
         let newData = {
-            name: customerName,
-            price: email,
-            date: date,
-            startTime: startTime,
-            endTime: endTime,
+            firstName: FirstName,
+            lastName: LastName,
+            email: email,
+            pronoun: pronouns,
+            acquisition: acquisition,
+            initialRegisted : currentTimestamp
           };
     
           const requestOptions = {
@@ -30,32 +35,26 @@ const NewCheckIn = () => {
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(newData),
           };
-          fetch("/api/v1/event", requestOptions)
+          fetch("/api/v1/Customer", requestOptions)
             .then((response) => response.json())
             .then((data) => {
               console.log("Update Succesful:", data);
-              alert(data.name+" has been updated!")
-              const updatedItems = events.map((item) =>
-                item.id === data.id ? data : item
-              );
-              setEvent(updatedItems);
-              setSelectedItem(data);
+              alert(data.id+" has been updated!")
             })
             .catch((error) => console.error("Error:", error));
     };
 
     return (
         <div className='page-container'>
-            <header className="header">
-                <h1>BHAKTI Lounge</h1>
-                <button onClick={() => console.log('Log out')}>Log out</button>
-            </header>
+            <Header pageNumber={2} />
             <div className="main-content">
                 <h2>New Customer</h2>
                 <form onSubmit={handleSubmit}>
-                    <div className="form-group">
-                        <label>Customer Name</label>
-                        <div className="info-value">{clientName}</div>
+                    <div className="form-group1">
+                        <label>First Name</label>
+                        <input id="firstname" type="text" onChange={(e) => setFirstName(e.target.value)}></input>
+                        <label>Last Name</label>
+                        <input id="lastname" type="text" onChange={(e) => setLastName(e.target.value)}></input>
                     </div>
                     <div className="form-group" >
                         <label htmlFor="email">Email</label>
@@ -69,7 +68,7 @@ const NewCheckIn = () => {
                     </div>
                     <div className="form-group" >
                         <label for="pronouns">Pronouns:</label>
-                        <select id="pronouns" name="pronouns" required>
+                        <select id="pronouns" name="pronouns" required onChange={(e) => setPronouns(e.target.value)}>
                             <option value="" selected disabled hidden>Choose one</option>
                             <option value="she/her">She/Her</option>
                             <option value="he/him">He/Him</option>
@@ -81,7 +80,7 @@ const NewCheckIn = () => {
 
                     <div className="form-group" >
                         <label for="channel">How did you hear about us?</label>
-                        <select id="channel" name="channel" required>
+                        <select id="channel" name="channel" required onChange={(e) => setAcquisition(e.target.value)}>
                             <option value="" selected disabled hidden>Choose one</option>
                             <option value="Facebook">Facebook</option>
                             <option value="Instagram">Instagram</option>
