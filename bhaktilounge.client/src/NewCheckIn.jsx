@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import './NewCheckIn.css';
 import { useLocation } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import Header from './components/Header.jsx';
 
 const NewCheckIn = () => {
@@ -10,10 +11,11 @@ const NewCheckIn = () => {
     const [pronouns, setPronouns] = useState('');
     const currentTimestamp = new Date().toISOString(); //get current timestamp
     const [acquisition , setAcquisition] = useState('');
+    const navigate = useNavigate();
 
     //get name data from previous page
-    const location = useLocation();
-    const clientName = location.state?.clientName || 'Unknown';
+    // const location = useLocation();
+    // const clientName = location.state?.clientName || 'Unknown';
 
     const backButton = () => {
         window.history.back();
@@ -46,6 +48,7 @@ const NewCheckIn = () => {
               alert(data.id+" has been updated!")
             })
             .catch((error) => console.error("Error:", error));
+            navigate('/check-in');
     };
 
     return (
