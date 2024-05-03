@@ -8,9 +8,11 @@ namespace BhaktiLounge.Server.Controllers {
     [ApiController]
     public class CompDataController : ControllerBase {
         private readonly ApplicationDbContext _context;
+        private readonly ILogger<ActivityController> _logger;
 
-        public CompDataController(ApplicationDbContext context) {
+        public CompDataController(ApplicationDbContext context, ILogger<ActivityController> logger) {
             _context = context;
+            _logger = logger;
         }
 
         [HttpGet("CustomerOption")]
@@ -33,7 +35,6 @@ namespace BhaktiLounge.Server.Controllers {
                                 .Where(e => e.Date == todayDate)
                                 .ToListAsync();
             Console.WriteLine(DateOnly.FromDateTime(DateTime.Now));
-            //计算价格（在前端）
 
             var result = new {
                 Activities = activities,
