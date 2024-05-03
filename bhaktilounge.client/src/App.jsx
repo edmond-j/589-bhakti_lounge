@@ -9,7 +9,6 @@ function App() {
       <div className="form-group">
         <Link to="/check-in">Login</Link>
         <Link to="/new-check-in">NewCheck-in</Link>
-        <Link to="/search-name">SearchName</Link>
         <Link to="/management/activity">Activity</Link>
         <br/>
         <Link to="/management/event">Event</Link>

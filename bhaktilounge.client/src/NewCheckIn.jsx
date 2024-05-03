@@ -15,6 +15,10 @@ const NewCheckIn = () => {
     const location = useLocation();
     const clientName = location.state?.clientName || 'Unknown';
 
+    const backButton = () => {
+        window.history.back();
+    };
+
 
     const handleSubmit = (event) => {
         event.preventDefault();
@@ -50,7 +54,7 @@ const NewCheckIn = () => {
             <div className="main-content">
                 <h2>New Customer</h2>
                 <form onSubmit={handleSubmit}>
-                    <div className="form-group1">
+                    <div className="form-group">
                         <label>First Name</label>
                         <input id="firstname" type="text" onChange={(e) => setFirstName(e.target.value)}></input>
                         <label>Last Name</label>
@@ -93,7 +97,7 @@ const NewCheckIn = () => {
                     </div>
                     <div className='button-container'>
                         <button  type="submit">Sign Up</button>
-                        <button  type="submit">Back</button>
+                        <button  type="submit" onClick={backButton}>Back</button>
                     </div>
                 </form>
             </div>
