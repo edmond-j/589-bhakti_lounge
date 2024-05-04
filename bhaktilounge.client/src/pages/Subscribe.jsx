@@ -36,7 +36,7 @@ function SubscriptionForm({ customerId }) {
         <div className={styles.subscriptionform}>
             <Header />
             <main>
-                <h3>Membership Subscribe</h3>
+                <h3>Membership Subscribe</h3>gitgit
                 <form
                     onSubmit={handleSubmit}
                     style={{ display: "flex", flexDirection: "column" }}
