@@ -10,7 +10,6 @@ import Activity from "./pages/Management/Activity.jsx";
 import Event from "./pages/Management/Event.jsx";
 import NotFound from "./pages/Management/NotFound.jsx";
 import Management from "./pages/Management.jsx";
-import NewCheckIn from "./pages/NewCheckIn.jsx";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
     <React.StrictMode>
@@ -20,7 +19,6 @@ ReactDOM.createRoot(document.getElementById("root")).render(
         <Route path="/check-in" element={<CheckIn />} />
         <Route path="/register" element={<Register />} />
         <Route path="/top-up" element={<TopUp />} />
-        <Route path="/new-check-in" element={<NewCheckIn />} />
         <Route path="/management" element={<Management />}>
           <Route path="activity" element={<Activity />} />
           <Route path="event" element={<Event />} />
