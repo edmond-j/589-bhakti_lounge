@@ -1,4 +1,5 @@
 ﻿using BhaktiLounge.Server.Models;
+using BhaktiLounge.Server.Models.Extensions;
 using Microsoft.EntityFrameworkCore;
 
 namespace BhaktiLounge.Server.Data {
@@ -8,11 +9,12 @@ namespace BhaktiLounge.Server.Data {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options) {
         }
-
+        
+        public DbSet<Checkin> Checkin { get; set; } = default!;
         public DbSet<Activity> Activity { get; set; } = default!;
-        public DbSet<CheckInRecord> CheckInRecord { get; set; } = default!;
-        public DbSet<Customer> Customer { get; set; } = default!;
         public DbSet<Event> Event { get; set; } = default!;
+        public DbSet<Customer> Customer { get; set; } = default!;
         public DbSet<MemberClass> MemberClass { get; set; } = default!;
+
     }
 }

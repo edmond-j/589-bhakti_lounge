@@ -25,6 +25,11 @@ td {
     padding-right: 1rem;
 }
 
+.form-group {
+    display: flex;
+    flex-direction: column;
+}
+
 /* Check in page */
 .CheckIn {
     text-align: center;
@@ -68,15 +73,14 @@ td {
     color: #000;
 }
 
-.button-class.enabled {
-    background-color: #FBBB19;
-}
+    .button-class.enabled {
+        background-color: #FBBB19;
+    }
 
-.button-class.disabled {
-    background-color: rgb(195, 192, 192);
-    cursor: not-allowed;
-}
-
+    .button-class.disabled {
+        background-color: rgb(195, 192, 192);
+        cursor: not-allowed;
+    }
 
 h2 {
     flex-basis: 100%;
@@ -112,7 +116,7 @@ h3 {
     min-height: 100%;
 }
 
-input {
+input, select {
     background-color: #F2F2F2;
     border-radius: 15px;
     height: 25px;
@@ -142,24 +146,24 @@ input {
     padding: 0;
 }
 
-.suggestions-list li {
-    padding: 8px;
-    cursor: pointer;
-    font-size: 0.8em;
-    font-weight: 200;
-    display: flex;
-    align-items: center;
-}
+    .suggestions-list li {
+        padding: 8px;
+        cursor: pointer;
+        font-size: 0.8em;
+        font-weight: 200;
+        display: flex;
+        align-items: center;
+    }
 
-.suggestions-list label {
-    margin-left: 8px;
-}
+    .suggestions-list label {
+        margin-left: 8px;
+    }
 
-.suggestions-list li:hover {
-    background-color: #f0f0f0;
-}
+    .suggestions-list li:hover {
+        background-color: #f0f0f0;
+    }
 
-.suggestions-list input[type="checkbox"] {
-    margin-right: 10px;
-    vertical-align: middle;
-}
+    .suggestions-list input[type="checkbox"] {
+        margin-right: 10px;
+        vertical-align: middle;
+    }

@@ -12,7 +12,6 @@
             }
 
             int year = 0, month = 0, day = 0;
-
             while (reader.Read()) {
                 if (reader.TokenType == JsonTokenType.EndObject) {
                     return new DateOnly(year, month, day);
@@ -33,7 +32,9 @@
                         case "day":
                             day = reader.GetInt32();
                             break;
-
+                        case "dayOfWeek":
+                            break;
+                        
                         default:
                             throw new JsonException($"Unknown property: {propertyName}");
                     }
@@ -48,6 +49,7 @@
             writer.WriteNumber("year", value.Year);
             writer.WriteNumber("month", value.Month);
             writer.WriteNumber("day", value.Day);
+            writer.WriteString("dayOfWeek", value.DayOfWeek.ToString());
             writer.WriteEndObject();
         }
     }

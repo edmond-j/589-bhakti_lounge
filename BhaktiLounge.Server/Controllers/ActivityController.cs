@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using BhaktiLounge.Server.Models;
 using BhaktiLounge.Server.Data;
+using BhaktiLounge.Server.Services;
 using Microsoft.EntityFrameworkCore;
 
 namespace BhaktiLounge.Server.Controllers {
@@ -10,46 +11,42 @@ namespace BhaktiLounge.Server.Controllers {
     [ApiController]
     public class ActivityController : ControllerBase {
         private readonly ApplicationDbContext _context;
+        private readonly ILogger<ActivityController> _logger;
+        private readonly IActivityService _service;
 
-        public ActivityController(ApplicationDbContext context) {
+        public ActivityController(ApplicationDbContext context, ILogger<ActivityController> logger, IActivityService service) {
             _context = context;
+            _logger = logger;
+            _service = service;
         }
 
         [HttpGet]
         public async Task<ActionResult> GetAllActivity() {
-            var activities = await _context.Activity.OrderBy(a => a.Id).ToArrayAsync();
+            var activities = await _service.GetAllActivity();
             return Ok(activities);
         }
 
         [HttpPost]
-        public async Task<ActionResult> AddActivity([FromBody] Activity activity) {
-            //Activity activity = new Activity { Id = 0, Type = "soulfeast", Price = 12, StartTime = new TimeOnly(18, 15), EndTime = new TimeOnly(0, 0), SoulFeast = true, DayOfWeek = 0 };
-            _context.Activity.Add(activity);
-            await _context.SaveChangesAsync();
-            return Ok(await _context.Activity.ToListAsync());
-        }
-
-        [HttpPost("CreateDefault")]
-        public async Task<ActionResult> AddDefaultActivity() {
-            var newActivity = new Activity();
-            _context.Activity.Add(newActivity);
-            await _context.SaveChangesAsync();
-            return Ok(newActivity);
+        public async Task<ActionResult> AddActivity([FromBody] Activity? newActivity) {
+            if (newActivity == null) {
+                return BadRequest("Activity data is required.");
+            }
+            return await _service.AddActivity(newActivity)? Ok(newActivity) : BadRequest("Failed to add activity.") ;
         }
 
         [HttpPut]
-        public async Task<ActionResult> UpdateActivity([FromBody] Activity updateActivity) {
-            var activity = await _context.Activity.FindAsync(updateActivity.Id);
+        public async Task<ActionResult> UpdateActivity([FromBody] Activity newActivity) {
+            var activity = await _context.Activity.FindAsync(newActivity.Id);
             if (activity is null) {
                 return NotFound("Item Not Found");
             }
-            activity.Name = updateActivity.Name;
-            activity.Price = updateActivity.Price;
-            activity.StartTime = updateActivity.StartTime;
-            activity.EndTime = updateActivity.EndTime;
-            activity.DaysOfWeek = updateActivity.DaysOfWeek;
-            activity.IncludeYoga = updateActivity.IncludeYoga;
-            activity.IncludeDinner = updateActivity.IncludeDinner;
+            activity.Name = newActivity.Name;
+            activity.Price = newActivity.Price;
+            activity.StartTime = newActivity.StartTime;
+            activity.EndTime = newActivity.EndTime;
+            activity.DaysOfWeek = newActivity.DaysOfWeek;
+            activity.IncludeYoga = newActivity.IncludeYoga;
+            activity.IncludeDinner = newActivity.IncludeDinner;
             _context.Activity.Update(activity);
             await _context.SaveChangesAsync();
             return Ok(activity);

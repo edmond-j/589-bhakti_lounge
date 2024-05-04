@@ -35,6 +35,7 @@ function ItemList({ type, items, setItem, setSelectedItem }) {
     // onAdd(newData);
   }
 
+  
   return (
     <div>
       {/* <p>{items[0].name}</p> */}

@@ -1,19 +1,23 @@
 ﻿using BhaktiLounge.Server.Data;
+using BhaktiLounge.Server.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace BhaktiLounge.Server.Controllers {
 
-    [Route("api/[controller]")]
+    [Route("api/v1/[controller]")]
     [ApiController]
     public class CustomerController : ControllerBase {
         private readonly ApplicationDbContext _context;
+        private readonly ILogger<ActivityController> _logger;
 
-        public CustomerController(ApplicationDbContext context) {
+        public CustomerController(ApplicationDbContext context, ILogger<ActivityController> logger) {
             _context = context;
+            _logger = logger;
         }
 
+        //Search a customer
         [HttpGet]
         public async Task<IActionResult> Search(string name) {
             var lowName = name.ToLower();
@@ -24,6 +28,32 @@ namespace BhaktiLounge.Server.Controllers {
                                 .ThenBy(c => c.FirstName)
                                 .ToArrayAsync();
             return Ok(customers);
+        }
+
+        //New Customer registration
+        [HttpPost]
+        public async Task<IActionResult> Register([FromBody] Customer newCustomer) {
+            _context.Customer.Add(newCustomer);
+            await _context.SaveChangesAsync();
+            return Ok(newCustomer);
+        }
+
+        //Subscribe, extend membership or modify profile
+        [HttpPut]
+        public async Task<IActionResult> Modifiy([FromBody] Customer newCustomer) {
+            var customer = await _context.Customer.FindAsync(newCustomer.Id);
+            if (customer == null) {
+                return NotFound("Item Not Found");
+            }
+            customer.FirstName = newCustomer.FirstName;
+            customer.LastName = newCustomer.LastName;
+            customer.Email = newCustomer.Email;
+            customer.SubStartDate = newCustomer.SubStartDate;
+            customer.SubEndDate = newCustomer.SubEndDate;
+            customer.PassRemain = newCustomer.PassRemain;
+            _context.Customer.Update(customer);
+            await _context.SaveChangesAsync();
+            return Ok(customer);
         }
     }
 }
