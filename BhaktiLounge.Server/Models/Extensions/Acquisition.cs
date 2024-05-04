@@ -12,6 +12,6 @@ public enum Acquisition
     EventFinder,
     Humanitix,
     BhaktiLoungeWebsite,
-    Other,
-    SelfDiscover
+    SelfDiscover,
+    Other
 }
