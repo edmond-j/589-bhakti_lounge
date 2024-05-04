@@ -16,11 +16,20 @@ function NameInput() {
     const fetchOptions = async (value) => {
         try {
             const response = await fetch(`/api/customer?name=${value}`);
+
+            console.log("data" + response);
+
             const data = await response.json();
-            setSuggestions(data);
+
+
+            if (data && Array.isArray(data) && data.length > 0) {
+                setSuggestions(data);
+            } else {
+                setSuggestions([{ id: -1, firstName: 'No Existing Customer', lastName: ' - New Drop In', email: '' }]);
+            }
         } catch (error) {
             console.error('Failed to fetch data:', error);
-            setSuggestions([]); // 错误处理，清空建议列表
+            setSuggestions([{ id: -1, firstName: 'No Existing Customer', lastName: ' - New Drop In', email: '' }]); // 错误处理，清空建议列表
         }
     };
 
@@ -43,11 +52,8 @@ function NameInput() {
         }
     };
 
-
-
-
     const handleSuggestionClick = (suggestion) => {
-        if (suggestion.id === 0) {
+        if (suggestion.id === -1) {
             // 重定向到新会员注册页面
             window.location.href = "/new-customer";
         } else {

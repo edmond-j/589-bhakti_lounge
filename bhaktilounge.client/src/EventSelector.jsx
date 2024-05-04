@@ -4,21 +4,25 @@ import './App.css';
 function EventSelector({ onEventSelect }) {
 
     // const [events, setEvents] = useState([]); // 初始化为空数组
-    // // 假设 fetchData 是一个异步函数，用来从后端获取数据
-    // useEffect(() => {
-    //     const fetchData = async () => {
-    //         try {
-    //             // 此处以一个假设的API调用替代
-    //             const response = await fetch('https://your-api-url.com/api/customers');
-    //             const data = await response.json();
-    //             setEvents(data);
-    //         } catch (error) {
-    //             console.error('Failed to fetch data:', error);
-    //         }
-    //     };
+    // const fetchEvents = async (value) => {
+    //     try {
+    //         const response = await fetch(`/api/customer?name=${value}`);
 
-    //     fetchData();
-    // }, []); // 空依赖数组表示此effect只在组件挂载时运行一次
+    //         console.log("data" + response);
+
+    //         const data = await response.json();
+
+
+    //         if (data && Array.isArray(data) && data.length > 0) {
+    //             setSuggestions(data);
+    //         } else {
+    //             setSuggestions([{ id: -1, firstName: 'No Existing Customer', lastName: ' - New Drop In', email: '' }]);
+    //         }
+    //     } catch (error) {
+    //         console.error('Failed to fetch data:', error);
+    //         setSuggestions([{ id: -1, firstName: 'No Existing Customer', lastName: ' - New Drop In', email: '' }]); // 错误处理，清空建议列表
+    //     }
+    // };
 
     // 直接定义 options 为一个数组
 
