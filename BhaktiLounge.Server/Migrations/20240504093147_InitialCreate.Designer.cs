@@ -13,8 +13,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace BhaktiLounge.Server.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240503143009_ChangeGenderToString")]
-    partial class ChangeGenderToString
+    [Migration("20240504093147_InitialCreate")]
+    partial class InitialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -25,23 +25,6 @@ namespace BhaktiLounge.Server.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
-
-            modelBuilder.Entity("BhaktiLounge.Server.Models.Acquisition", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Acquisition");
-                });
 
             modelBuilder.Entity("BhaktiLounge.Server.Models.Activity", b =>
                 {
@@ -78,7 +61,7 @@ namespace BhaktiLounge.Server.Migrations
                     b.ToTable("Activity");
                 });
 
-            modelBuilder.Entity("BhaktiLounge.Server.Models.CheckInRecord", b =>
+            modelBuilder.Entity("BhaktiLounge.Server.Models.Checkin", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -86,8 +69,8 @@ namespace BhaktiLounge.Server.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<List<string>>("ActivityName")
-                        .HasColumnType("text[]");
+                    b.Property<List<int>>("ActivitiesId")
+                        .HasColumnType("integer[]");
 
                     b.Property<int>("CustomerId")
                         .HasColumnType("integer");
@@ -95,15 +78,14 @@ namespace BhaktiLounge.Server.Migrations
                     b.Property<DateOnly>("Date")
                         .HasColumnType("date");
 
-                    b.Property<string>("EventName")
-                        .HasColumnType("text");
+                    b.Property<List<int>>("EventsId")
+                        .HasColumnType("integer[]");
 
                     b.Property<bool>("IsFirstTime")
                         .HasColumnType("boolean");
 
-                    b.Property<string>("PaymentMethod")
-                        .IsRequired()
-                        .HasColumnType("text");
+                    b.Property<int>("Payment")
+                        .HasColumnType("integer");
 
                     b.Property<TimeOnly>("Time")
                         .HasColumnType("time without time zone");
@@ -115,7 +97,7 @@ namespace BhaktiLounge.Server.Migrations
 
                     b.HasIndex("CustomerId");
 
-                    b.ToTable("CheckInRecord");
+                    b.ToTable("Checkin");
                 });
 
             modelBuilder.Entity("BhaktiLounge.Server.Models.Customer", b =>
@@ -126,8 +108,8 @@ namespace BhaktiLounge.Server.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("Acquisition")
-                        .HasColumnType("text");
+                    b.Property<int?>("Acquisition")
+                        .HasColumnType("integer");
 
                     b.Property<string>("Email")
                         .IsRequired()
@@ -137,7 +119,10 @@ namespace BhaktiLounge.Server.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<DateTime?>("InitialRegisted")
+                    b.Property<int?>("Gender")
+                        .HasColumnType("integer");
+
+                    b.Property<DateTime?>("InitialRegistered")
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("LastName")
@@ -146,10 +131,6 @@ namespace BhaktiLounge.Server.Migrations
 
                     b.Property<int?>("PassRemain")
                         .HasColumnType("integer");
-
-                    b.Property<string>("Pronoun")
-                        .IsRequired()
-                        .HasColumnType("text");
 
                     b.Property<DateOnly?>("SubEndDate")
                         .HasColumnType("date");
@@ -217,7 +198,7 @@ namespace BhaktiLounge.Server.Migrations
                     b.ToTable("MemberClass");
                 });
 
-            modelBuilder.Entity("BhaktiLounge.Server.Models.CheckInRecord", b =>
+            modelBuilder.Entity("BhaktiLounge.Server.Models.Checkin", b =>
                 {
                     b.HasOne("BhaktiLounge.Server.Models.Customer", "Customer")
                         .WithMany()

@@ -105,8 +105,8 @@ namespace BhaktiLounge.Server.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<int[]>("Acquisition")
-                        .HasColumnType("integer[]");
+                    b.Property<int?>("Acquisition")
+                        .HasColumnType("integer");
 
                     b.Property<string>("Email")
                         .IsRequired()
@@ -116,6 +116,9 @@ namespace BhaktiLounge.Server.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
+                    b.Property<int?>("Gender")
+                        .HasColumnType("integer");
+
                     b.Property<DateTime?>("InitialRegistered")
                         .HasColumnType("timestamp with time zone");
 
@@ -124,9 +127,6 @@ namespace BhaktiLounge.Server.Migrations
                         .HasColumnType("text");
 
                     b.Property<int?>("PassRemain")
-                        .HasColumnType("integer");
-
-                    b.Property<int?>("Pronoun")
                         .HasColumnType("integer");
 
                     b.Property<DateOnly?>("SubEndDate")
