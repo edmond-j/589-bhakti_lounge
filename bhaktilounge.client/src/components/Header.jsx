@@ -2,12 +2,10 @@ import React from 'react';
 import logo from '@/assets/BhaktiLounge-Logo.png'; // 假设你有一个logo图像
 import { useNavigate } from 'react-router-dom';
 
-
 const Header = ({ pageNumber }) => {
-
     const navigate = useNavigate();
-    const handleNewCustomer = () => { 
-        navigate('/new-check-in');
+    const handleNewCustomer = () => {
+        navigate('/register');
     }
 
     return (
