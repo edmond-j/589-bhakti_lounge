@@ -9,7 +9,7 @@ const Register = () => {
     const [FirstName, setFirstName] = useState('');
     const [LastName, setLastName] = useState('');
     const [email, setEmail] = useState('');
-    const [pronouns, setPronouns] = useState('');
+    const [gender, setGender] = useState('');
     const currentTimestamp = new Date().toISOString(); //get current timestamp
     const [acquisition, setAcquisition] = useState('');
     const navigate = useNavigate();
@@ -20,28 +20,27 @@ const Register = () => {
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        console.log('Customer Name:', FirstName);
-        console.log('Email:', email);
 
         let newData = {
             firstName: FirstName,
             lastName: LastName,
             email: email,
-            pronoun: pronouns,
+            gender: gender,
             acquisition: acquisition,
             initialRegisted: currentTimestamp,
         };
-
         const requestOptions = {
-            method: "PUT",
+            method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(newData),
         };
+        
+        console.log(requestOptions);
         fetch("/api/v1/Customer", requestOptions)
             .then((response) => response.json())
             .then((data) => {
-                console.log("Update Succesful:", data);
-                alert(FirstName + LastName + " has been regiisted!")
+                console.log("Update Successful:", data);
+                alert(FirstName + LastName + " has been registered!")
             })
             .catch((error) => console.error("Error:", error));
         navigate('/check-in');
@@ -71,27 +70,33 @@ const Register = () => {
                     </div>
                     <div className="form-group" >
                         <label htmlFor="pronouns">Pronouns</label>
-                        <select id="pronouns" value={pronouns} name="pronouns" required onChange={(e) => setPronouns(e.target.value)}>
+                        <select id="pronouns" value={gender} name="pronouns" required
+                                onChange={(e) => setGender(e.target.value)}>
                             <option value="" disabled hidden>Choose one</option>
-                            <option value="she/her">She/Her</option>
-                            <option value="he/him">He/Him</option>
-                            <option value="they/them">They/Them</option>
-                            <option value="ze/zir">Ze/Zir</option>
+                            <option value="he">He/Him</option>
+                            <option value="she">She/Her</option>
+                            <option value="they">They/Them</option>
                             <option value="other">Other</option>
                         </select>
                     </div>
 
                     <div className="form-group" >
                         <label htmlFor="channel">How did you hear about us?</label>
-                        <select id="channel" value={acquisition} name="channel" required onChange={(e) => setAcquisition(e.target.value)}>
+                        <select id="channel" value={acquisition} name="channel" required
+                                onChange={(e) => setAcquisition(e.target.value)}>
                             <option value="" disabled hidden>Choose one</option>
                             <option value="Facebook">Facebook</option>
                             <option value="Instagram">Instagram</option>
+                            <option value="WordOfMouth">Word of Mouth</option>
                             <option value="Flyer">Flyer</option>
-                            <option value="Bhakti_Website">Bhakti Website</option>
-                            <option value="friend_family">Friend/Family Referral</option>
-                            <option value="Google_Search">Google Search</option>
-                            <option value="other">Other11</option>
+                            <option value="Poster">Poster</option>
+                            <option value="GoogleSearch">Google Search</option>
+                            <option value="Eventbrite">Eventbrite</option>
+                            <option value="EventFinder">EventFinder</option>
+                            <option value="Humanitix">Humanitix</option>
+                            <option value="BhaktiLoungeWebsite">Bhakti Lounge Website</option>
+                            <option value="SelfDiscover">Self Discovery</option>
+                            <option value="Other">Other</option>
                         </select>
                     </div>
                     <div className='button-container'>
