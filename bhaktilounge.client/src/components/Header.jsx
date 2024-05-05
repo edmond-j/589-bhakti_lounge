@@ -7,7 +7,11 @@ const Header = () => {
     const navigate = useNavigate();
 
     const subscribe = () => {
-        navigate('/subscribe');
+        navigate('/subscribe/1/kenny/liu/a@b.com');
+    }
+
+    const register = () => {
+        navigate('/register');
     }
 
     return (
@@ -15,7 +19,7 @@ const Header = () => {
             <img src={logo} alt="BHAKTI Lounge Logo" className="Header-logo" />
             <span className='line-buttons'>
                 <button className='button-class' onClick={subscribe}>Subscribe</button>
-                <button className='button-class'>New Customer</button>
+                <button className='button-class' onClick={register}>New Customer</button>
                 <button className='button-class'>Log out</button>
             </span>
 
