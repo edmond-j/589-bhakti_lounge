@@ -89,12 +89,9 @@ function SubscriptionForm() {
                     style={{ display: "flex", flexDirection: "column" }}
                 >
                     <div className='sbscriptionformContent'>
-                        <label>
-                            Email: <div>  {email}</div>
-                        </label>
                        
                         <label>
-                            Membership
+                            Select Membership Type
                             <select
                                 name="memberClassId"
                                 value={subscription.memberClassId}
@@ -113,7 +110,8 @@ function SubscriptionForm() {
 
                         {selectedSub && (
                             <label>
-                                {sessions} sessions except Thursdays until {endDate.toDateString()}
+                                <b>{sessions}</b> sessions {sessions === "unlimited" && <b>except</b>}
+                                Thursdays until <b>{endDate.toDateString()}</b>
                             </label>
                         )}
 
