@@ -1,37 +1,39 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 
 function EventSelector({ onEventSelect }) {
 
-    // const [events, setEvents] = useState([]); // 初始化为空数组
-    // const fetchEvents = async (value) => {
-    //     try {
-    //         const response = await fetch(`/api/customer?name=${value}`);
+    const [events, setEvents] = useState([]); // 初始化为空数组
 
-    //         console.log("data" + response);
+    useEffect(() => {
+        fetchEvents();
+    }, []);
 
-    //         const data = await response.json();
+    const fetchEvents = async (value) => {
+        try {
+            const response = await fetch(`/api/v1/event`);
+            console.log("data" + response);
+            const data = await response.json();
+            if (data && Array.isArray(data) && data.length > 0) {
+                setEvents(data);
+            } else {
+                setEvents([{ id: -1, name: 'Null', price: -10, selected: false }]);
+            }
+        } catch (error) {
+            console.error('Failed to fetch data:', error);
+            setEvents([{ id: -1, name: 'Null', price: -10, selected: false }]); // 错误处理，清空建议列表
+        }
+    };
 
-
-    //         if (data && Array.isArray(data) && data.length > 0) {
-    //             setSuggestions(data);
-    //         } else {
-    //             setSuggestions([{ id: -1, firstName: 'No Existing Customer', lastName: ' - New Drop In', email: '' }]);
-    //         }
-    //     } catch (error) {
-    //         console.error('Failed to fetch data:', error);
-    //         setSuggestions([{ id: -1, firstName: 'No Existing Customer', lastName: ' - New Drop In', email: '' }]); // 错误处理，清空建议列表
-    //     }
-    // };
 
     // 直接定义 options 为一个数组
 
-    const [events, setEvents] = useState([
-        { id: 1, name: 'Yoga 5:30pm', price: 10, selected: false },
-        { id: 2, name: 'Yoga 6:15pm', price: 10, selected: false },
-        { id: 3, name: 'Workshop', price: 20, selected: false },
-        { id: 4, name: 'Dinner', price: 12, selected: false }
-    ]);
+    // const [events, setEvents] = useState([
+    //     { id: 1, name: 'Yoga 5:30pm', price: 10, selected: false },
+    //     { id: 2, name: 'Yoga 6:15pm', price: 10, selected: false },
+    //     { id: 3, name: 'Workshop', price: 20, selected: false },
+    //     { id: 4, name: 'Dinner', price: 12, selected: false }
+    // ]);
 
     const [showList, setShowList] = useState(false); // 状态控制下拉列表的显示
 

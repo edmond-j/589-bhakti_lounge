@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-
+import { useNavigate } from 'react-router-dom';
 import EventSelector from './EventSelector';
 import PaymentSelector from './PaymentSelector';
 import { debounce } from 'lodash';
@@ -15,13 +15,9 @@ function NameInput() {
 
     const fetchOptions = async (value) => {
         try {
-            const response = await fetch(`/api/customer?name=${value}`);
-
+            const response = await fetch(`/api/v1/Customer?name=${value}`);
             console.log("data" + response);
-
             const data = await response.json();
-
-
             if (data && Array.isArray(data) && data.length > 0) {
                 setSuggestions(data);
             } else {
@@ -29,7 +25,7 @@ function NameInput() {
             }
         } catch (error) {
             console.error('Failed to fetch data:', error);
-            setSuggestions([{ id: -1, firstName: 'No Existing Customer', lastName: ' - New Drop In', email: '' }]); // 错误处理，清空建议列表
+            setSuggestions([{ id: -2, firstName: 'Failed to', lastName: ' fetch customers data', email: '' }]); // 错误处理，清空建议列表
         }
     };
 
@@ -52,10 +48,11 @@ function NameInput() {
         }
     };
 
+    const navigate = useNavigate();
+
     const handleSuggestionClick = (suggestion) => {
         if (suggestion.id === -1) {
-            // 重定向到新会员注册页面
-            window.location.href = "/new-customer";
+            navigate('/register');
         } else {
             setSelectedCustomer(suggestion);
             setShowDetails(true);            // 显示会员详细信息
@@ -152,6 +149,7 @@ function NameInput() {
                         <EventSelector onEventSelect={handleSelectedEvents} />
 
                         <PaymentSelector onPaymentSelect={handleSelectedPayment} />
+                        <label className="totalPrice">Total Price: </label>
                     </div>
                     <span className='line-buttons'>
                         <button className='button-class' onClick={handleBackClick}>Back</button>
@@ -162,7 +160,6 @@ function NameInput() {
                         >
                             CheckIn
                         </button>
-
                     </span>
 
                 </>
