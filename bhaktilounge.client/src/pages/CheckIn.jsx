@@ -9,6 +9,7 @@ function CheckIn() {
             <h2>Customer Check-in</h2>
             <NameInput />
             <Footer />
+
         </div>
     );
 }
