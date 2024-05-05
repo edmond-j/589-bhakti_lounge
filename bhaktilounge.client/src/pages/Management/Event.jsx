@@ -26,7 +26,7 @@ function Event() {
       .then((data) => {
         console.log("popu", data);
         //如果没有data该怎么办？
-        if (data) {
+        if (data.length > 0) {
           setEvent(data);
           setSelectedItem(data[0]);
         }
