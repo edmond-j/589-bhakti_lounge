@@ -7,7 +7,7 @@ const Header = () => {
     const navigate = useNavigate();
 
     const subscribe = () => {
-        navigate('/subscribe');
+        navigate('/subscribe/1/kenny/liu/a@b.com');
     }
 
     return (
