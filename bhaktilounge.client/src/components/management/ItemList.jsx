@@ -22,7 +22,7 @@ function ItemList({ type, items, setItem, setSelectedItem }) {
       method: "POST",
       headers: { "Content-Type": "application/json" },
     };
-    fetch(`/api/v1/${type}/createdefault`, requestOptions)
+    fetch(`/api/v1/${type}`, requestOptions)
       .then((response) => response.json())
       .then((data) => {
         console.log("New Activity Created:", data);
@@ -35,7 +35,7 @@ function ItemList({ type, items, setItem, setSelectedItem }) {
     // onAdd(newData);
   }
 
-  
+
   return (
     <div>
       {/* <p>{items[0].name}</p> */}

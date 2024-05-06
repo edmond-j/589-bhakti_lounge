@@ -29,7 +29,7 @@ function NameInput() {
         }
     };
 
-    const debouncedFetchOptions = debounce(fetchOptions, 2000);
+    const debouncedFetchOptions = debounce(fetchOptions, 500);
 
     // // 直接定义 options 为一个数组
     // const options = [
