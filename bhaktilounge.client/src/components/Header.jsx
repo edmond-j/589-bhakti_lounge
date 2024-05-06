@@ -1,7 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import logo from '../assets/BhaktiLounge-Logo.png'; 
-import '../App.css'; 
+import logo from '../assets/BhaktiLounge-Logo.png';
+import '../App.css';
 
 const Header = () => {
     const navigate = useNavigate();

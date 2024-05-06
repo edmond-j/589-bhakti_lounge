@@ -16,19 +16,17 @@ namespace BhaktiLounge.Server {
                 option.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection"));
             });
             builder.Services.AddControllers().AddJsonOptions(options => {
-                options.JsonSerializerOptions.Converters.Add(new TimeOnlyConverter());
+                //options.JsonSerializerOptions.Converters.Add(new TimeOnlyConverter());
                 options.JsonSerializerOptions.Converters.Add(new DayOfWeekConverter());
-                options.JsonSerializerOptions.Converters.Add(new DateOnlyConverter());
                 options.JsonSerializerOptions.Converters.Add(new GenderConverter());
-                options.JsonSerializerOptions.Converters.Add(new AcquisitionConverter());
+                //options.JsonSerializerOptions.Converters.Add(new DateOnlyConverter());
+                //options.JsonSerializerOptions.Converters.Add(new AcquisitionConverter());
             });
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddScoped<IActivityService, ActivityService>();
             builder.Services.AddScoped<ICheckinService, CheckinService>();
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
-    
-   
 
             var app = builder.Build();
 
