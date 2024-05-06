@@ -5,10 +5,11 @@ import NameInput from "../components/NameInputAndDetails";
 function CheckIn() {
     return (
         <div className="CheckIn">
-            <Header pageNumber={1} />
+            <Header  />
             <h2>Customer Check-in</h2>
             <NameInput />
             <Footer />
+
         </div>
     );
 }

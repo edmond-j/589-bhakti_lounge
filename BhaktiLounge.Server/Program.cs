@@ -19,6 +19,8 @@ namespace BhaktiLounge.Server {
                 options.JsonSerializerOptions.Converters.Add(new TimeOnlyConverter());
                 options.JsonSerializerOptions.Converters.Add(new DayOfWeekConverter());
                 options.JsonSerializerOptions.Converters.Add(new DateOnlyConverter());
+                options.JsonSerializerOptions.Converters.Add(new GenderConverter());
+                options.JsonSerializerOptions.Converters.Add(new AcquisitionConverter());
             });
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddScoped<IActivityService, ActivityService>();
