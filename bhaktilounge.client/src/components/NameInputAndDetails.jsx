@@ -133,9 +133,9 @@ function NameInput() {
     const calculateTotalPrice = () => {
         const activitiesPrice = selectedActivities.reduce((sum, activity) => sum + (activity.price || 0), 0);
         const eventsPrice = selectedEvents.reduce((sum, event) => sum + (event.price || 0), 0);
-        if (selectedPayment === 6) {
+        if (selectedPayment === 7) {
             setTotalPrice(6);
-        } else if (selectedPayment === 7 || selectedPayment === 1 || selectedPayment === 5) {
+        } else if (selectedPayment === 1 || selectedPayment === 2 || selectedPayment === 6 || selectedPayment === 8) {
             setTotalPrice(0);
         } else {
             setTotalPrice(activitiesPrice + eventsPrice);
