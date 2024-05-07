@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import ActivitySelector from './ActivitySelector';
 import EventSelector from './EventSelector';
 import PaymentSelector from './PaymentSelector';
 import { debounce } from 'lodash';
@@ -7,9 +8,10 @@ import { debounce } from 'lodash';
 
 function NameInput() {
     const [customerName, setCustomerName] = useState('');
-    const [suggestions, setSuggestions] = useState([]);
+    const [suggestions, setCustomerSuggestions] = useState([]);
     const [selectedCustomer, setSelectedCustomer] = useState(null);
-    const [showDetails, setShowDetails] = useState(false);
+    const [showDetails, setShowCustomerDetails] = useState(false);
+    const [selectedActivities, setSelectedActivities] = useState([]);
     const [selectedEvents, setSelectedEvents] = useState([]);
     const [selectedPayment, setSelectedPayment] = useState(null);
 
@@ -19,45 +21,47 @@ function NameInput() {
             console.log("data" + response);
             const data = await response.json();
             if (data && Array.isArray(data) && data.length > 0) {
-                setSuggestions(data);
+                setCustomerSuggestions(data);
             } else {
-                setSuggestions([{ id: -1, firstName: 'No Existing Customer', lastName: ' - New Drop In', email: '' }]);
+                setCustomerSuggestions([{ id: -1, firstName: 'No Existing Customer', lastName: ' - New Drop In', email: '' }]);
             }
         } catch (error) {
             console.error('Failed to fetch data:', error);
-            setSuggestions([{ id: -2, firstName: 'Failed to', lastName: ' fetch customers data', email: '' }]); // 错误处理，清空建议列表
+            setCustomerSuggestions([{ id: -2, firstName: 'Failed to', lastName: ' fetch customers data', email: '' }]); // 错误处理，清空建议列表
         }
     };
 
     const debouncedFetchOptions = debounce(fetchOptions, 500);
 
-    // // 直接定义 options 为一个数组
-    // const options = [
-    //     { id: 1, firstName: 'Violet', lastName: 'Zhang', email: '123@gmail.com' },
-    //     { id: 2, firstName: 'Vivian', lastName: 'Law', email: '456@hotmail.com' },
-    //     { id: 3, firstName: 'Henry', lastName: 'Birt', email: '789@foxmail.com' }
-    // ];
-
-    const handleInputChange = (e) => {
+    const handleNameInputChange = (e) => {
         const value = e.target.value.toLowerCase();
         setCustomerName(value);
         if (value.length > 0) {
             debouncedFetchOptions(value);
         } else {
-            setSuggestions([]); // 如果输入为空，则清空建议列表
+            setCustomerSuggestions([]); // 如果输入为空，则清空建议列表
         }
     };
 
     const navigate = useNavigate();
 
-    const handleSuggestionClick = (suggestion) => {
-        if (suggestion.id === -1) {
+    const handleCustomerSuggestionClick = (customerSuggestion) => {
+        if (customerSuggestion.id === -1) {
             navigate('/register');
         } else {
-            setSelectedCustomer(suggestion);
-            setShowDetails(true);            // 显示会员详细信息
-            setSuggestions([]);  // 清空建议列表
+            setSelectedCustomer(customerSuggestion);
+            setShowCustomerDetails(true);            // 显示会员详细信息
+            setCustomerSuggestions([]);  // 清空建议列表
         }
+    };
+
+    const subscribe = () => {
+        navigate(`/subscribe/${selectedCustomer.id}/${selectedCustomer.firstName}/${selectedCustomer.lastName}/${selectedCustomer.email}`);
+    }
+
+    const handleSelectedActivities = (selected) => {
+        setSelectedActivities(selected);
+        console.log("Selected Activities: ", selected);
     };
 
     const handleSelectedEvents = (selected) => {
@@ -72,16 +76,14 @@ function NameInput() {
 
     const handleBackClick = () => {
         setSelectedCustomer(null);       // 清空选中的客户信息
-        setShowDetails(false);           // 隐藏会员详细信息
+        setShowCustomerDetails(false);           // 隐藏会员详细信息
     };
 
-    const isCheckInEnabled = selectedEvents.length > 0 && selectedPayment !== null;
+    const isCheckInEnabled = (selectedEvents.length > 0 || selectedActivities.length > 0) && selectedPayment !== null;
 
     const handleCheckInClick = () => {
-        if (selectedEvents.length > 0 && selectedPayment !== null) {
-            // 执行检入操作
-            console.log('Check in successful with events:', selectedEvents, 'and payment:', selectedPayment);
-            // 可以在这里添加更多的逻辑，例如调用 API
+        if (isCheckInEnabled) {
+            console.log('Check in successful with events:', selectedEvents, 'and activities:', selectedActivities, 'and payment:', selectedPayment);
         } else {
             console.error('Check in failed: No events or payment selected');
         }
@@ -96,12 +98,12 @@ function NameInput() {
                         type="text"
                         placeholder="Customer Name"
                         value={customerName}
-                        onChange={handleInputChange}
+                        onChange={handleNameInputChange}
                     />
                     {suggestions.length > 0 && (
                         <ul className="suggestions-list">
                             {suggestions.map((suggestion) => (
-                                <li key={suggestion.id} onClick={() => handleSuggestionClick(suggestion)}>
+                                <li key={suggestion.id} onClick={() => handleCustomerSuggestionClick(suggestion)}>
                                     {suggestion.firstName} {suggestion.lastName} ({suggestion.email})
                                 </li>
                             ))}
@@ -145,10 +147,14 @@ function NameInput() {
                             value={selectedCustomer.id}
                             readOnly
                         />
-                        {/* 你可以在这里添加更多详细信息，如会员状态等 */}
+                        <button className='button-class' onClick={subscribe}>Buy Membership</button>
+
+                        <ActivitySelector onActivitySelect={handleSelectedActivities} />
+
                         <EventSelector onEventSelect={handleSelectedEvents} />
 
                         <PaymentSelector onPaymentSelect={handleSelectedPayment} />
+
                         <label className="totalPrice">Total Price: </label>
                     </div>
                     <span className='line-buttons'>
