@@ -20,7 +20,8 @@ function ItemList({ type, items, setItem, setSelectedItem }) {
     // };
     const requestOptions = {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({})
     };
     fetch(`/api/v1/${type}`, requestOptions)
       .then((response) => response.json())
