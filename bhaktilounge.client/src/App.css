@@ -67,20 +67,20 @@ td {
 .button-class {
     margin: 5px 10px;
     padding: 3px 8px;
-    font-size: 1em;
+    font-size: 0.8em;
     font-weight: 200;
     background-color: #FBBB19;
     color: #000;
 }
 
-    .button-class.enabled {
-        background-color: #FBBB19;
-    }
+.button-class.enabled {
+    background-color: #FBBB19;
+}
 
-    .button-class.disabled {
-        background-color: rgb(195, 192, 192);
-        cursor: not-allowed;
-    }
+.button-class.disabled {
+    background-color: rgb(195, 192, 192);
+    cursor: not-allowed;
+}
 
 h2 {
     flex-basis: 100%;
@@ -89,6 +89,12 @@ h2 {
 }
 
 h3 {
+    flex-basis: 100%;
+    text-align: center;
+    font-weight: 200;
+}
+
+h5 {
     flex-basis: 100%;
     text-align: center;
     font-weight: 200;
@@ -116,7 +122,8 @@ h3 {
     min-height: 100%;
 }
 
-input, select {
+input:not([type="checkbox"]),
+select {
     background-color: #F2F2F2;
     border-radius: 15px;
     height: 25px;
@@ -146,24 +153,33 @@ input, select {
     padding: 0;
 }
 
-    .suggestions-list li {
-        padding: 8px;
-        cursor: pointer;
-        font-size: 0.8em;
-        font-weight: 200;
-        display: flex;
-        align-items: center;
-    }
+.suggestions-list li {
+    padding: 8px;
+    cursor: pointer;
+    font-size: 0.6em;
+    font-weight: 200;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
 
-    .suggestions-list label {
-        margin-left: 8px;
-    }
+.suggestions-list label {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+}
 
-    .suggestions-list li:hover {
-        background-color: #f0f0f0;
-    }
+.suggestions-list li:hover {
+    background-color: #f0f0f0;
+}
 
-    .suggestions-list input[type="checkbox"] {
-        margin-right: 10px;
-        vertical-align: middle;
-    }
+.suggestions-list input[type="checkbox"] {
+    margin-right: 10px;
+    vertical-align: middle;
+}
+
+.suggestions-list label.disabled {
+    cursor: default;
+    color: #999;
+}

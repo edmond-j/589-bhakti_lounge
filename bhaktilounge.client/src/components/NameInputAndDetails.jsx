@@ -1,88 +1,147 @@
 import { useEffect, useState } from 'react';
-
+import { useNavigate } from 'react-router-dom';
+import { debounce } from 'lodash';
+import ActivitySelector from './ActivitySelector';
 import EventSelector from './EventSelector';
 import PaymentSelector from './PaymentSelector';
-import { debounce } from 'lodash';
 
 
 function NameInput() {
-    const [customerName, setCustomerName] = useState('');
-    const [suggestions, setSuggestions] = useState([]);
+    const [suggestions, setCustomerSuggestions] = useState([]);
     const [selectedCustomer, setSelectedCustomer] = useState(null);
-    const [showDetails, setShowDetails] = useState(false);
+    const [showDetails, setShowCustomerDetails] = useState(false);
+    const [selectedActivities, setSelectedActivities] = useState([]);
     const [selectedEvents, setSelectedEvents] = useState([]);
     const [selectedPayment, setSelectedPayment] = useState(null);
+    const [totalPrice, setTotalPrice] = useState(0);
 
     const fetchOptions = async (value) => {
         try {
-            const response = await fetch(`/api/v1/customer?name=${value}`);
+            const response = await fetch(`/api/v1/Customer?name=${value}`);
+            console.log("data" + response);
             const data = await response.json();
-            setSuggestions(data);
+            if (data && Array.isArray(data) && data.length > 0) {
+                setCustomerSuggestions(data);
+            } else {
+                setCustomerSuggestions([{ id: -1, firstName: 'No Existing Customer', lastName: ' - New Drop In', email: '' }]);
+            }
         } catch (error) {
             console.error('Failed to fetch data:', error);
-            setSuggestions([]); // 错误处理，清空建议列表
+            setCustomerSuggestions([{ id: -2, firstName: 'Failed to', lastName: ' fetch customers data', email: '' }]); // 错误处理，清空建议列表
         }
     };
 
-    const debouncedFetchOptions = debounce(fetchOptions, 300);
+    const debouncedFetchOptions = debounce(fetchOptions, 500);
 
-    // // 直接定义 options 为一个数组
-    // const options = [
-    //     { id: 1, firstName: 'Violet', lastName: 'Zhang', email: '123@gmail.com' },
-    //     { id: 2, firstName: 'Vivian', lastName: 'Law', email: '456@hotmail.com' },
-    //     { id: 3, firstName: 'Henry', lastName: 'Birt', email: '789@foxmail.com' }
-    // ];
-
-    const handleInputChange = (e) => {
+    const handleNameInputChange = (e) => {
         const value = e.target.value;
-        setCustomerName(value);
         if (value.length > 0) {
             debouncedFetchOptions(value);
         } else {
-            setSuggestions([]); // 如果输入为空，则清空建议列表
+            setCustomerSuggestions([]);
         }
     };
 
+    const navigate = useNavigate();
 
-
-
-    const handleSuggestionClick = (suggestion) => {
-        if (suggestion.id === 0) {
-            // 重定向到新会员注册页面
-            window.location.href = "/new-customer";
+    const handleCustomerSuggestionClick = (customerSuggestion) => {
+        if (customerSuggestion.id === -1) {
+            navigate('/register');
         } else {
-            setSelectedCustomer(suggestion);
-            setShowDetails(true);            // 显示会员详细信息
-            setSuggestions([]);  // 清空建议列表
+            setSelectedCustomer(customerSuggestion);
+            setShowCustomerDetails(true);
+            setCustomerSuggestions([]);
         }
+    };
+
+    const subscribe = () => {
+        navigate(`/subscribe/${selectedCustomer.id}/${selectedCustomer.firstName}/${selectedCustomer.lastName}/${selectedCustomer.email}`);
+    }
+
+    const handleSelectedActivities = (selected) => {
+        setSelectedActivities(selected);
+        console.log(selected);
     };
 
     const handleSelectedEvents = (selected) => {
         setSelectedEvents(selected);
-        console.log("Selected Events: ", selected);
+        console.log(selected);
     };
 
     const handleSelectedPayment = (selected) => {
         setSelectedPayment(selected);
-        console.log("Selected Payment: ", selected);
     };
 
     const handleBackClick = () => {
         setSelectedCustomer(null);       // 清空选中的客户信息
-        setShowDetails(false);           // 隐藏会员详细信息
+        setShowCustomerDetails(false);           // 隐藏会员详细信息
     };
 
-    const isCheckInEnabled = selectedEvents.length > 0 && selectedPayment !== null;
+    const isCheckInEnabled = (selectedEvents.length > 0 || selectedActivities.length > 0) && selectedPayment !== null;
 
-    const handleCheckInClick = () => {
-        if (selectedEvents.length > 0 && selectedPayment !== null) {
-            // 执行检入操作
-            console.log('Check in successful with events:', selectedEvents, 'and payment:', selectedPayment);
-            // 可以在这里添加更多的逻辑，例如调用 API
+    const handleCheckInClick = async () => {
+        if (isCheckInEnabled) {
+            const date = new Date();
+            const newCheckin = {
+                date: {
+                    year: date.getFullYear(),
+                    month: date.getMonth() + 1,
+                    day: date.getDate(),
+                    dayOfWeek: date.toLocaleString('en-US', { weekday: 'long' })
+                },
+                time: {
+                    hour: date.getHours(),
+                    minute: date.getMinutes()
+                },
+                customerId: selectedCustomer.id,
+                customer: {
+                    ...selectedCustomer,
+                    passRemain: selectedCustomer.passRemain || 0
+                },
+                payment: selectedPayment.id,
+                activitiesId: selectedActivities.map(activity => activity.id),
+                eventsId: selectedEvents.map(event => event.id),
+                totalPrice: parseFloat(totalPrice),
+                isFirstTime: true // 这个值根据实际业务逻辑进行设置
+            };
+
+            try {
+                const response = await fetch('/api/v1/Checkin', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(newCheckin)
+                });
+
+                if (response.ok) {
+                    console.log('Check-in successful:', await response.json());
+                } else {
+                    console.error('Failed to add check-in:', await response.text());
+                }
+            } catch (error) {
+                console.error('Error while adding check-in:', error);
+            }
         } else {
-            console.error('Check in failed: No events or payment selected');
+            console.error('Check-in failed: No events or payment selected');
         }
     };
+
+    const calculateTotalPrice = () => {
+        const activitiesPrice = selectedActivities.reduce((sum, activity) => sum + (activity.price || 0), 0);
+        const eventsPrice = selectedEvents.reduce((sum, event) => sum + (event.price || 0), 0);
+        if (selectedPayment === 6) {
+            setTotalPrice(6);
+        } else if (selectedPayment === 7 || selectedPayment === 1) {
+            setTotalPrice(0);
+        } else {
+            setTotalPrice(activitiesPrice + eventsPrice);
+        }
+    };
+
+    useEffect(() => {
+        calculateTotalPrice();
+    }, [selectedActivities, selectedEvents, selectedPayment]);
 
     return (
         <div className="form-container" >
@@ -92,13 +151,12 @@ function NameInput() {
                     <input
                         type="text"
                         placeholder="Customer Name"
-                        value={customerName}
-                        onChange={handleInputChange}
+                        onChange={handleNameInputChange}
                     />
                     {suggestions.length > 0 && (
                         <ul className="suggestions-list">
                             {suggestions.map((suggestion) => (
-                                <li key={suggestion.id} onClick={() => handleSuggestionClick(suggestion)}>
+                                <li key={suggestion.id} onClick={() => handleCustomerSuggestionClick(suggestion)}>
                                     {suggestion.firstName} {suggestion.lastName} ({suggestion.email})
                                 </li>
                             ))}
@@ -142,10 +200,16 @@ function NameInput() {
                             value={selectedCustomer.id}
                             readOnly
                         />
-                        {/* 你可以在这里添加更多详细信息，如会员状态等 */}
+                        <button className='button-class' onClick={subscribe}>Buy Membership</button>
+
+                        <ActivitySelector onActivitySelect={handleSelectedActivities} />
+
                         <EventSelector onEventSelect={handleSelectedEvents} />
 
                         <PaymentSelector onPaymentSelect={handleSelectedPayment} />
+
+                        <h5>Total Price: ${totalPrice}</h5>
+
                     </div>
                     <span className='line-buttons'>
                         <button className='button-class' onClick={handleBackClick}>Back</button>
@@ -156,7 +220,6 @@ function NameInput() {
                         >
                             CheckIn
                         </button>
-
                     </span>
 
                 </>

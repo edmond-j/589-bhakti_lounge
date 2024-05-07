@@ -3,25 +3,6 @@ import { useState } from 'react';
 
 function PaymentSelector({ onPaymentSelect }) {
 
-    // const [payments, setPayments] = useState([]); // 初始化为空数组
-    // // 假设 fetchData 是一个异步函数，用来从后端获取数据
-    // useEffect(() => {
-    //     const fetchData = async () => {
-    //         try {
-    //             // 此处以一个假设的API调用替代
-    //             const response = await fetch('https://your-api-url.com/api/customers');
-    //             const data = await response.json();
-    //             setPayments(data);
-    //         } catch (error) {
-    //             console.error('Failed to fetch data:', error);
-    //         }
-    //     };
-
-    //     fetchData();
-    // }, []); // 空依赖数组表示此effect只在组件挂载时运行一次
-
-    // 直接定义 options 为一个数组
-
     const [payments, setPayments] = useState([
         { id: 1, name: 'Membership', selected: false },
         { id: 2, name: 'Cash', selected: false },
@@ -39,9 +20,9 @@ function PaymentSelector({ onPaymentSelect }) {
             return { ...payment, selected: payment.id === id ? !payment.selected : false };
         });
         setPayments(updatedPayments);
-        const selectedPayment = updatedPayments.filter(payment => payment.selected).map(payment => payment.id);
+        const selectedPayment = updatedPayments.find((payment) => payment.selected);
         // 调用父组件的回调函数，传递所有选中的事件的ID数组
-        onPaymentSelect(selectedPayment);
+        onPaymentSelect(selectedPayment ? selectedPayment.id : null); // 传递单个ID或 null
     };
 
     const toggleList = () => {
