@@ -1,17 +1,27 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 
-function PaymentSelector({ onPaymentSelect }) {
+function PaymentSelector({ onPaymentSelect, hasMembership }) {
+    const [payments, setPayments] = useState([]);
 
-    const [payments, setPayments] = useState([
-        { id: 1, name: 'Membership', selected: false },
-        { id: 2, name: 'Cash', selected: false },
-        { id: 3, name: 'Card', selected: false },
-        { id: 4, name: 'Online bank transfer', selected: false },
-        { id: 5, name: 'Service Exchange', selected: false },
-        { id: 6, name: 'Devotee- $6 payment', selected: false },
-        { id: 7, name: 'Devotee- no payment', selected: false }
-    ]);
+    useEffect(() => {
+        const defaultPayments = [
+            { id: 2, name: 'Class Pass', selected: false },
+            { id: 3, name: 'Cash', selected: false },
+            { id: 4, name: 'Card', selected: false },
+            { id: 5, name: 'Online bank transfer', selected: false },
+            { id: 6, name: 'Service Exchange', selected: false },
+            { id: 7, name: 'Devotee- $6 payment', selected: false },
+            { id: 8, name: 'Devotee- no payment', selected: false }
+        ];
+
+        // 如果用户拥有会员资格，添加 Membership 选项
+        if (hasMembership) {
+            defaultPayments.unshift({ id: 1, name: 'Membership', selected: false });
+        }
+
+        setPayments(defaultPayments);
+    }, [hasMembership]);
 
     const [showList, setShowList] = useState(false); // 状态控制下拉列表的显示
 

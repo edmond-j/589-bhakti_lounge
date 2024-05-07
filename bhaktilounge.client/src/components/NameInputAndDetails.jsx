@@ -14,6 +14,8 @@ function NameInput() {
     const [selectedEvents, setSelectedEvents] = useState([]);
     const [selectedPayment, setSelectedPayment] = useState(null);
     const [totalPrice, setTotalPrice] = useState(0);
+    const [membershipDetail, setMembershipDetail] = useState('');
+    const [hasMembership, setHasMembership] = useState(false);
 
     const fetchOptions = async (value) => {
         try {
@@ -51,8 +53,19 @@ function NameInput() {
             setSelectedCustomer(customerSuggestion);
             setShowCustomerDetails(true);
             setCustomerSuggestions([]);
+            console.log(customerSuggestion);
         }
     };
+
+    useEffect(() => {
+        if (selectedCustomer !== null && selectedCustomer.passRemain !== null) {
+            setMembershipDetail("Membership (expire on " + selectedCustomer.subEndDate + ")");
+            setHasMembership(true);
+        } else {
+            setMembershipDetail('None');
+            setHasMembership(false);
+        }
+    }, [selectedCustomer]);
 
     const subscribe = () => {
         navigate(`/subscribe/${selectedCustomer.id}/${selectedCustomer.firstName}/${selectedCustomer.lastName}/${selectedCustomer.email}`);
@@ -82,22 +95,12 @@ function NameInput() {
     const handleCheckInClick = async () => {
         if (isCheckInEnabled) {
             const date = new Date();
+            const formattedDate = `${date.getFullYear()}-${(date.getMonth() + 1).toString().padStart(2, '0')}-${date.getDate().toString().padStart(2, '0')}`;
+            const formattedTime = `${date.getHours().toString().padStart(2, '0')}:${date.getMinutes().toString().padStart(2, '0')}:${date.getSeconds().toString().padStart(2, '0')}`;
             const newCheckin = {
-                date: {
-                    year: date.getFullYear(),
-                    month: date.getMonth() + 1,
-                    day: date.getDate(),
-                    dayOfWeek: date.toLocaleString('en-US', { weekday: 'long' })
-                },
-                time: {
-                    hour: date.getHours(),
-                    minute: date.getMinutes()
-                },
+                date: formattedDate,
+                time: formattedTime,
                 customerId: selectedCustomer.id,
-                customer: {
-                    ...selectedCustomer,
-                    passRemain: selectedCustomer.passRemain || 0
-                },
                 payment: selectedPayment.id,
                 activitiesId: selectedActivities.map(activity => activity.id),
                 eventsId: selectedEvents.map(event => event.id),
@@ -132,7 +135,7 @@ function NameInput() {
         const eventsPrice = selectedEvents.reduce((sum, event) => sum + (event.price || 0), 0);
         if (selectedPayment === 6) {
             setTotalPrice(6);
-        } else if (selectedPayment === 7 || selectedPayment === 1) {
+        } else if (selectedPayment === 7 || selectedPayment === 1 || selectedPayment === 5) {
             setTotalPrice(0);
         } else {
             setTotalPrice(activitiesPrice + eventsPrice);
@@ -197,7 +200,7 @@ function NameInput() {
                         <input
                             type="text"
                             placeholder="Membership"
-                            value={selectedCustomer.id}
+                            value={membershipDetail}
                             readOnly
                         />
                         <button className='button-class' onClick={subscribe}>Buy Membership</button>
@@ -206,7 +209,7 @@ function NameInput() {
 
                         <EventSelector onEventSelect={handleSelectedEvents} />
 
-                        <PaymentSelector onPaymentSelect={handleSelectedPayment} />
+                        <PaymentSelector onPaymentSelect={handleSelectedPayment} hasMembership={hasMembership} />
 
                         <h5>Total Price: ${totalPrice}</h5>
 
@@ -215,7 +218,7 @@ function NameInput() {
                         <button className='button-class' onClick={handleBackClick}>Back</button>
                         <button
                             className={`button-class ${isCheckInEnabled ? 'enabled' : 'disabled'}`}
-                            onClick={isCheckInEnabled ? handleCheckInClick : undefined}
+                            onClick={handleCheckInClick}
                             disabled={!isCheckInEnabled}
                         >
                             CheckIn
