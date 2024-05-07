@@ -1,14 +1,13 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;400;600;700&display=swap');
-:root {
+
+
+.subscriptionform {
     --buttonColor: #ffc107;
     --buttontextColor: #ffffff;
     --buttonHoverColor: #a6c8e1;
     --inputBorderColor: #e1e1e1;
     --headerColor: #333;
     font-size: calc(1vw + 1vh + 0.5vmin);
-}
-
-.subscriptionform {
     margin: 1vh auto;
     padding: 1vmin;
 }
@@ -57,11 +56,14 @@
             box-shadow: 0 0.2vmin 0.4vmin rgba(0, 0, 0, 0.1);
         }
 
+.label2{
+    margin-top:2vh;
+}
 .subscriptionform p {
-    background-color: #fafafa;
+    background-color: #fff0c2;
     padding: 0.5vmin;
     border-radius: 1vmin;
-    margin-top: 2vh;
+    margin-top: 3vh;
 }
 
     .subscriptionform footer {
