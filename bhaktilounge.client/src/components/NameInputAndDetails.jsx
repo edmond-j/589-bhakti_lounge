@@ -1,19 +1,19 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { debounce } from 'lodash';
 import ActivitySelector from './ActivitySelector';
 import EventSelector from './EventSelector';
 import PaymentSelector from './PaymentSelector';
-import { debounce } from 'lodash';
 
 
 function NameInput() {
-    const [customerName, setCustomerName] = useState('');
     const [suggestions, setCustomerSuggestions] = useState([]);
     const [selectedCustomer, setSelectedCustomer] = useState(null);
     const [showDetails, setShowCustomerDetails] = useState(false);
     const [selectedActivities, setSelectedActivities] = useState([]);
     const [selectedEvents, setSelectedEvents] = useState([]);
     const [selectedPayment, setSelectedPayment] = useState(null);
+    const [totalPrice, setTotalPrice] = useState(0);
 
     const fetchOptions = async (value) => {
         try {
@@ -34,12 +34,11 @@ function NameInput() {
     const debouncedFetchOptions = debounce(fetchOptions, 500);
 
     const handleNameInputChange = (e) => {
-        const value = e.target.value.toLowerCase();
-        setCustomerName(value);
+        const value = e.target.value;
         if (value.length > 0) {
             debouncedFetchOptions(value);
         } else {
-            setCustomerSuggestions([]); // 如果输入为空，则清空建议列表
+            setCustomerSuggestions([]);
         }
     };
 
@@ -50,8 +49,8 @@ function NameInput() {
             navigate('/register');
         } else {
             setSelectedCustomer(customerSuggestion);
-            setShowCustomerDetails(true);            // 显示会员详细信息
-            setCustomerSuggestions([]);  // 清空建议列表
+            setShowCustomerDetails(true);
+            setCustomerSuggestions([]);
         }
     };
 
@@ -61,17 +60,16 @@ function NameInput() {
 
     const handleSelectedActivities = (selected) => {
         setSelectedActivities(selected);
-        console.log("Selected Activities: ", selected);
+        console.log(selected);
     };
 
     const handleSelectedEvents = (selected) => {
         setSelectedEvents(selected);
-        console.log("Selected Events: ", selected);
+        console.log(selected);
     };
 
     const handleSelectedPayment = (selected) => {
         setSelectedPayment(selected);
-        console.log("Selected Payment: ", selected);
     };
 
     const handleBackClick = () => {
@@ -81,13 +79,69 @@ function NameInput() {
 
     const isCheckInEnabled = (selectedEvents.length > 0 || selectedActivities.length > 0) && selectedPayment !== null;
 
-    const handleCheckInClick = () => {
+    const handleCheckInClick = async () => {
         if (isCheckInEnabled) {
-            console.log('Check in successful with events:', selectedEvents, 'and activities:', selectedActivities, 'and payment:', selectedPayment);
+            const date = new Date();
+            const newCheckin = {
+                date: {
+                    year: date.getFullYear(),
+                    month: date.getMonth() + 1,
+                    day: date.getDate(),
+                    dayOfWeek: date.toLocaleString('en-US', { weekday: 'long' })
+                },
+                time: {
+                    hour: date.getHours(),
+                    minute: date.getMinutes()
+                },
+                customerId: selectedCustomer.id,
+                customer: {
+                    ...selectedCustomer,
+                    passRemain: selectedCustomer.passRemain || 0
+                },
+                payment: selectedPayment.id,
+                activitiesId: selectedActivities.map(activity => activity.id),
+                eventsId: selectedEvents.map(event => event.id),
+                totalPrice: parseFloat(totalPrice),
+                isFirstTime: true // 这个值根据实际业务逻辑进行设置
+            };
+
+            try {
+                const response = await fetch('/api/v1/Checkin', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(newCheckin)
+                });
+
+                if (response.ok) {
+                    console.log('Check-in successful:', await response.json());
+                } else {
+                    console.error('Failed to add check-in:', await response.text());
+                }
+            } catch (error) {
+                console.error('Error while adding check-in:', error);
+            }
         } else {
-            console.error('Check in failed: No events or payment selected');
+            console.error('Check-in failed: No events or payment selected');
         }
     };
+
+    const calculateTotalPrice = () => {
+        const activitiesPrice = selectedActivities.reduce((sum, activity) => sum + (activity.price || 0), 0);
+        const eventsPrice = selectedEvents.reduce((sum, event) => sum + (event.price || 0), 0);
+        if (selectedPayment === 6) {
+            setTotalPrice(6);
+        } else if (selectedPayment === 7 || selectedPayment === 1) {
+            setTotalPrice(0);
+        } else {
+            setTotalPrice(activitiesPrice + eventsPrice);
+        }
+    };
+
+    useEffect(() => {
+        calculateTotalPrice();
+    }, [selectedActivities, selectedEvents, selectedPayment]);
 
     return (
         <div className="form-container" >
@@ -97,7 +151,6 @@ function NameInput() {
                     <input
                         type="text"
                         placeholder="Customer Name"
-                        value={customerName}
                         onChange={handleNameInputChange}
                     />
                     {suggestions.length > 0 && (
@@ -155,7 +208,8 @@ function NameInput() {
 
                         <PaymentSelector onPaymentSelect={handleSelectedPayment} />
 
-                        <label className="totalPrice">Total Price: </label>
+                        <h5>Total Price: ${totalPrice}</h5>
+
                     </div>
                     <span className='line-buttons'>
                         <button className='button-class' onClick={handleBackClick}>Back</button>

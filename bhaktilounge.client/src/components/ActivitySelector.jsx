@@ -1,9 +1,9 @@
 import { useState, useEffect } from 'react';
 
-
 function ActivitySelector({ onActivitySelect }) {
 
-    const [activities, setActivities] = useState([]); // 初始化为空数组
+    const [activities, setActivities] = useState([]);
+    const [showList, setShowList] = useState(false);
 
     useEffect(() => {
         fetchActivities();
@@ -11,9 +11,8 @@ function ActivitySelector({ onActivitySelect }) {
 
     const fetchActivities = async () => {
         try {
-            const response = await fetch(`/api/v1/activity`);
-            console.log("data" + response);
-            const data = await response.json();
+            const response = await fetch(`api/v1/CompData/CustomerOption`);
+            const data = await response.json().activities;
             if (data && Array.isArray(data) && data.length > 0) {
                 setActivities(
                     data.map((activity) => ({
@@ -21,7 +20,7 @@ function ActivitySelector({ onActivitySelect }) {
                         selected: false // 为每个事件添加默认的 selected 属性
                     })));
             } else {
-                setActivities([{ id: -1, name: 'No Activity Avaliable ', price: -10, selected: false }]);
+                setActivities([{ id: -1, name: 'No Activity Avaliable Today', price: -10, selected: false }]);
             }
         } catch (error) {
             console.error('Failed to fetch data:', error);
@@ -29,7 +28,9 @@ function ActivitySelector({ onActivitySelect }) {
         }
     };
 
-    const [showList, setShowList] = useState(false); // 状态控制下拉列表的显示
+    useEffect(() => {
+        fetchActivities();
+    }, []);
 
     const handleSelectActivity = (id) => {
         const updatedActivities = activities.map(activity => {
@@ -38,16 +39,13 @@ function ActivitySelector({ onActivitySelect }) {
             }
             return activity;
         });
-
         setActivities(updatedActivities);
-
-        const selectedActivities = updatedActivities.filter(activity => activity.selected).map(activity => activity.id);
-
+        const selectedActivities = updatedActivities.filter(activity => activity.selected);
         onActivitySelect(selectedActivities);
     };
 
     const toggleList = () => {
-        setShowList(!showList); // 切换列表显示状态
+        setShowList(!showList);
     };
 
     return (
@@ -63,14 +61,16 @@ function ActivitySelector({ onActivitySelect }) {
             {showList && (
                 <ul className="suggestions-list">
                     {activities.map((activity) => (
-                        <li key={activity.id}>
-                            <label>
-                                <input
-                                    type="checkbox"
-                                    checked={activity.selected || false}
-                                    onChange={() => handleSelectActivity(activity.id)}
-                                />
-                                {`${activity.name} $${activity.price}`}
+                        <li key={activity.id} className="activity-item">
+                            <label className={`activity-label ${activity.id === -1 ? 'disabled' : ''}`}>
+                                {activity.id !== -1 && (
+                                    <input
+                                        type="checkbox"
+                                        checked={activity.selected || false}
+                                        onChange={() => handleSelectActivity(activity.id)}
+                                    />
+                                )}
+                                {activity.id !== -1 ? `${activity.name} $${activity.price}` : activity.name}
                             </label>
                         </li>
                     ))}
