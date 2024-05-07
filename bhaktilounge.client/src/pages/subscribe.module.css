@@ -1,14 +1,14 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;400;600;700&display=swap');
-:root {
-    --buttonColor: #ffc107;
+
+
+.subscriptionform {
+     --buttonColor: #ffc107;
     --buttontextColor: #ffffff;
     --buttonHoverColor: #a6c8e1;
     --inputBorderColor: #e1e1e1;
     --headerColor: #333;
     font-size: calc(1vw + 1vh + 0.5vmin);
-}
 
-.subscriptionform {
     margin: 1vh auto;
     padding: 1vmin;
 }
