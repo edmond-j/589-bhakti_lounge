@@ -3,6 +3,8 @@ import styles from "./subscribe.module.css";
 import logo from '../assets/BhaktiLounge-Logo.png';
 import { useEffect } from "react";
 import { useParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+
 
 
 const isoDate = (date) => {
@@ -14,6 +16,7 @@ function SubscriptionForm() {
     const { id,firstName,lastName,email } = useParams();
     const [subscription, setSubscription] = useState({ id });
     const [products, setProducts] = useState([]);
+    const navigate = useNavigate();
 
     useEffect(() => {
         fetch('/api/v1/MemberClass', {
@@ -77,6 +80,15 @@ function SubscriptionForm() {
             console.error('Error submitting subscription:', error);
         }
     };
+    
+        const handleBackToCheckin = () => {
+            navigate('/check-in')
+        };
+    
+
+  
+
+
 
 
     return (
@@ -124,7 +136,7 @@ function SubscriptionForm() {
 
                     <div style={{ alignItems: "center" }}>
                         <div className={styles.subscriptionform}>
-                            <button type="button">Back</button>
+                            <button type="button" onClick={handleBackToCheckin}>Back</button>
                             <button type="submit">Confirm</button>
                         </div>
                     </div>
