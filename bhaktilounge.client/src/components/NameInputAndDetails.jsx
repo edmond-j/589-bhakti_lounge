@@ -15,7 +15,7 @@ function NameInput() {
 
     const fetchOptions = async (value) => {
         try {
-            const response = await fetch(`/api/customer?name=${value}`);
+            const response = await fetch(`/api/v1/customer?name=${value}`);
             const data = await response.json();
             setSuggestions(data);
         } catch (error) {
@@ -24,7 +24,7 @@ function NameInput() {
         }
     };
 
-    const debouncedFetchOptions = debounce(fetchOptions, 2000);
+    const debouncedFetchOptions = debounce(fetchOptions, 300);
 
     // // 直接定义 options 为一个数组
     // const options = [
@@ -34,7 +34,7 @@ function NameInput() {
     // ];
 
     const handleInputChange = (e) => {
-        const value = e.target.value.toLowerCase();
+        const value = e.target.value;
         setCustomerName(value);
         if (value.length > 0) {
             debouncedFetchOptions(value);

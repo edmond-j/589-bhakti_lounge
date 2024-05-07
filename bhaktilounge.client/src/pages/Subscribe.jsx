@@ -1,6 +1,6 @@
 import { useState } from "react";
 import styles from "./subscribe.module.css";
-import Header from "../components/Header";
+import logo from '../assets/BhaktiLounge-Logo.png';
 import { useEffect } from "react";
 import { useParams } from 'react-router-dom';
 
@@ -81,7 +81,7 @@ function SubscriptionForm() {
 
     return (
         <div className={styles.subscriptionform}>
-            <Header />
+            <img src={logo} alt="BHAKTI Lounge Logo" className="Header-logo" />
             <main>
                 <h3>Renew subscription for {firstName}  {lastName} </h3>
                 <form
