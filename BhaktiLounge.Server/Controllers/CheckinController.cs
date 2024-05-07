@@ -2,38 +2,54 @@
 using BhaktiLounge.Server.Models;
 using BhaktiLounge.Server.Services;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace BhaktiLounge.Server.Controllers;
+
 [Route("api/v1/[controller]")]
 [ApiController]
-public class CheckinController : ControllerBase
-{
+public class CheckinController : ControllerBase {
     private readonly ApplicationDbContext _context;
     private readonly ILogger<ActivityController> _logger;
     private readonly ICheckinService _service;
-    
-    public CheckinController(ApplicationDbContext context, ILogger<ActivityController> logger, ICheckinService service)
-    {
+
+    public CheckinController(ApplicationDbContext context, ILogger<ActivityController> logger, ICheckinService service) {
         _context = context;
         _logger = logger;
         _service = service;
     }
-    
+
     [HttpGet]
-    public async Task<ActionResult> GetAllCheckins()
-    {
+    public async Task<ActionResult> GetAllCheckins() {
         var checkins = await _service.GetAllCheckins();
         return Ok(checkins);
     }
-    
+
+    [HttpGet("today-checkins")]
+    public async Task<ActionResult> GetTodayCheckins() {
+        DateOnly todayDate = DateOnly.FromDateTime(DateTime.Now);
+        var todayCheckins = await _context.Checkin
+                .Where(c => c.Date == todayDate)
+                .ToArrayAsync();
+        var activityIds = await _context.Activity
+                        .Where(a => a.IncludeDinner == true)
+                        .Select(a => a.Id)
+                        .ToListAsync();
+
+        var dinnerCheckins = todayCheckins.Where(c => c.ActivitiesId.Any(a => activityIds.Contains(a))).ToList();
+
+        var result = new {
+            TotalCheckIns = todayCheckins.Count(),
+            Dinners = dinnerCheckins.Count(),
+        };
+        return Ok(result);
+    }
+
     [HttpPost]
-    public async Task<ActionResult> AddCheckin([FromBody] Checkin? newCheckin)
-    {
-        if (newCheckin == null)
-        {
+    public async Task<ActionResult> AddCheckin([FromBody] Checkin? newCheckin) {
+        if (newCheckin == null) {
             return BadRequest("Checkin data is required.");
         }
-        return await _service.AddCheckin(newCheckin)? Ok(newCheckin) : BadRequest("Failed to add checkin.") ;
+        return await _service.AddCheckin(newCheckin) ? Ok(newCheckin) : BadRequest("Failed to add checkin.");
     }
-    
 }

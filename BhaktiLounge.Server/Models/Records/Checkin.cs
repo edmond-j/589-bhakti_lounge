@@ -8,8 +8,10 @@ namespace BhaktiLounge.Server.Models {
         public int Id { get; set; }
         public DateOnly Date { get; set; }
         public TimeOnly Time { get; set; }
+
         [Required]
         public int CustomerId { get; set; }
+
         public Customer? Customer { get; set; }
         public Payment Payment { get; set; }
         public List<int>? ActivitiesId { get; set; }
