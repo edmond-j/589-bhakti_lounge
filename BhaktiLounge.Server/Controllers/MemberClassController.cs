@@ -24,7 +24,7 @@ namespace BhaktiLounge.Server.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAllMemberClass()
         {
-            var memberClasses = await _context.MemberClass.ToArrayAsync();
+            var memberClasses = await _context.MemberClass.OrderBy(m=>m.Id).ToArrayAsync();
             return Ok(memberClasses);
         }
 

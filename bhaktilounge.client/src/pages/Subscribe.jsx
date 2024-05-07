@@ -109,9 +109,9 @@ function SubscriptionForm() {
                         </label>
 
                         {selectedSub && (
-                            <label>
-                                <b>{sessions}</b> sessions {sessions === "unlimited" && <b>except</b>}
-                                Thursdays until <b>{endDate.toDateString()}</b>
+                            <label className='label2'>
+                                <b>{sessions}</b> sessions {sessions === "unlimited" && <b>except </b>}
+                                 Thursdays until <b>{endDate.toDateString()}</b>
                             </label>
                         )}
 
