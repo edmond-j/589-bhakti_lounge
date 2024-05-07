@@ -4,9 +4,9 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace BhaktiLounge.Server.Services;
 
-public interface ICheckinService
-{
+public interface ICheckinService {
 
     public Task<List<Checkin>> GetAllCheckins();
+
     public Task<Boolean> AddCheckin(Checkin checkin);
 }
