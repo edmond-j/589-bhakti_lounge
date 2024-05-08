@@ -4,6 +4,7 @@ import { debounce } from 'lodash';
 import ActivitySelector from './ActivitySelector';
 import EventSelector from './EventSelector';
 import PaymentSelector from './PaymentSelector';
+import { useLocation } from 'react-router-dom';
 
 
 function NameInput() {
@@ -16,6 +17,10 @@ function NameInput() {
     const [totalPrice, setTotalPrice] = useState(0);
     const [membershipDetail, setMembershipDetail] = useState('');
     const [hasMembership, setHasMembership] = useState(false);
+
+    //get name data from register page
+    const location = useLocation();
+    const [customerName, setCustomerName] = useState(location.state?.FirstName || 'Unknown');
 
     const fetchOptions = async (value) => {
         try {
@@ -36,9 +41,9 @@ function NameInput() {
     const debouncedFetchOptions = debounce(fetchOptions, 500);
 
     const handleNameInputChange = (e) => {
-        const value = e.target.value;
-        if (value.length > 0) {
-            debouncedFetchOptions(value);
+        setCustomerName(e.target.value);
+        if (customerName.length > 0) {
+            debouncedFetchOptions(customerName);
         } else {
             setCustomerSuggestions([]);
         }
@@ -157,6 +162,7 @@ function NameInput() {
                         type="text"
                         placeholder="Customer Name"
                         onChange={handleNameInputChange}
+                        value={customerName || ''}
                     />
                     {suggestions.length > 0 && (
                         <ul className="suggestions-list">
