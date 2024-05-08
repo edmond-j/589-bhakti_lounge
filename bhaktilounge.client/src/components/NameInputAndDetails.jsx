@@ -119,6 +119,8 @@ function NameInput() {
 
                 if (response.ok) {
                     console.log('Check-in successful:', await response.json());
+                    alert(selectedCustomer.firstName + " " + selectedCustomer.lastName + " has been checked in! ")
+                    navigate(0);
                 } else {
                     console.error('Failed to add check-in:', await response.text());
                 }

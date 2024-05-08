@@ -11,8 +11,8 @@ function PaymentSelector({ onPaymentSelect, hasMembership }) {
             { id: 4, name: 'Card', selected: false },
             { id: 5, name: 'Online bank transfer', selected: false },
             { id: 6, name: 'Service Exchange', selected: false },
-            { id: 7, name: 'Devotee- $6 payment', selected: false },
-            { id: 8, name: 'Devotee- no payment', selected: false }
+            { id: 7, name: 'Devotee - $6 payment', selected: false },
+            { id: 8, name: 'Devotee - no payment', selected: false }
         ];
 
         // 如果用户拥有会员资格，添加 Membership 选项
