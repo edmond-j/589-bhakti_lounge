@@ -20,7 +20,7 @@ function NameInput() {
 
     //get name data from register page
     const location = useLocation();
-    const [customerName, setCustomerName] = useState(location.state?.FirstName || 'Unknown');
+    const [customerName, setCustomerName] = useState(location.state?.FirstName || '');
 
     const fetchOptions = async (value) => {
         try {
