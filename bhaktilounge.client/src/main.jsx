@@ -14,21 +14,20 @@ import SubscriptionForm from "./pages/Subscribe.jsx"
 
 ReactDOM.createRoot(document.getElementById("root")).render(
     <React.StrictMode>
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<App />} />
-        <Route path="/check-in" element={<CheckIn />} />
-        <Route path="/register" element={<Register />} />
+        <BrowserRouter>
+            <Routes>
+                <Route path="/" element={<App />} />
+                <Route path="/check-in" element={<CheckIn />} />
+                <Route path="/register" element={<Register />} />
                 <Route path="/top-up" element={<TopUp />} />
                 <Route path="/subscribe/:id/:firstName/:lastName/:email" element={<SubscriptionForm />} />
-        <Route path="/management" element={<Management />}>
-          <Route path="activity" element={<Activity />} />
-          <Route path="event" element={<Event />} />
-          <Route path="*" element={<NotFound />} />
-        </Route>
-      </Routes>
-    </BrowserRouter>
+                <Route path="/management" element={<Management />}>
+                    <Route path="activity" element={<Activity />} />
+                    <Route path="event" element={<Event />} />
+                    <Route path="*" element={<NotFound />} />
+                </Route>
+            </Routes>
+        </BrowserRouter>
 
-
-  </React.StrictMode>
+    </React.StrictMode>
 );

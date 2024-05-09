@@ -61,8 +61,12 @@ function Activity() {
         const [price, setPrice] = useState(selectedItem.price);
         const [startTime, setStartTime] = useState(selectedItem.startTime);
         const [endTime, setEndTime] = useState(selectedItem.endTime);
-        const [daysOfWeek, setDaysOfWeek] = useState(selectedItem.daysOfWeek[0]);
-        const [includeYoga, setYoga] = useState(selectedItem.includeYoga || false);
+        const [daysOfWeek, setDaysOfWeek] = useState(
+            selectedItem.daysOfWeek[0]
+        );
+        const [includeYoga, setYoga] = useState(
+            selectedItem.includeYoga || false
+        );
         const [includeDinner, setDinner] = useState(
             selectedItem.includeDinner || false
         );
@@ -105,7 +109,9 @@ function Activity() {
                 method: "DELETE",
                 headers: { "Content-Type": "application/json" },
             };
-            fetch(url, requestOptions).then((response) => console.log(response));
+            fetch(url, requestOptions).then((response) =>
+                console.log(response)
+            );
             const index = activities.indexOf(selectedItem);
             setActivity((currentItems) =>
                 currentItems.filter((item) => item !== selectedItem)

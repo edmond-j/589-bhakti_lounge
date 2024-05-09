@@ -19,8 +19,9 @@ namespace BhaktiLounge.Server.Controllers {
 
         //Search a customer
         [HttpGet]
-        public async Task<IActionResult> Search(string name) {
-            var lowName = name.ToLower();
+        public async Task<IActionResult> Search(string? name) {
+            var lowName = name == null ? "" : name.ToLower();
+            //var lowName = name.ToLower();
             var customers = await _context.Customer
                                 .Where(c => c.FirstName.ToLower().Contains(lowName) || c.LastName.ToLower().Contains(lowName))
                                 .Take(8)

@@ -91,7 +91,9 @@ function Event() {
                 method: "DELETE",
                 headers: { "Content-Type": "application/json" },
             };
-            fetch(url, requestOptions).then((response) => console.log(response));
+            fetch(url, requestOptions).then((response) =>
+                console.log(response)
+            );
             const index = events.indexOf(selectedItem);
             setEvent((currentItems) =>
                 currentItems.filter((item) => item !== selectedItem)
