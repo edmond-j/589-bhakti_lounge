@@ -28,8 +28,17 @@ namespace BhaktiLounge.Server {
 
         private static void ConfigureServices(WebApplicationBuilder builder) {
             // Database configuration
-            builder.Services.AddDbContext<ApplicationDbContext>(option =>
-                option.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
+            switch (Environment.GetEnvironmentVariable("HOME_LAB"))
+            {
+                case null:
+                    builder.Services.AddDbContext<ApplicationDbContext>(option =>
+                        option.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
+                    break;
+                case "true":
+                    builder.Services.AddDbContext<ApplicationDbContext>(option =>
+                        option.UseNpgsql(builder.Configuration.GetConnectionString("HomeLabConnection")));
+                    break;
+            }
 
             // JSON converters and controllers
             builder.Services.AddControllers().AddJsonOptions(options => {
