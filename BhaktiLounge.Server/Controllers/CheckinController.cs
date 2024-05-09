@@ -1,6 +1,7 @@
 ﻿using BhaktiLounge.Server.Data;
 using BhaktiLounge.Server.Models;
 using BhaktiLounge.Server.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -20,6 +21,7 @@ public class CheckinController : ControllerBase {
     }
 
     [HttpGet]
+    [Authorize]
     public async Task<ActionResult> GetAllCheckins() {
         var checkins = await _service.GetAllCheckins();
         return Ok(checkins);
