@@ -1,10 +1,12 @@
 ﻿using BhaktiLounge.Server.Models;
+using BhaktiLounge.Server.Models.Accounts;
 using BhaktiLounge.Server.Models.Extensions;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace BhaktiLounge.Server.Data {
 
-    public class ApplicationDbContext : DbContext {
+    public class ApplicationDbContext : IdentityDbContext<Admin> {
 
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options) {
@@ -17,4 +19,8 @@ namespace BhaktiLounge.Server.Data {
         public DbSet<MemberClass> MemberClass { get; set; } = default!;
 
     }
+
+
+
+
 }
