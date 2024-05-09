@@ -1,6 +1,6 @@
 ﻿namespace BhaktiLounge.Server.Models.Accounts;
 
-public class RegisterModel : UserModel
+public class SignupModel : UserModel
 {
     public required string Email { get; set; }
     public required string FirstName { get; set; }
