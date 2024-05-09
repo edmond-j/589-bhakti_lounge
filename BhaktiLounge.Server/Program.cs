@@ -1,3 +1,4 @@
+using System.Security.Claims;
 using System.Text;
 using BhaktiLounge.Server.Data;
 using BhaktiLounge.Server.Data.Conveters;
@@ -61,7 +62,8 @@ namespace BhaktiLounge.Server {
                     ValidateIssuer = true,
                     ValidateAudience = true,
                     ValidateLifetime = true,
-                    ValidateIssuerSigningKey = true
+                    ValidateIssuerSigningKey = true,
+                    RoleClaimType = ClaimTypes.Role
                 };
             });
 

@@ -52,7 +52,7 @@ public class AuthController : ControllerBase
     }
 
     [HttpPost("login")]
-    public async Task<IActionResult> Login([FromBody] RegisterModel userModel)
+    public async Task<IActionResult> Login([FromBody] UserModel userModel)
     {
         // Find the user by username
         var user = await _userManager.FindByNameAsync(userModel.UserName);
@@ -64,13 +64,17 @@ public class AuthController : ControllerBase
         if (!passwordValid)
             return Unauthorized("Invalid Credentials");
 
-
-        var claims = new[]
+        var roles = await _userManager.GetRolesAsync(user);
+        var claims = new List<Claim>
         {
-            new Claim(ClaimTypes.Name, user.UserName),
-            new Claim(ClaimTypes.NameIdentifier, user.Id)
-        };
+            new(ClaimTypes.Name, user.UserName),
+            new(ClaimTypes.NameIdentifier, user.Id),
 
+        };
+        foreach (var role in roles)
+        {
+            claims.Add(new Claim(ClaimTypes.Role, role));
+        }
         var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]));
         var cred = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
