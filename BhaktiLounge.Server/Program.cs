@@ -1,53 +1,113 @@
+using System.Text;
 using BhaktiLounge.Server.Data;
 using BhaktiLounge.Server.Data.Conveters;
-using BhaktiLounge.Server.Models;
+using BhaktiLounge.Server.Models.Accounts;
 using BhaktiLounge.Server.Services;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
 
 namespace BhaktiLounge.Server {
 
     public class Program {
-
         public static void Main(string[] args) {
             var builder = WebApplication.CreateBuilder(args);
 
-            // Add services to the container.
-            builder.Services.AddDbContext<ApplicationDbContext>(option => {
-                option.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection"));
-            });
-            builder.Services.AddControllers().AddJsonOptions(options => {
-                //options.JsonSerializerOptions.Converters.Add(new TimeOnlyConverter());
-                options.JsonSerializerOptions.Converters.Add(new DayOfWeekConverter());
-                options.JsonSerializerOptions.Converters.Add(new GenderConverter());
-                //options.JsonSerializerOptions.Converters.Add(new DateOnlyConverter());
-                //options.JsonSerializerOptions.Converters.Add(new AcquisitionConverter());
-            });
-            // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-            builder.Services.AddScoped<IActivityService, ActivityService>();
-            builder.Services.AddScoped<ICheckinService, CheckinService>();
-            builder.Services.AddEndpointsApiExplorer();
-            builder.Services.AddSwaggerGen();
+            // Configure services
+            ConfigureServices(builder);
 
             var app = builder.Build();
 
+            // Configure middleware and endpoints
+            ConfigureApp(app);
+
+            app.Run();
+        }
+
+        private static void ConfigureServices(WebApplicationBuilder builder) {
+            // Database configuration
+            builder.Services.AddDbContext<ApplicationDbContext>(option =>
+                option.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+            // JSON converters and controllers
+            builder.Services.AddControllers().AddJsonOptions(options => {
+                options.JsonSerializerOptions.Converters.Add(new DayOfWeekConverter());
+                options.JsonSerializerOptions.Converters.Add(new GenderConverter());
+            });
+
+            // Scoped services
+            builder.Services.AddScoped<IActivityService, ActivityService>();
+            builder.Services.AddScoped<ICheckinService, CheckinService>();
+
+            // Swagger
+            builder.Services.AddEndpointsApiExplorer();
+            builder.Services.AddSwaggerGen();
+
+            // Identity and Authentication
+            builder.Services.AddIdentity<Admin, IdentityRole>()
+                .AddEntityFrameworkStores<ApplicationDbContext>()
+                .AddDefaultTokenProviders();
+
+            builder.Services.AddAuthentication(options => {
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+            }).AddJwtBearer(o => {
+                o.TokenValidationParameters = new TokenValidationParameters {
+                    ValidIssuer = builder.Configuration["Jwt:Issuer"],
+                    ValidAudience = builder.Configuration["Jwt:Audience"],
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"])),
+                    ValidateIssuer = true,
+                    ValidateAudience = true,
+                    ValidateLifetime = true,
+                    ValidateIssuerSigningKey = true
+                };
+            });
+
+            // Authorization
+            builder.Services.AddAuthorization();
+
+        }
+
+
+
+        private static void ConfigureApp(WebApplication app) {
+            // Static files and HTTP redirection
             app.UseDefaultFiles();
             app.UseStaticFiles();
+            app.UseHttpsRedirection();
 
-            // Configure the HTTP request pipeline.
+            // Swagger in development
             if (app.Environment.IsDevelopment()) {
                 app.UseSwagger();
                 app.UseSwaggerUI();
             }
 
-            app.UseHttpsRedirection();
+            EnsureRolesCreated(app.Services).Wait();
 
+
+            // Authentication and Authorization
+            app.UseAuthentication();
             app.UseAuthorization();
 
+            // Controllers and Fallback
             app.MapControllers();
-
             app.MapFallbackToFile("/index.html");
+        }
+        private static async Task EnsureRolesCreated(IServiceProvider serviceProvider)
+        {
+            using var scope = serviceProvider.CreateScope();
+            var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
 
-            app.Run();
+            string[] roleNames = [ "Manager", "Staff"];
+            foreach (var roleName in roleNames)
+            {
+                if (!await roleManager.RoleExistsAsync(roleName))
+                {
+                    await roleManager.CreateAsync(new IdentityRole(roleName));
+                }
+            }
         }
     }
 }

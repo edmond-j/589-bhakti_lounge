@@ -14,10 +14,6 @@ const Register = () => {
     const [acquisition, setAcquisition] = useState('');
     const navigate = useNavigate();
 
-    //get name data from previous page
-    // const location = useLocation();
-    // const clientName = location.state?.clientName || 'Unknown';
-
     const handleSubmit = (event) => {
         event.preventDefault();
 
@@ -43,7 +39,8 @@ const Register = () => {
                 alert(FirstName + LastName + " has been registered!")
             })
             .catch((error) => console.error("Error:", error));
-        navigate('/check-in');
+        const customerName = FirstName + " " + LastName;
+        navigate('/check-in',{state: {FirstName}});
     };
 
     return (
@@ -54,9 +51,9 @@ const Register = () => {
                 <form onSubmit={handleSubmit}>
                     <div className="form-group">
                         <label>First Name</label>
-                        <input id="firstname" type="text" onChange={(e) => setFirstName(e.target.value)}></input>
+                        <input id="firstname" type="text" required onChange={(e) => setFirstName(e.target.value) }></input>
                         <label>Last Name</label>
-                        <input id="lastname" type="text" onChange={(e) => setLastName(e.target.value)}></input>
+                        <input id="lastname" type="text" required onChange={(e) => setLastName(e.target.value)}></input>
                     </div>
                     <div className="form-group" >
                         <label htmlFor="email">Email</label>
@@ -66,6 +63,7 @@ const Register = () => {
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
                             placeholder='Enter an email address'
+                            required
                         />
                     </div>
                     <div className="form-group" >

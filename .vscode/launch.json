@@ -1,0 +1,10 @@
+{
+    "configurations": [
+        {
+            "name": "C#: BhaktiLounge.Server [Default Configuration]",
+            "type": "dotnet",
+            "request": "launch",
+            "projectPath": "${workspaceFolder}/BhaktiLounge.Server/BhaktiLounge.Server.csproj"
+        }
+    ]
+}

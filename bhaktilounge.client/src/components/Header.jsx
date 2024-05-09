@@ -6,9 +6,6 @@ import '../App.css';
 const Header = () => {
     const navigate = useNavigate();
 
-    const subscribe = () => {
-        navigate('/subscribe/1/kenny/liu/a@b.com');
-    }
 
     const register = () => {
         navigate('/register');
@@ -18,7 +15,7 @@ const Header = () => {
         <header className="Header">
             <img src={logo} alt="BHAKTI Lounge Logo" className="Header-logo" />
             <span className='line-buttons'>
-                <button className='button-class' onClick={subscribe}>Subscribe</button>
+                <button className='button-class' >Manage</button>
                 <button className='button-class' onClick={register}>New Customer</button>
                 <button className='button-class'>Log out</button>
             </span>
