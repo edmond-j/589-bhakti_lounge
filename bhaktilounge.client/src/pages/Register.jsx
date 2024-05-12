@@ -4,7 +4,6 @@ import { useNavigate } from 'react-router-dom';
 import { Link } from "react-router-dom";
 import Header from '../components/Header.jsx';
 
-
 const Register = () => {
     const [FirstName, setFirstName] = useState('');
     const [LastName, setLastName] = useState('');
@@ -30,7 +29,7 @@ const Register = () => {
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(newData),
         };
-        
+
         console.log(requestOptions);
         fetch("/api/v1/Customer", requestOptions)
             .then((response) => response.json())
@@ -40,7 +39,7 @@ const Register = () => {
             })
             .catch((error) => console.error("Error:", error));
         const customerName = FirstName + " " + LastName;
-        navigate('/check-in',{state: {FirstName}});
+        navigate('/check-in', { state: { FirstName } });
     };
 
     return (
@@ -51,7 +50,7 @@ const Register = () => {
                 <form onSubmit={handleSubmit}>
                     <div className="form-group">
                         <label>First Name</label>
-                        <input id="firstname" type="text" required onChange={(e) => setFirstName(e.target.value) }></input>
+                        <input id="firstname" type="text" required onChange={(e) => setFirstName(e.target.value)}></input>
                         <label>Last Name</label>
                         <input id="lastname" type="text" required onChange={(e) => setLastName(e.target.value)}></input>
                     </div>
@@ -69,7 +68,7 @@ const Register = () => {
                     <div className="form-group" >
                         <label htmlFor="pronouns">Pronouns</label>
                         <select id="pronouns" value={gender} name="pronouns" required
-                                onChange={(e) => setGender(e.target.value)}>
+                            onChange={(e) => setGender(e.target.value)}>
                             <option value="" disabled hidden>Choose one</option>
                             <option value="he">He/Him</option>
                             <option value="she">She/Her</option>
@@ -81,7 +80,7 @@ const Register = () => {
                     <div className="form-group" >
                         <label htmlFor="channel">How did you hear about us?</label>
                         <select id="channel" value={acquisition} name="channel" required
-                                onChange={(e) => setAcquisition(e.target.value)}>
+                            onChange={(e) => setAcquisition(e.target.value)}>
                             <option value="" disabled hidden>Choose one</option>
                             <option value="Facebook">Facebook</option>
                             <option value="Instagram">Instagram</option>

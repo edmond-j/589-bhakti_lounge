@@ -78,7 +78,8 @@ select {
 }
 
 .logo {
-    font-size: 24px; /* 调整为实际logo大小 */
+    font-size: 24px;
+    /* 调整为实际logo大小 */
     font-weight: bold;
 }
 
@@ -87,6 +88,7 @@ select {
     list-style: none;
     padding: 0;
 }
+
 /* .menu li {
   padding: 5px 10px;
   background-color: black;

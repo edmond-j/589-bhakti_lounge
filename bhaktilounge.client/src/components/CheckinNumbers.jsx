@@ -1,8 +1,7 @@
 import { useEffect, useState } from 'react';
-import '../App.css';
+//import '../App.css';
 
 const CheckinNumbers = () => {
-
     const [checkinNumbers, setCheckinNumbers] = useState([]); // 初始化为空数组
 
     useEffect(() => {

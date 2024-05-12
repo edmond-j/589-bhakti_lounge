@@ -1,0 +1,16 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.twbtn {
+    @apply items-center justify-center h-10 px-4 text-sm font-bold rounded-lg drop-shadow-lg;
+    transition: background-color 0.2s ease-in-out;
+}
+
+.twinput{
+    @apply bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 mt-2 mb-6 drop-shadow-md
+}
+
+.twcheck{
+    @apply bg-gray-50 mb-1 drop-shadow-md
+}

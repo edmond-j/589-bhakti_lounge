@@ -1,4 +1,5 @@
 import { NavLink } from "react-router-dom";
+import MgmtHeader from "./MgmtHeader";
 
 function MgmtHeader() {
     const linkClass = ({ isActive }) => isActive ? "background-blue" : "background-black";
@@ -20,20 +21,6 @@ function MgmtHeader() {
                 <span>Administrator</span>
                 <a href="/" className="logout-link">Log Out</a>
             </div>
-            <div className="space-y-2">
-    <label htmlFor="Option1" className="flex cursor-pointer items-start gap-4">
-      <div className="flex items-center">
-        &#8203;
-        <input type="checkbox" className="size-4 rounded border-gray-300" id="Option1" />
-      </div>
-
-      <div>
-        <strong className="font-medium text-gray-900"> John Clapton </strong>
-      </div>
-    </label>
-
-    
-  </div>
         </div>
     )
 }
