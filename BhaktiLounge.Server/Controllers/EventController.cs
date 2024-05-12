@@ -27,9 +27,13 @@ namespace BhaktiLounge.Server.Controllers {
 
         [HttpPost]
         public async Task<ActionResult> AddEvent([FromBody] Event? newEvent) {
-            if (newEvent == null) {
-                return BadRequest("Activity data is required.");
-            }
+            //if (newEvent == null) {
+            //    return BadRequest("Activity data is required.");
+            //}
+            //_context.Event.Add(newEvent);
+            //await _context.SaveChangesAsync();
+            //return Ok(newEvent);
+            newEvent ??= new Event();
             _context.Event.Add(newEvent);
             await _context.SaveChangesAsync();
             return Ok(newEvent);
@@ -37,18 +41,18 @@ namespace BhaktiLounge.Server.Controllers {
 
         [HttpPut]
         public async Task<ActionResult> UpdateEvent([FromBody] Event updateEvent) {
-            var oneEvent = await _context.Event.FindAsync(updateEvent.Id);
-            if (oneEvent is null) {
+            var updatedEvent = await _context.Event.FindAsync(updateEvent.Id);
+            if (updatedEvent is null) {
                 return NotFound("Item Not Found");
             }
-            oneEvent.Name = updateEvent.Name;
-            oneEvent.Price = updateEvent.Price;
-            oneEvent.Date = updateEvent.Date;
-            oneEvent.StartTime = updateEvent.StartTime;
-            oneEvent.EndTime = updateEvent.EndTime;
-            _context.Event.Update(oneEvent);
+            updatedEvent.Name = updateEvent.Name;
+            updatedEvent.Price = updateEvent.Price;
+            updatedEvent.Date = updateEvent.Date;
+            updatedEvent.StartTime = updateEvent.StartTime;
+            updatedEvent.EndTime = updateEvent.EndTime;
+            _context.Event.Update(updatedEvent);
             await _context.SaveChangesAsync();
-            return Ok(oneEvent);
+            return Ok(updatedEvent);
         }
 
         [HttpDelete]

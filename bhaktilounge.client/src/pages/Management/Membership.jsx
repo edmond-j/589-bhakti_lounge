@@ -1,31 +1,25 @@
 import React from "react";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
-// import { toast } from "../../../node_modules/react-toastify/dist/index";
 import ItemList from "/src/components/management/ItemList";
 import ToolBar from "../../components/management/ToolBar";
 import OptionButton from "../../components/management/OptionButton";
 import { itemHighlight } from "./method";
 import spinner from "/public/spinner.svg";
 
-function Activity() {
-    const [activities, setActivity] = useState([]);
+function Membership() {
+    const [items, setItems] = useState([]);
     const [selectedItem, setSelectedItem] = useState(null);
     const [isLoading, setLoading] = useState(true);
     useEffect(() => {
         async function populateActivityData() {
-            // const response = await fetch("/api/v1/activity");
-            // const data = await response.json();
-            // setActivity(data);
-            //设定selectedItem
-            fetch("/api/v1/activity")
+            fetch("/api/v1/memberclass")
                 .then((response) => response.json())
                 .then((data) => {
                     console.log("acquire", data);
-                    //如果没有data该怎么办？
                     setLoading(false);
                     if (data.length > 0) {
-                        setActivity(data);
+                        setItems(data);
                         setSelectedItem(data[0]);
                     }
                 });
@@ -35,7 +29,7 @@ function Activity() {
 
     useEffect(() => itemHighlight(selectedItem), [selectedItem]);
 
-    function UpdateActivity() {
+    function UpdateItemForm() {
         let content = null;
         if (isLoading) {
             content = (
@@ -55,39 +49,23 @@ function Activity() {
             );
         } else {
             useEffect(() => {
-                //导致问题：Internal React error: Expected static flag was missing.
                 setName(selectedItem.name);
+                setDuration(selectedItem.duration);
+                setPass(selectedItem.pass);
                 setPrice(selectedItem.price);
-                setStartTime(selectedItem.startTime);
-                setEndTime(selectedItem.endTime);
-                setDaysOfWeek(selectedItem.daysOfWeek[0]);
-                setYoga(selectedItem.includeYoga);
-                setDinner(selectedItem.includeDinner);
             }, [selectedItem]);
             const [name, setName] = useState(selectedItem.name);
+            const [duration, setDuration] = useState(selectedItem.duration);
+            const [pass, setPass] = useState(selectedItem.pass);
             const [price, setPrice] = useState(selectedItem.price);
-            const [startTime, setStartTime] = useState(selectedItem.startTime);
-            const [endTime, setEndTime] = useState(selectedItem.endTime);
-            const [daysOfWeek, setDaysOfWeek] = useState(
-                selectedItem.daysOfWeek[0]
-            );
-            const [includeYoga, setYoga] = useState(
-                selectedItem.includeYoga || false
-            );
-            const [includeDinner, setDinner] = useState(
-                selectedItem.includeDinner || false
-            );
 
             function updateData() {
                 let newData = {
                     id: selectedItem.id,
-                    name, // name:name,
+                    name,
+                    duration,
+                    pass,
                     price,
-                    startTime,
-                    endTime,
-                    daysOfWeek: [daysOfWeek],
-                    includeYoga,
-                    includeDinner,
                 };
 
                 const requestOptions = {
@@ -96,23 +74,23 @@ function Activity() {
                     body: JSON.stringify(newData),
                 };
                 // console.log(JSON.stringify(newData));
-                fetch("/api/v1/activity", requestOptions)
+                fetch("/api/v1/memberclass", requestOptions)
                     .then((response) => response.json())
                     .then((data) => {
                         console.log("Update Succesful:", data);
                         // alert(data.name + " has been updated!");
                         toast.success(data.name + " has been updated!");
-                        const updatedActivities = activities.map((item) =>
+                        const updatedItems = items.map((item) =>
                             item.id === data.id ? data : item
                         );
-                        setActivity(updatedActivities); //update the frontend activities after backend data updated
+                        setItems(updatedItems); //update the frontend activities after backend data updated
                         setSelectedItem(data);
                     })
                     .catch((error) => console.error("Error:", error));
             }
 
             function deleteData() {
-                const url = "/api/v1/activity?Id=" + selectedItem.id;
+                const url = "/api/v1/memberclass?Id=" + selectedItem.id;
                 const requestOptions = {
                     method: "DELETE",
                     headers: { "Content-Type": "application/json" },
@@ -121,17 +99,17 @@ function Activity() {
                     console.log(response);
                     toast.success(selectedItem.name + " has been deleted.");
                 });
-                const index = activities.indexOf(selectedItem);
-                setActivity((currentItems) =>
+                const index = items.indexOf(selectedItem);
+                setItems((currentItems) =>
                     currentItems.filter((item) => item !== selectedItem)
                 ); //remove the deleted activity
                 if (index > 0) {
-                    setSelectedItem(activities[index - 1]);
+                    setSelectedItem(items[index - 1]);
                 } else {
-                    if (activities.length == 1)
+                    if (items.length == 1)
                         //when the activities has only 1 element
                         setSelectedItem(null);
-                    else setSelectedItem(activities[index]);
+                    else setSelectedItem(items[index]);
                 }
             }
             content = (
@@ -141,12 +119,28 @@ function Activity() {
                         <p>ID: {selectedItem.id}</p>
                     </div>
                     <div className="flex flex-col">
-                        <label htmlFor="mgt-name">Activity Name*</label>
+                        <label htmlFor="mgt-name">Membership Name*</label>
                         <input
                             type="text"
                             id="mgt-name"
                             value={name}
                             onChange={(e) => setName(e.target.value)}
+                            className=" twinput"
+                        />
+                        <label htmlFor="duration">Duration</label>
+                        <input
+                            type="number"
+                            id="duration"
+                            value={duration || 0}
+                            onChange={(e) => setDuration(e.target.value)}
+                            className=" twinput"
+                        />
+                        <label htmlFor="pass">Pass</label>
+                        <input
+                            type="number"
+                            id="pass"
+                            value={pass || 0}
+                            onChange={(e) => setPass(e.target.value)}
                             className=" twinput"
                         />
                         <label htmlFor="price">Price (NZD)*</label>
@@ -157,58 +151,6 @@ function Activity() {
                             onChange={(e) => setPrice(e.target.value)}
                             className=" twinput"
                         />
-                        <label htmlFor="days">Days</label>
-                        <select
-                            id="days"
-                            value={daysOfWeek}
-                            onChange={(e) => setDaysOfWeek(e.target.value)}
-                            className=" twinput">
-                            <option>Monday</option>
-                            <option>Tuesday</option>
-                            <option>Wednesday</option>
-                            <option>Thursday</option>
-                            <option>Friday</option>
-                            <option>Saturday</option>
-                            <option>Sunday</option>
-                        </select>
-                        <label htmlFor="start-time">Start Time</label>
-                        <input
-                            type="time"
-                            id="start-time"
-                            value={startTime || "00:00"}
-                            onChange={(e) => setStartTime(e.target.value)}
-                            className=" twinput"
-                        />
-                        <label htmlFor="end-time">End Time</label>
-                        <input
-                            type="time"
-                            id="end-time"
-                            value={endTime || "00:00"}
-                            onChange={(e) => setEndTime(e.target.value)}
-                            className=" twinput"
-                        />
-                        <div className="grid grid-cols-2 space-x-6 mt-2 mb-6">
-                            <label htmlFor="include-yoga">Include Yoga</label>
-                            <input
-                                type="checkbox"
-                                id="include-yoga"
-                                checked={includeYoga}
-                                onChange={(e) => setYoga(e.target.checked)}
-                                className="twcheck"
-                            />
-                        </div>
-                        <div className="grid grid-cols-2 space-x-6 mt-2 mb-6">
-                            <label htmlFor="include-dinner">
-                                Include Dinner
-                            </label>
-                            <input
-                                type="checkbox"
-                                id="include-dinner"
-                                checked={includeDinner}
-                                onChange={(e) => setDinner(e.target.checked)}
-                                className="twcheck"
-                            />
-                        </div>
                         <OptionButton
                             updateData={updateData}
                             deleteData={deleteData}
@@ -221,7 +163,7 @@ function Activity() {
 
         return (
             <div className="flex flex-col flex-grow min-w-max">
-                <ToolBar title="Activity" />
+                <ToolBar title="Event" />
                 {content}
             </div>
         );
@@ -230,14 +172,14 @@ function Activity() {
     return (
         <>
             <ItemList
-                type={"activity"}
-                items={activities}
-                setItem={setActivity}
+                type={"memberclass"}
+                items={items}
+                setItem={setItems}
                 setSelectedItem={setSelectedItem}
             />
-            <UpdateActivity />
+            <UpdateItemForm />
         </>
     );
 }
 
-export default Activity;
+export default Membership;
