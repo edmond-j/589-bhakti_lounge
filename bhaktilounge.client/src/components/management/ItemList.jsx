@@ -4,7 +4,6 @@ import { FaSortAmountDown } from "react-icons/fa";
 import { IoMdAdd } from "react-icons/io";
 
 function ItemList({ type, items, setItem, setSelectedItem }) {
-
     function createNew() {
         const requestOptions = {
             method: "POST",
@@ -35,37 +34,38 @@ function ItemList({ type, items, setItem, setSelectedItem }) {
                 <div className="absolute z-10 flex-col items-start hidden w-full pb-1 bg-white shadow-lg group-focus:flex">
                     <a
                         className="w-full px-4 py-2 text-left hover:bg-gray-300"
-                        href="#"
-                    >
+                        href="#">
                         by Name
                     </a>
                     <a
                         className="w-full px-4 py-2 text-left hover:bg-gray-300"
-                        href="#"
-                    >
+                        href="#">
                         by Created Time
                     </a>
                 </div>
             </button>
             <div className="flex flex-col flex-grow p-4 overflow-auto">
-            {items.length > 0 ? (
-                <ul id="mgmt-itemlist">
-                    {items.map((item) => (
-                        <li
-                            className="flex items-center flex-shrink-0 h-9 px-4 my-1 text-sm font-medium rounded-lg hover:bg-gray-300"
-                            id={`item-${item.id}`}
-                            tabIndex="0"
-                            key={item.id}
-                            onClick={() => setSelectedItem(item)}
-                        >
-                            {item.name}
-                        </li>
-                    ))}
-                </ul>):( <label className="self-center font-bold text-2xl text-gray-400 mt-40">(Empty)</label>)}
+                {items.length > 0 ? (
+                    <ul id="mgmt-itemlist">
+                        {items.map((item) => (
+                            <li
+                                className="flex items-center flex-shrink-0 h-9 px-4 my-1 text-sm font-medium rounded-lg hover:bg-gray-300"
+                                id={`item-${item.id}`}
+                                tabIndex="0"
+                                key={item.id}
+                                onClick={() => setSelectedItem(item)}>
+                                {item.name}
+                            </li>
+                        ))}
+                    </ul>
+                ) : (
+                    <label className="self-center font-bold text-2xl text-gray-400 mt-40">
+                        (Empty)
+                    </label>
+                )}
                 <button
                     className="twbtn flex flex-shrink-0 mt-auto bg-primary rounded hover:bg-yellow-500"
-                    onClick={createNew}
-                >
+                    onClick={createNew}>
                     <IoMdAdd className="w-5 h-5 mr-2" />
                     Add New
                 </button>
