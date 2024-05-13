@@ -1,22 +1,19 @@
 import { NavLink } from "react-router-dom";
 import React from "react";
-import { GrDashboard } from "react-icons/gr";
-import { GrYoga } from "react-icons/gr";
-import { MdOutlineEmojiEvents } from "react-icons/md";
+import { GrYoga, GrDashboard } from "react-icons/gr";
+import { MdOutlineDisplaySettings, MdOutlineEmojiEvents } from "react-icons/md";
 import { FaPeopleGroup } from "react-icons/fa6";
-import { MdOutlineDisplaySettings } from "react-icons/md";
 import { FaUserLock } from "react-icons/fa";
 import { ImExit } from "react-icons/im";
 
 function MgmtSideBar() {
-    let linkClass =({ isActive }) =>
+    let linkClass = ({ isActive }) =>
         "flex items-center w-full h-12 px-3 mt-2 rounded-lg hover:bg-gray-700 hover:text-gray-300 " +
-         (isActive ? "  bg-gray-300 text-gray-900" : " bg-gray-900");
+        (isActive ? "  bg-gray-300 text-gray-900" : " bg-gray-900");
     return (
-        <div className="flex flex-col items-center w-64 min-w-64 h-full text-gray-400 bg-gray-900 rounded-l-2xl">
-            <div className="flex items-center w-full px-3 mt-3">
+        <div className="flex flex-col items-center w-64 h-full text-gray-400 bg-gray-900 rounded-l-2xl">
+            <div className="flex items-center w-full px-8 pt-8">
                 <img src="/public/bhakti-logo-alt.webp" alt="logo" />
-
             </div>
             <div className="flex justify-center w-full px-3 mt-3">
                 {/* <GrYoga className="w-12 h-12 stroke-current"/> */}
@@ -25,31 +22,23 @@ function MgmtSideBar() {
                 </label>
             </div>
 
-            <div className="w-full px-2">
+            <div className="w-64 px-2">
                 <div className="flex flex-col items-center w-full mt-3 border-t border-gray-700">
                     <NavLink className={linkClass} to="report">
                         <GrDashboard className="tw-sidebar-icon" />
-                        <span className="tw-sidebar-item">
-                            Dasboard
-                        </span>
+                        <span className="tw-sidebar-item">Dasboard</span>
                     </NavLink>
                     <NavLink className={linkClass} to="activity">
                         <GrYoga className="tw-sidebar-icon" />
-                        <span className="tw-sidebar-item">
-                            Activity
-                        </span>
+                        <span className="tw-sidebar-item">Activity</span>
                     </NavLink>
                     <NavLink className={linkClass} to="event">
                         <MdOutlineEmojiEvents className="tw-sidebar-icon" />
-                        <span className="tw-sidebar-item">
-                            Event
-                        </span>
+                        <span className="tw-sidebar-item">Event</span>
                     </NavLink>
                     <NavLink className={linkClass} to="membership">
                         <FaPeopleGroup className="tw-sidebar-icon" />
-                        <span className="tw-sidebar-item">
-                            Membership
-                        </span>
+                        <span className="tw-sidebar-item">Membership</span>
                     </NavLink>
                     <NavLink className={linkClass} to="misc">
                         <MdOutlineDisplaySettings className="tw-sidebar-icon" />
@@ -58,13 +47,15 @@ function MgmtSideBar() {
                 </div>
                 <div className="flex flex-col items-center w-full mt-2 border-t border-gray-700">
                     <NavLink className={linkClass} to="user">
-                    <FaUserLock className="tw-sidebar-icon"/>
+                        <FaUserLock className="tw-sidebar-icon" />
                         <span className="tw-sidebar-item">User</span>
                     </NavLink>
                 </div>
             </div>
-            <a href="/check-in" className="flex items-center justify-center w-full h-16 mt-auto bg-gray-800 hover:bg-gray-700 hover:text-gray-300 rounded-bl-2xl">
-                <ImExit className="tw-sidebar-icon"/>
+            <a
+                href="/check-in"
+                className="flex items-center justify-center w-full h-16 mt-auto bg-gray-800 hover:bg-gray-700 hover:text-gray-300 rounded-bl-2xl">
+                <ImExit className="tw-sidebar-icon" />
                 <span className="ml-2 text-base font-bold">To Check In</span>
             </a>
         </div>

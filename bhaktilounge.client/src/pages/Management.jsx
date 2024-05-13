@@ -1,6 +1,5 @@
 import { Outlet } from "react-router-dom";
 import { Bounce, Slide, Zoom, Flip, ToastContainer } from "react-toastify";
-import MgmtHeader from "../components/management/MgmtHeader.jsx";
 import MgmtSideBar from "../components/management/MgmtSideBar.jsx";
 import "react-toastify/dist/ReactToastify.css";
 import "/public/style.css";
@@ -8,8 +7,8 @@ import "/public/style.css";
 
 function Management() {
     return (
-        <div className="flex justify-center w-screen bg-gray-500 min-h-screen">
-            <div className="flex w-3/4 min-h-full text-gray-700">
+        <div className="flex justify-center p-8 min-h-screen bg-gray-500">
+            <div className="flex overflow-auto w-320 min-h-full text-gray-700">
                 {/* <MgmtHeader /> */}
                 <MgmtSideBar />
                 <Outlet />

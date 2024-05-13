@@ -44,25 +44,27 @@ function ItemList({ type, items, setItem, setSelectedItem }) {
                     </a>
                 </div>
             </button>
-            <div className="flex flex-col flex-grow p-4 overflow-auto">
-                {items.length > 0 ? (
-                    <ul id="mgmt-itemlist">
-                        {items.map((item) => (
-                            <li
-                                className="flex items-center flex-shrink-0 h-9 px-4 my-1 text-base font-medium rounded-lg hover:bg-gray-300"
-                                id={`item-${item.id}`}
-                                tabIndex="0"
-                                key={item.id}
-                                onClick={() => setSelectedItem(item)}>
-                                {item.name}
-                            </li>
-                        ))}
-                    </ul>
-                ) : (
-                    <label className="self-center font-bold text-2xl text-gray-400 mt-40">
-                        (Empty)
-                    </label>
-                )}
+            <div className="flex flex-col flex-grow p-4">
+                <div className="flex flex-col flex-grow max-h-95 overflow-auto">
+                    {items.length > 0 ? (
+                        <ul id="mgmt-itemlist">
+                            {items.map((item) => (
+                                <li
+                                    className="flex items-center flex-shrink-0 h-9 px-4 my-1 text-base font-medium rounded-lg hover:bg-gray-300"
+                                    id={`item-${item.id}`}
+                                    tabIndex="0"
+                                    key={item.id}
+                                    onClick={() => setSelectedItem(item)}>
+                                    {item.name}
+                                </li>
+                            ))}
+                        </ul>
+                    ) : (
+                        <label className="self-center font-bold text-2xl text-gray-400 mt-40">
+                            (Empty)
+                        </label>
+                    )}
+                </div>
                 <button
                     className="tw-btn flex flex-shrink-0 mt-auto bg-primary rounded hover:bg-yellow-500"
                     onClick={createNew}>

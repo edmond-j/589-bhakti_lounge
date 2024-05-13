@@ -554,40 +554,6 @@ video {
   --tw-contain-style:  ;
 }
 
-.container {
-  width: 100%;
-}
-
-@media (min-width: 640px) {
-  .container {
-    max-width: 640px;
-  }
-}
-
-@media (min-width: 768px) {
-  .container {
-    max-width: 768px;
-  }
-}
-
-@media (min-width: 1024px) {
-  .container {
-    max-width: 1024px;
-  }
-}
-
-@media (min-width: 1280px) {
-  .container {
-    max-width: 1280px;
-  }
-}
-
-@media (min-width: 1536px) {
-  .container {
-    max-width: 1536px;
-  }
-}
-
 .static {
   position: static;
 }
@@ -630,6 +596,10 @@ video {
   margin-right: 0.5rem;
 }
 
+.mt-12 {
+  margin-top: 3rem;
+}
+
 .mt-2 {
   margin-top: 0.5rem;
 }
@@ -644,10 +614,6 @@ video {
 
 .mt-40 {
   margin-top: 10rem;
-}
-
-.mt-6 {
-  margin-top: 1.5rem;
 }
 
 .mt-\[-20rem\] {
@@ -694,8 +660,8 @@ video {
   height: 100%;
 }
 
-.h-screen {
-  height: 100vh;
+.max-h-95 {
+  max-height: 80vh;
 }
 
 .min-h-full {
@@ -710,8 +676,12 @@ video {
   width: 3rem;
 }
 
-.w-3\/4 {
-  width: 75%;
+.w-192 {
+  width: 768px;
+}
+
+.w-320 {
+  width: 1280px;
 }
 
 .w-5 {
@@ -730,17 +700,8 @@ video {
   width: 100%;
 }
 
-.w-screen {
-  width: 100vw;
-}
-
 .min-w-64 {
   min-width: 16rem;
-}
-
-.min-w-max {
-  min-width: -moz-max-content;
-  min-width: max-content;
 }
 
 .max-w-lg {
@@ -755,12 +716,12 @@ video {
   flex-grow: 1;
 }
 
-.grid-cols-2 {
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+.grow {
+  flex-grow: 1;
 }
 
-.grid-cols-3 {
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+.grid-cols-2 {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
 }
 
 .flex-col {
@@ -795,10 +756,6 @@ video {
   justify-content: space-evenly;
 }
 
-.gap-6 {
-  gap: 1.5rem;
-}
-
 .space-x-6 > :not([hidden]) ~ :not([hidden]) {
   --tw-space-x-reverse: 0;
   margin-right: calc(1.5rem * var(--tw-space-x-reverse));
@@ -817,6 +774,10 @@ video {
 
 .overflow-auto {
   overflow: auto;
+}
+
+.overflow-hidden {
+  overflow: hidden;
 }
 
 .rounded {
@@ -928,6 +889,10 @@ video {
   padding: 1.5rem;
 }
 
+.p-8 {
+  padding: 2rem;
+}
+
 .px-2 {
   padding-left: 0.5rem;
   padding-right: 0.5rem;
@@ -959,6 +924,10 @@ video {
 
 .pb-6 {
   padding-bottom: 1.5rem;
+}
+
+.pt-8 {
+  padding-top: 2rem;
 }
 
 .text-left {

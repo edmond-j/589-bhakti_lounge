@@ -135,12 +135,12 @@ function Activity() {
                 }
             }
             content = (
-                <div className="grid grid-cols-3 gap-6 flex-grow p-6 overflow-auto bg-gray-200 rounded-br-2xl">
-                    <div>
-                        <h1 className="text-4xl font-extrabold mb-4">{name}</h1>
+                <div className="flex grow p-6 bg-gray-200 rounded-br-2xl">
+                    <div className="w-64">
+                        <h1 className="text-4xl font-extrabold mb-4 overflow-hidden">{name}</h1>
                         <p>ID: {selectedItem.id}</p>
                     </div>
-                    <div className="flex flex-col">
+                    <div className="w-64 flex-col">
                         <label htmlFor="mgt-name">Activity Name*</label>
                         <input
                             type="text"
@@ -148,6 +148,7 @@ function Activity() {
                             value={name}
                             onChange={(e) => setName(e.target.value)}
                             className="tw-input"
+                            maxLength="30"
                         />
                         <label htmlFor="price">Price (NZD)*</label>
                         <input
@@ -220,7 +221,7 @@ function Activity() {
         // console.log(selectedItem.id);
 
         return (
-            <div className="flex flex-col flex-grow min-w-max">
+            <div className="flex flex-col w-192">
                 <ToolBar title="Activity" />
                 {content}
             </div>

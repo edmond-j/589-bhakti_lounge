@@ -2,7 +2,7 @@ import React from "react";
 
 function OptionButton({ updateData, deleteData }) {
     return (
-        <div className="flex justify-evenly mt-6">
+        <div className="flex justify-evenly mt-12">
             <button
                 onClick={updateData}
                 className="tw-btn text-white bg-slate-400 rounded hover:bg-slate-500">
@@ -16,5 +16,5 @@ function OptionButton({ updateData, deleteData }) {
         </div>
     );
 }
-
+    
 export default OptionButton;

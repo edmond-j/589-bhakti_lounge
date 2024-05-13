@@ -111,19 +111,20 @@ function Membership() {
                 }
             }
             content = (
-                <div className="grid grid-cols-3 gap-6 flex-grow p-6 overflow-auto bg-gray-200 rounded-br-2xl">
-                    <div>
-                        <h1 className="text-4xl font-extrabold mb-4">{name}</h1>
+                <div className="flex grow p-6 bg-gray-200 rounded-br-2xl">
+                    <div className="w-64">
+                        <h1 className="text-4xl font-extrabold mb-4 overflow-hidden">{name}</h1>
                         <p>ID: {selectedItem.id}</p>
                     </div>
-                    <div className="flex flex-col">
+                    <div className="w-64 flex-col">
                         <label htmlFor="mgt-name">Membership Name*</label>
-                        <input
+                        <input  
                             type="text"
                             id="mgt-name"
                             value={name}
                             onChange={(e) => setName(e.target.value)}
                             className=" tw-input"
+                            maxLength="30"
                         />
                         <label htmlFor="duration">Duration</label>
                         <input
@@ -132,6 +133,7 @@ function Membership() {
                             value={duration || 0}
                             onChange={(e) => setDuration(e.target.value)}
                             className=" tw-input"
+                            min="0"
                         />
                         <label htmlFor="pass">Pass</label>
                         <input
@@ -140,6 +142,7 @@ function Membership() {
                             value={pass || 0}
                             onChange={(e) => setPass(e.target.value)}
                             className=" tw-input"
+                            min="0"
                         />
                         <label htmlFor="price">Price (NZD)*</label>
                         <input
@@ -148,6 +151,7 @@ function Membership() {
                             value={price}
                             onChange={(e) => setPrice(e.target.value)}
                             className=" tw-input"
+                            min="0"
                         />
                         <OptionButton
                             updateData={updateData}
@@ -159,7 +163,7 @@ function Membership() {
         }
 
         return (
-            <div className="flex flex-col flex-grow min-w-max">
+            <div className="flex flex-col w-192">
                 <ToolBar title="Membership" />
                 {content}
             </div>
