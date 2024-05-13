@@ -21,7 +21,6 @@ public class CheckinController : ControllerBase {
     }
 
     [HttpGet]
-    [Authorize]
     public async Task<ActionResult> GetAllCheckins() {
         var checkins = await _service.GetAllCheckins();
         return Ok(checkins);
