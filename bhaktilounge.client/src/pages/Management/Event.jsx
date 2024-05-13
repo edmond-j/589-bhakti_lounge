@@ -103,6 +103,7 @@ function Event() {
                     toast.success(selectedItem.name + " has been deleted.");
                 });
                 const index = items.indexOf(selectedItem);
+                console.log(index);
                 setItems((currentItems) =>
                     currentItems.filter((item) => item !== selectedItem)
                 ); //remove the deleted activity
@@ -112,7 +113,7 @@ function Event() {
                     if (items.length == 1)
                         //when the activities has only 1 element
                         setSelectedItem(null);
-                    else setSelectedItem(items[index]);
+                    else setSelectedItem(items[1]);
                 }
             }
             content = (
@@ -128,7 +129,7 @@ function Event() {
                             id="mgt-name"
                             value={name}
                             onChange={(e) => setName(e.target.value)}
-                            className=" twinput"
+                            className="tw-input"
                         />
                         <label htmlFor="price">Price (NZD)*</label>
                         <input
@@ -136,7 +137,7 @@ function Event() {
                             id="price"
                             value={price}
                             onChange={(e) => setPrice(e.target.value)}
-                            className=" twinput"
+                            className="tw-input"
                         />
                         <label htmlFor="date">Date</label>
                         <input
@@ -144,7 +145,7 @@ function Event() {
                             id="date"
                             value={date}
                             onChange={(e) => setDate(e.target.value)}
-                            className=" twinput"
+                            className="tw-input"
                         />
                         <label htmlFor="start-time">Start Time</label>
                         <input
@@ -152,7 +153,7 @@ function Event() {
                             id="start-time"
                             value={startTime || "00:00"}
                             onChange={(e) => setStartTime(e.target.value)}
-                            className=" twinput"
+                            className="tw-input"
                         />
                         <label htmlFor="end-time">End Time</label>
                         <input
@@ -160,7 +161,7 @@ function Event() {
                             id="end-time"
                             value={endTime || "00:00"}
                             onChange={(e) => setEndTime(e.target.value)}
-                            className=" twinput"
+                            className="tw-input"
                         />
                         <OptionButton
                             updateData={updateData}

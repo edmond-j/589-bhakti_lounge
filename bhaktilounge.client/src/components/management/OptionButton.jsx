@@ -5,12 +5,12 @@ function OptionButton({ updateData, deleteData }) {
         <div className="flex justify-evenly mt-6">
             <button
                 onClick={updateData}
-                className="twbtn text-white bg-slate-400 rounded hover:bg-slate-500">
+                className="tw-btn text-white bg-slate-400 rounded hover:bg-slate-500">
                 Update
             </button>
             <button
                 onClick={deleteData}
-                className="twbtn text-white bg-red-400 rounded hover:bg-red-500">
+                className="tw-btn text-white bg-red-400 rounded hover:bg-red-500">
                 Delete
             </button>
         </div>

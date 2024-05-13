@@ -131,7 +131,7 @@ function Activity() {
                     if (activities.length == 1)
                         //when the activities has only 1 element
                         setSelectedItem(null);
-                    else setSelectedItem(activities[index]);
+                    else setSelectedItem(activities[1]);
                 }
             }
             content = (
@@ -147,7 +147,7 @@ function Activity() {
                             id="mgt-name"
                             value={name}
                             onChange={(e) => setName(e.target.value)}
-                            className=" twinput"
+                            className="tw-input"
                         />
                         <label htmlFor="price">Price (NZD)*</label>
                         <input
@@ -155,14 +155,14 @@ function Activity() {
                             id="price"
                             value={price}
                             onChange={(e) => setPrice(e.target.value)}
-                            className=" twinput"
+                            className="tw-input"
                         />
                         <label htmlFor="days">Days</label>
                         <select
                             id="days"
                             value={daysOfWeek}
                             onChange={(e) => setDaysOfWeek(e.target.value)}
-                            className=" twinput">
+                            className="tw-input">
                             <option>Monday</option>
                             <option>Tuesday</option>
                             <option>Wednesday</option>
@@ -177,7 +177,7 @@ function Activity() {
                             id="start-time"
                             value={startTime || "00:00"}
                             onChange={(e) => setStartTime(e.target.value)}
-                            className=" twinput"
+                            className="tw-input"
                         />
                         <label htmlFor="end-time">End Time</label>
                         <input
@@ -185,7 +185,7 @@ function Activity() {
                             id="end-time"
                             value={endTime || "00:00"}
                             onChange={(e) => setEndTime(e.target.value)}
-                            className=" twinput"
+                            className="tw-input"
                         />
                         <div className="grid grid-cols-2 space-x-6 mt-2 mb-6">
                             <label htmlFor="include-yoga">Include Yoga</label>
@@ -194,7 +194,7 @@ function Activity() {
                                 id="include-yoga"
                                 checked={includeYoga}
                                 onChange={(e) => setYoga(e.target.checked)}
-                                className="twcheck"
+                                className="tw-check"
                             />
                         </div>
                         <div className="grid grid-cols-2 space-x-6 mt-2 mb-6">
@@ -206,7 +206,7 @@ function Activity() {
                                 id="include-dinner"
                                 checked={includeDinner}
                                 onChange={(e) => setDinner(e.target.checked)}
-                                className="twcheck"
+                                className="tw-check"
                             />
                         </div>
                         <OptionButton

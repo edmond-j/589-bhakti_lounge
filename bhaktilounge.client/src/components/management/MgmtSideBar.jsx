@@ -28,43 +28,43 @@ function MgmtSideBar() {
             <div className="w-full px-2">
                 <div className="flex flex-col items-center w-full mt-3 border-t border-gray-700">
                     <NavLink className={linkClass} to="report">
-                        <GrDashboard className="w-6 h-6 stroke-current" />
-                        <span className="ml-2 text-base font-medium">
+                        <GrDashboard className="tw-sidebar-icon" />
+                        <span className="tw-sidebar-item">
                             Dasboard
                         </span>
                     </NavLink>
                     <NavLink className={linkClass} to="activity">
-                        <GrYoga className="w-6 h-6 stroke-current" />
-                        <span className="ml-2 text-base font-medium">
+                        <GrYoga className="tw-sidebar-icon" />
+                        <span className="tw-sidebar-item">
                             Activity
                         </span>
                     </NavLink>
                     <NavLink className={linkClass} to="event">
-                        <MdOutlineEmojiEvents className="w-6 h-6 stroke-current" />
-                        <span className="ml-2 text-base font-medium">
+                        <MdOutlineEmojiEvents className="tw-sidebar-icon" />
+                        <span className="tw-sidebar-item">
                             Event
                         </span>
                     </NavLink>
                     <NavLink className={linkClass} to="membership">
-                        <FaPeopleGroup className="w-6 h-6 stroke-current" />
-                        <span className="ml-2 text-base font-medium">
+                        <FaPeopleGroup className="tw-sidebar-icon" />
+                        <span className="tw-sidebar-item">
                             Membership
                         </span>
                     </NavLink>
                     <NavLink className={linkClass} to="misc">
-                        <MdOutlineDisplaySettings className="w-6 h-6 stroke-current" />
-                        <span className="ml-2 text-base font-medium">Misc</span>
+                        <MdOutlineDisplaySettings className="tw-sidebar-icon" />
+                        <span className="tw-sidebar-item">Misc</span>
                     </NavLink>
                 </div>
                 <div className="flex flex-col items-center w-full mt-2 border-t border-gray-700">
                     <NavLink className={linkClass} to="user">
-                    <FaUserLock className="w-6 h-6 stroke-current"/>
-                        <span className="ml-2 text-base font-medium">User</span>
+                    <FaUserLock className="tw-sidebar-icon"/>
+                        <span className="tw-sidebar-item">User</span>
                     </NavLink>
                 </div>
             </div>
             <a href="/check-in" className="flex items-center justify-center w-full h-16 mt-auto bg-gray-800 hover:bg-gray-700 hover:text-gray-300 rounded-bl-2xl">
-                <ImExit className="w-6 h-6 stroke-current"/>
+                <ImExit className="tw-sidebar-icon"/>
                 <span className="ml-2 text-base font-bold">To Check In</span>
             </a>
         </div>

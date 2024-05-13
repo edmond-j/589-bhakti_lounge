@@ -49,7 +49,7 @@ function ItemList({ type, items, setItem, setSelectedItem }) {
                     <ul id="mgmt-itemlist">
                         {items.map((item) => (
                             <li
-                                className="flex items-center flex-shrink-0 h-9 px-4 my-1 text-sm font-medium rounded-lg hover:bg-gray-300"
+                                className="flex items-center flex-shrink-0 h-9 px-4 my-1 text-base font-medium rounded-lg hover:bg-gray-300"
                                 id={`item-${item.id}`}
                                 tabIndex="0"
                                 key={item.id}
@@ -64,7 +64,7 @@ function ItemList({ type, items, setItem, setSelectedItem }) {
                     </label>
                 )}
                 <button
-                    className="twbtn flex flex-shrink-0 mt-auto bg-primary rounded hover:bg-yellow-500"
+                    className="tw-btn flex flex-shrink-0 mt-auto bg-primary rounded hover:bg-yellow-500"
                     onClick={createNew}>
                     <IoMdAdd className="w-5 h-5 mr-2" />
                     Add New

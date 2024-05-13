@@ -73,12 +73,10 @@ function Membership() {
                     headers: { "Content-Type": "application/json" },
                     body: JSON.stringify(newData),
                 };
-                // console.log(JSON.stringify(newData));
                 fetch("/api/v1/memberclass", requestOptions)
                     .then((response) => response.json())
                     .then((data) => {
                         console.log("Update Succesful:", data);
-                        // alert(data.name + " has been updated!");
                         toast.success(data.name + " has been updated!");
                         const updatedItems = items.map((item) =>
                             item.id === data.id ? data : item
@@ -109,7 +107,7 @@ function Membership() {
                     if (items.length == 1)
                         //when the activities has only 1 element
                         setSelectedItem(null);
-                    else setSelectedItem(items[index]);
+                    else setSelectedItem(items[1]);
                 }
             }
             content = (
@@ -125,7 +123,7 @@ function Membership() {
                             id="mgt-name"
                             value={name}
                             onChange={(e) => setName(e.target.value)}
-                            className=" twinput"
+                            className=" tw-input"
                         />
                         <label htmlFor="duration">Duration</label>
                         <input
@@ -133,7 +131,7 @@ function Membership() {
                             id="duration"
                             value={duration || 0}
                             onChange={(e) => setDuration(e.target.value)}
-                            className=" twinput"
+                            className=" tw-input"
                         />
                         <label htmlFor="pass">Pass</label>
                         <input
@@ -141,7 +139,7 @@ function Membership() {
                             id="pass"
                             value={pass || 0}
                             onChange={(e) => setPass(e.target.value)}
-                            className=" twinput"
+                            className=" tw-input"
                         />
                         <label htmlFor="price">Price (NZD)*</label>
                         <input
@@ -149,7 +147,7 @@ function Membership() {
                             id="price"
                             value={price}
                             onChange={(e) => setPrice(e.target.value)}
-                            className=" twinput"
+                            className=" tw-input"
                         />
                         <OptionButton
                             updateData={updateData}
@@ -159,11 +157,10 @@ function Membership() {
                 </div>
             );
         }
-        // console.log(selectedItem.id);
 
         return (
             <div className="flex flex-col flex-grow min-w-max">
-                <ToolBar title="Event" />
+                <ToolBar title="Membership" />
                 {content}
             </div>
         );
