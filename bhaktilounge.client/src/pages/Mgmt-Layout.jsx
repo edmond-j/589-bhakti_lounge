@@ -3,6 +3,8 @@ import { Bounce, Slide, Zoom, Flip, ToastContainer } from "react-toastify";
 import MgmtSideBar from "../components/management/MgmtSideBar.jsx";
 import "react-toastify/dist/ReactToastify.css";
 import "./style.css";
+import PrivateRoute from "@/ProtectedRoute.jsx";
+import ProtectedRoute from "@/ProtectedRoute.jsx";
 // import "./Management.css"
 
 function MgmtLayout() {
@@ -11,7 +13,9 @@ function MgmtLayout() {
             <div className="flex overflow-auto w-320 min-h-full text-gray-700">
                 {/* <MgmtHeader /> */}
                 <MgmtSideBar />
-                <Outlet />
+                {/*<ProtectedRoute>*/}
+                    <Outlet />
+                {/*</ProtectedRoute>*/}
                 <div className="mt-28">
                     <ToastContainer
                         position="bottom-right"
