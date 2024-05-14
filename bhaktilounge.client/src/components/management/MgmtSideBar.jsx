@@ -13,7 +13,7 @@ function MgmtSideBar() {
     return (
         <div className="flex flex-col items-center w-64 h-full text-gray-400 bg-gray-900 rounded-l-2xl">
             <div className="flex items-center w-full px-8 pt-8">
-                <img src="/public/bhakti-logo-alt.webp" alt="logo" />
+                <img src="/bhakti-logo-alt.webp" alt="logo" />
             </div>
             <div className="flex justify-center w-full px-3 mt-3">
                 {/* <GrYoga className="w-12 h-12 stroke-current"/> */}

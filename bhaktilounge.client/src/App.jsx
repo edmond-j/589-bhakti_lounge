@@ -7,8 +7,8 @@ function App() {
             <h1 id="tabelLabel">User Login</h1>
             <p>This component demonstrates fetching data from the server.</p>
             <div className="form-group">
-                <Link to="/check">Login</Link>
-                <Link to="/register">Register</Link>
+                <Link to="/check/check-in">Login</Link>
+                <Link to="/check/register">Register</Link>
                 <Link to="/management/activity">Activity</Link>
                 <br />
                 <Link to="/management/event">Event</Link>

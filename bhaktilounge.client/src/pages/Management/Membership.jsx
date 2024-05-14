@@ -5,7 +5,7 @@ import ItemList from "/src/components/management/ItemList";
 import ToolBar from "../../components/management/ToolBar";
 import OptionButton from "../../components/management/OptionButton";
 import { itemHighlight } from "./method";
-import spinner from "/public/spinner.svg";
+import spinner from "/spinner.svg";
 
 function Membership() {
     const [items, setItems] = useState([]);
