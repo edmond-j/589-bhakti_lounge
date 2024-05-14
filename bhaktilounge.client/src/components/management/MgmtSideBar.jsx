@@ -52,11 +52,12 @@ function MgmtSideBar() {
                     </NavLink>
                 </div>
             </div>
-            <div
+            <a
+                href="/check/check-in"
                 className="flex items-center justify-center w-full h-16 mt-auto bg-gray-800 hover:bg-gray-700 hover:text-gray-300 rounded-bl-2xl">
                 <ImExit className="tw-sidebar-icon" />
                 <span className="ml-2 text-base font-bold">To Check In</span>
-            </div>
+            </a>
         </div>
     );
 }

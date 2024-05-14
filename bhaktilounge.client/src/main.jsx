@@ -33,23 +33,12 @@ ReactDOM.createRoot(document.getElementById("root")).render(
                         element={<SubscriptionForm />}
                     />
                 </Route>
-
-                    <Route path="/management" element={
-
-                        <MgmtLayout />
-
-                        }>
-                        <Route path="activity" element={
-
-                            <Activity />
-
-                        }
-                        />
-                        <Route path="event" element={<Event />} />
-                        <Route path="membership" element={<Membership />} />
-                        <Route path="*" element={<NotFound />} />
-                    </Route>
-
+                <Route path="/management" element={<MgmtLayout />}>
+                    <Route path="activity" element={<Activity />} />
+                    <Route path="event" element={<Event />} />
+                    <Route path="membership" element={<Membership />} />
+                    <Route path="*" element={<NotFound />} />
+                </Route>
             </Routes>
         </BrowserRouter>
     </Provider>
