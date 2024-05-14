@@ -1,6 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import logo from "../assets/BhaktiLounge-Logo.png";
+import logo from "/logo.jpg";
 
 const Header = () => {
     const navigate = useNavigate();
@@ -11,7 +11,9 @@ const Header = () => {
     const goManagement = () => {
         navigate("/management/activity");
     };
-
+    const goHome = () => {
+        navigate("/");
+    };
     return (
         <header className="Header">
             <img src={logo} alt="BHAKTI Lounge Logo" height="80" className="Header-logo" />
@@ -22,7 +24,7 @@ const Header = () => {
                 <button className="tw-btn" onClick={register}>
                     New Customer
                 </button>
-                <button className="tw-btn">Log out</button>
+                <button className="tw-btn" onClick={goHome}>Log out</button>
             </div>
         </header>
     );

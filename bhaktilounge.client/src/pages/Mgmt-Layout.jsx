@@ -2,7 +2,6 @@ import { Outlet } from "react-router-dom";
 import { Bounce, Slide, Zoom, Flip, ToastContainer } from "react-toastify";
 import MgmtSideBar from "../components/management/MgmtSideBar.jsx";
 import "react-toastify/dist/ReactToastify.css";
-import "./style.css";
 // import "./Management.css"
 
 function MgmtLayout() {
