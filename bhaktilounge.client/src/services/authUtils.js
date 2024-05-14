@@ -1,7 +1,10 @@
-﻿const API_URL = "/api/v1/auth/";
+﻿import {useDispatch} from "react-redux";
+import {setToken, clearToken}  from "./tokenSlice.js";
+const API_URL = "/api/v1/auth/";
+const dispatch = useDispatch();
 
 // Function to register a new user
-const signup = (username, email, password, firstname, lastname) => {
+const signup = (username, email, password) => {
 	return fetch(API_URL + "signup", {
 		method: "POST",
 		headers: {
@@ -12,8 +15,8 @@ const signup = (username, email, password, firstname, lastname) => {
 				username: username,
 				email: email,
 				password: password,
-				firstname: firstname,
-				lastname: lastname
+/*				firstname: firstname,
+				lastname: lastname*/
 			}),
 	})
 		.then(response => {
@@ -28,8 +31,8 @@ const signup = (username, email, password, firstname, lastname) => {
 };
 
 // Function to login a user
-const signin = (username, password) => {
-	return fetch(API_URL + "signin", {
+export const login = async (username, password) => {
+	fetch(API_URL + "signin", {
 		method: "POST",
 		headers: {
 			"Content-Type": "application/json",
@@ -43,13 +46,11 @@ const signin = (username, password) => {
 			if (!response.ok) {
 				throw new Error('Network response was not ok');
 			}
-			return response.json();
 		})
 		.then(data => {
-			if (data.accessToken) {
-				localStorage.setItem("user", JSON.stringify(data));
+			if (data.token) {
+				dispatch(setToken(data.token))
 			}
-			return data;
 		})
 		.catch(error => {
 			console.error('There was a problem with the fetch operation:', error);
@@ -57,13 +58,9 @@ const signin = (username, password) => {
 };
 
 
-const signout = () => {
-	localStorage.removeItem("user");
+export const logout = async () => {
+	await dispatch(clearToken());
 };
 
 // Exporting the functions as an object
-export default {
-	signup,
-	signin,
-	signout,
-};
+

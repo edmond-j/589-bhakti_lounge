@@ -86,7 +86,11 @@ public class AuthController : ControllerBase
             signingCredentials: cred
         );
 
-        return Ok(new { token = new JwtSecurityTokenHandler().WriteToken(token) });
+        return Ok(new
+        {
+            username = user.UserName,
+            token = new JwtSecurityTokenHandler().WriteToken(token)
+        });
     }
 
 }
