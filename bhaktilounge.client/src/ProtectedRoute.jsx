@@ -4,7 +4,7 @@ import {jwtDecode} from "jwt-decode";
 import {clearToken} from "@/services/tokenSlice.js";
 import {useEffect} from "react";
 import {useDispatch} from "react-redux";
-const PrivateRoute = ({ children }) => {
+const ProtectedRoute = ({ children }) => {
 	const dispatch = useDispatch();
 	const token = useSelector((state) => state.token.value);
 	useEffect(() => {
@@ -21,4 +21,4 @@ const PrivateRoute = ({ children }) => {
 	return token==null ? <Navigate to="/" />:children ;
 };
 
-export default PrivateRoute;
+export default ProtectedRoute;
