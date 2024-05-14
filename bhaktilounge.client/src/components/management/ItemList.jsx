@@ -66,7 +66,7 @@ function ItemList({ type, items, setItem, setSelectedItem }) {
                     )}
                 </div>
                 <button
-                    className="tw-btn flex flex-shrink-0 mt-auto bg-primary rounded hover:bg-yellow-500"
+                    className="tw-btn flex flex-shrink-0 mt-auto rounded"
                     onClick={createNew}>
                     <IoMdAdd className="w-5 h-5 mr-2" />
                     Add New

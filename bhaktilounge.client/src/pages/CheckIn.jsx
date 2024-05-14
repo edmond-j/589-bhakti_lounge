@@ -5,14 +5,13 @@ import CheckinNumbers from "../components/CheckinNumbers";
 
 function CheckIn() {
     return (
-        <div className="CheckIn">
+        <>
             <Header />
             <h2>Customer Check-in</h2>
-            <CheckinNumbers />
+            {/* <CheckinNumbers /> */}
             <NameInput />
             <Footer />
-
-        </div>
+        </>
     );
 }
 

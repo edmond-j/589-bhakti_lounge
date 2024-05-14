@@ -1,16 +1,11 @@
 import { Outlet } from "react-router-dom";
 import { Bounce, Slide, Zoom, Flip, ToastContainer } from "react-toastify";
-import MgmtSideBar from "../components/management/MgmtSideBar.jsx";
-import "react-toastify/dist/ReactToastify.css";
-import "/public/style.css";
-// import "./Management.css"
+import React from "react";
 
-function Management() {
+function ChkLayout() {
     return (
-        <div className="flex justify-center p-8 min-h-screen bg-gray-500">
-            <div className="flex overflow-auto w-320 min-h-full text-gray-700">
-                {/* <MgmtHeader /> */}
-                <MgmtSideBar />
+        <div className="chk-body bg-gray-500">
+            <div className="chk-root text-gray-700">
                 <Outlet />
                 <div className="mt-28">
                     <ToastContainer
@@ -23,4 +18,5 @@ function Management() {
         </div>
     );
 }
-export default Management;
+
+export default ChkLayout;

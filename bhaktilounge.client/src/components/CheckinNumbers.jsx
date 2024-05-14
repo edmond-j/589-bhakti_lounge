@@ -21,8 +21,8 @@ const CheckinNumbers = () => {
 
     return (
         <div>
-            <h5>Total Check-in Today: {checkinNumbers.totalCheckIns}</h5>
-            <h5>Total Diners Today: {checkinNumbers.dinners}</h5>
+            <p>Check-in: {checkinNumbers.totalCheckIns}</p>
+            <p>Diners: {checkinNumbers.dinners}</p>
         </div>
 
     );

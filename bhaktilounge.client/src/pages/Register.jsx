@@ -39,7 +39,7 @@ const Register = () => {
             })
             .catch((error) => console.error("Error:", error));
         const customerName = FirstName + " " + LastName;
-        navigate('/check-in', { state: { FirstName } });
+        navigate('check/check-in', { state: { FirstName } });
     };
 
     return (
@@ -97,9 +97,9 @@ const Register = () => {
                         </select>
                     </div>
                     <div className='button-container'>
-                        <button type="submit">Sign Up</button>
+                        <button className="tw-btn" type="submit">Sign Up</button>
                         {/* <button type="submit" onClick={backButton}>Back</button> */}
-                        <button ><Link to="/check-in" className='white-text' >Back</Link></button>
+                        <button className="tw-btn"><Link to="/check/check-in" >Back</Link></button>
                     </div>
                 </form>
             </div>

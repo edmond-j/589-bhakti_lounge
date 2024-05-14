@@ -50,8 +50,8 @@ function EventSelector({ onEventSelect }) {
     };
 
     return (
-        <div className="form-container">
-            <label className="input-labels">Events</label>
+        <div className="form-group">
+            <label>Events</label>
             <input
                 htmlFor="events"
                 type="text"

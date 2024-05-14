@@ -1,47 +1,34 @@
-﻿@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;400;600;700&display=swap');
+﻿@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@200;400;600;700&display=swap");
 
-#root {
+.chk-root {
     max-width: 1280px;
+    min-width: 640px;
     min-height: 500px;
     margin: 0 auto;
     padding: 2rem;
     text-align: center;
-    font-family: 'Poppins', sans-serif;
-    color: #000;
+    font-family: "Poppins", sans-serif;
+    color: #374151;
     background-color: #fff;
 }
 
-tr:nth-child(even) {
-    background: #F2F2F2;
-}
-
-tr:nth-child(odd) {
-    background: #FFF;
-}
-
-th,
-td {
-    padding-left: 1rem;
-    padding-right: 1rem;
-}
-
-.form-group {
+/* .form-group {
     display: flex;
     flex-direction: column;
-}
+} */
 
 /* Check in page */
-.CheckIn {
+/* .CheckIn {
     text-align: center;
     position: relative;
     height: 100%;
-}
+} */
 
-.check-in-container {
+/* .check-in-container {
     display: block;
     margin: 50px auto;
     width: 50%;
-}
+} */
 
 /* Header Component */
 .Header {
@@ -56,49 +43,41 @@ td {
 
 .Header-logo {
     height: 80px;
-    /* Adjust as per your logo's aspect ratio */
     margin-right: 10px;
 }
 
-.line-buttons {
+/* .line-buttons {
+    display: flex;
+    
     align-self: center;
-}
+} */
 
-.button-class {
+/* .button-class {
     margin: 5px 10px;
     padding: 3px 8px;
     font-size: 0.8em;
     font-weight: 200;
-    background-color: #FBBB19;
+    background-color: #fbbb19;
     color: #000;
-}
+} */
 
-.button-class.enabled {
-    background-color: #FBBB19;
-}
-
-.button-class.disabled {
+.tw-btn.disabled {
     background-color: rgb(195, 192, 192);
     cursor: not-allowed;
 }
 
-h2 {
-    flex-basis: 100%;
-    text-align: center;
-    font-weight: 200;
+.tw-btn.disabled:hover {
+    background-color: rgb(168, 168, 168);
 }
-
-h3 {
-    flex-basis: 100%;
-    text-align: center;
-    font-weight: 200;
-}
-
+/* h1,
+h2,
+h3,
+h4,
 h5 {
     flex-basis: 100%;
     text-align: center;
     font-weight: 200;
-}
+} */
 
 /* Footer Component */
 .Footer {
@@ -112,7 +91,7 @@ h5 {
 }
 
 /* Name Input Component */
-.form-container {
+/* .form-container {
     position: relative;
     display: flex;
     flex-direction: column;
@@ -120,11 +99,11 @@ h5 {
     align-items: center;
     height: auto;
     min-height: 100%;
-}
+} */
 
-input:not([type="checkbox"]),
+/* input:not([type="checkbox"]),
 select {
-    background-color: #F2F2F2;
+    background-color: #f2f2f2;
     border-radius: 15px;
     height: 25px;
     min-width: 250px;
@@ -133,15 +112,15 @@ select {
     padding: 5px;
     color: #000;
     margin: 0 0 5px 0;
-}
+} */
 
-.input-labels {
+/* .input-labels {
     font-size: 1em;
     display: block;
     margin: 5px;
     width: 100%;
     font-weight: 200;
-}
+} */
 
 .suggestions-list {
     min-width: 250px;

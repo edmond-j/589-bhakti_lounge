@@ -6,7 +6,7 @@ const Header = () => {
     const navigate = useNavigate();
 
     const register = () => {
-        navigate("/register");
+        navigate("/check/register");
     };
     const goManagement = () => {
         navigate("/management/activity");
@@ -14,16 +14,16 @@ const Header = () => {
 
     return (
         <header className="Header">
-            <img src={logo} alt="BHAKTI Lounge Logo" className="Header-logo" />
-            <span className="line-buttons">
-                <button className="button-class" onClick={goManagement}>
+            <img src={logo} alt="BHAKTI Lounge Logo" height="80" className="Header-logo" />
+            <div className="button-container">
+                <button className="tw-btn" onClick={goManagement}>
                     Manage
                 </button>
-                <button className="button-class" onClick={register}>
+                <button className="tw-btn" onClick={register}>
                     New Customer
                 </button>
-                <button className="button-class">Log out</button>
-            </span>
+                <button className="tw-btn">Log out</button>
+            </div>
         </header>
     );
 };

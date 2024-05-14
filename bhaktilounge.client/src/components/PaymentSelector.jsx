@@ -40,8 +40,8 @@ function PaymentSelector({ onPaymentSelect, hasMembership }) {
     };
 
     return (
-        <div className="form-container">
-            <label className="input-labels">Payments</label>
+        <div className="form-group">
+            <label>Payments</label>
             <input
                 htmlFor="payments"
                 type="text"
