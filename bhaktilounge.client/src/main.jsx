@@ -14,9 +14,13 @@ import NotFound from "./pages/Management/NotFound.jsx";
 import MgmtLayout from "./pages/Mgmt-Layout.jsx";
 import ChkLayout from "./pages/Chk-Layout.jsx";
 import SubscriptionForm from "./pages/Subscribe.jsx";
+import ProtectedRoute from "@/ProtectedRoute.jsx";
+import { Provider } from 'react-redux';
+import store from './services/store.js';
 
 ReactDOM.createRoot(document.getElementById("root")).render(
     <React.StrictMode>
+    <Provider store={store}>
         <BrowserRouter>
             <Routes>
                 <Route path="/" element={<App />} />
@@ -29,13 +33,20 @@ ReactDOM.createRoot(document.getElementById("root")).render(
                         element={<SubscriptionForm />}
                     />
                 </Route>
-                <Route path="/management" element={<MgmtLayout />}>
-                    <Route path="activity" element={<Activity />} />
-                    <Route path="event" element={<Event />} />
-                    <Route path="membership" element={<Membership />} />
-                    <Route path="*" element={<NotFound />} />
-                </Route>
+
+                    <Route path="/management" element={
+                        <ProtectedRoute>
+                        <MgmtLayout />
+                        </ProtectedRoute>
+                        }>
+                        <Route path="activity" element={<Activity />} />
+                        <Route path="event" element={<Event />} />
+                        <Route path="membership" element={<Membership />} />
+                        <Route path="*" element={<NotFound />} />
+                    </Route>
+
             </Routes>
         </BrowserRouter>
+    </Provider>
     </React.StrictMode>
 );
