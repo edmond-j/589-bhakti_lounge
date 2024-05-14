@@ -4,6 +4,7 @@ import { debounce } from 'lodash';
 import ActivitySelector from './ActivitySelector';
 import EventSelector from './EventSelector';
 import PaymentSelector from './PaymentSelector';
+import CheckinNumbers from './CheckinNumbers';
 import { useLocation } from 'react-router-dom';
 
 
@@ -53,7 +54,7 @@ function NameInput() {
 
     const handleCustomerSuggestionClick = (customerSuggestion) => {
         if (customerSuggestion.id === -1) {
-            navigate('/register');
+            navigate('/check/register');
         } else {
             setSelectedCustomer(customerSuggestion);
             setShowCustomerDetails(true);
@@ -73,7 +74,7 @@ function NameInput() {
     }, [selectedCustomer]);
 
     const subscribe = () => {
-        navigate(`/subscribe/${selectedCustomer.id}/${selectedCustomer.firstName}/${selectedCustomer.lastName}/${selectedCustomer.email}`);
+        navigate(`/check/subscribe/${selectedCustomer.id}/${selectedCustomer.firstName}/${selectedCustomer.lastName}/${selectedCustomer.email}`);
     }
 
     const handleSelectedActivities = (selected) => {
@@ -154,7 +155,7 @@ function NameInput() {
     }, [selectedActivities, selectedEvents, selectedPayment]);
 
     return (
-        <div className="form-container" >
+        <div className="form-group" >
             {!showDetails && (
                 <>
                     <label className="input-labels">Customer Name</label>
@@ -180,7 +181,7 @@ function NameInput() {
                     <div className="customer-details">
                         <h3>Existing Customer</h3>
 
-                        <label className="input-labels">First Name</label>
+                        <label >First Name</label>
                         <input
                             type="text"
                             placeholder="First Name"
@@ -188,7 +189,7 @@ function NameInput() {
                             readOnly
                         />
 
-                        <label className="input-labels">Last Name</label>
+                        <label >Last Name</label>
                         <input
                             type="text"
                             placeholder="Last Name"
@@ -196,7 +197,7 @@ function NameInput() {
                             readOnly
                         />
 
-                        <label className="input-labels">Email</label>
+                        <label >Email</label>
                         <input
                             type="text"
                             placeholder="Last Name"
@@ -204,14 +205,14 @@ function NameInput() {
                             readOnly
                         />
 
-                        <label className="input-labels">Membership</label>
+                        <label >Membership</label>
                         <input
                             type="text"
                             placeholder="Membership"
                             value={membershipDetail}
                             readOnly
                         />
-                        <button className='button-class' onClick={subscribe}>Buy Membership</button>
+                        <button className='tw-btn mt-6' onClick={subscribe}>Buy Membership</button>
 
                         <ActivitySelector onActivitySelect={handleSelectedActivities} />
 
@@ -219,13 +220,13 @@ function NameInput() {
 
                         <PaymentSelector onPaymentSelect={handleSelectedPayment} hasMembership={hasMembership} />
 
-                        <h5>Total Price: ${totalPrice}</h5>
+                        <h3 className='mt-6'>Total Price: ${totalPrice}</h3>
 
                     </div>
-                    <span className='line-buttons'>
-                        <button className='button-class' onClick={handleBackClick}>Back</button>
+                    <span className='button-container'>
+                        <button className='tw-btn' onClick={handleBackClick}>Back</button>
                         <button
-                            className={`button-class ${isCheckInEnabled ? 'enabled' : 'disabled'}`}
+                            className={`tw-btn ${isCheckInEnabled ? 'enabled' : 'disabled'}`}
                             onClick={handleCheckInClick}
                             disabled={!isCheckInEnabled}
                         >

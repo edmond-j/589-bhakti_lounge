@@ -1,35 +1,33 @@
 import { useState } from "react";
-import styles from "./subscribe.module.css";
-import logo from '../assets/BhaktiLounge-Logo.png';
+// import styles from "./subscribe.module.css";
+import logo from "../assets/BhaktiLounge-Logo.png";
 import { useEffect } from "react";
-import { useParams } from 'react-router-dom';
-import { useNavigate } from 'react-router-dom';
-
-
+import { useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const isoDate = (date) => {
-    return date.toISOString().substring(0,10);
-}
+    return date.toISOString().substring(0, 10);
+};
 
 function SubscriptionForm() {
     // function SubscriptionForm({ id, customerName, email }) {
-    const { id,firstName,lastName,email } = useParams();
+    const { id, firstName, lastName, email } = useParams();
     const [subscription, setSubscription] = useState({ id });
     const [products, setProducts] = useState([]);
     const navigate = useNavigate();
 
     useEffect(() => {
-        fetch('/api/v1/MemberClass', {
-            method: 'GET',
+        fetch("/api/v1/MemberClass", {
+            method: "GET",
             headers: {
-                'Content-Type': 'application/json',
-            }
+                "Content-Type": "application/json",
+            },
         })
-            .then(resp => {
-                resp.json().then(d => setProducts(d))                
+            .then((resp) => {
+                resp.json().then((d) => setProducts(d));
             })
-            .catch(err => console.log(err));
-    }  , []);
+            .catch((err) => console.log(err));
+    }, []);
 
     const handleInputChange = (event) => {
         const { name, value } = event.target;
@@ -40,7 +38,9 @@ function SubscriptionForm() {
         setSubscription(newSub);
     };
 
-    const selectedSub = products.find((p) => p.id == subscription.memberClassId);
+    const selectedSub = products.find(
+        (p) => p.id == subscription.memberClassId
+    );
     let sessions = 0;
     let startDate = new Date();
     let endDate = new Date();
@@ -52,63 +52,55 @@ function SubscriptionForm() {
     const handleSubmit = async (event) => {
         event.preventDefault();
 
-
         const formData = {
             customerId: id,
-            subStartDate: isoDate( startDate),
-            subEndDate: isoDate( endDate),
+            subStartDate: isoDate(startDate),
+            subEndDate: isoDate(endDate),
             passRemain: selectedSub.pass,
         };
 
         try {
-            const response = await fetch('/api/v1/subscribe', {
-                method: 'POST',
+            const response = await fetch("/api/v1/subscribe", {
+                method: "POST",
                 headers: {
-                    'Content-Type': 'application/json',
+                    "Content-Type": "application/json",
                 },
-                body: JSON.stringify(formData)
+                body: JSON.stringify(formData),
             });
 
             if (response.ok) {
-
-                console.log('Subscription successful', await response.json());
+                console.log("Subscription successful", await response.json());
             } else {
-
-                throw new Error('Failed to submit subscription');
+                throw new Error("Failed to submit subscription");
             }
         } catch (error) {
-            console.error('Error submitting subscription:', error);
+            console.error("Error submitting subscription:", error);
         }
     };
-    
-        const handleBackToCheckin = () => {
-            navigate('/check-in')
-        };
-    
 
-  
-
-
-
+    const handleBackToCheckin = () => {
+        navigate("/check/check-in");
+    };
 
     return (
-        <div className={styles.subscriptionform}>
+        <>
             <img src={logo} alt="BHAKTI Lounge Logo" className="Header-logo" />
             <main>
-                <h3>Renew subscription for {firstName}  {lastName} </h3>
+                <h2>Renew subscription</h2>
+                <h3>
+                    for: {firstName} {lastName}{" "}
+                </h3>
                 <form
+                    className="form-group"
                     onSubmit={handleSubmit}
-                    style={{ display: "flex", flexDirection: "column" }}
-                >
-                    <div className='sbscriptionformContent'>
-                       
+                    style={{ display: "flex", flexDirection: "column" }}>
+                    <div className="sbscriptionformContent">
                         <label>
                             Select Membership Type
                             <select
                                 name="memberClassId"
                                 value={subscription.memberClassId}
-                                onChange={handleInputChange}
-                            >
+                                onChange={handleInputChange}>
                                 <option></option>
                                 {products.map((p) => {
                                     return (
@@ -121,9 +113,10 @@ function SubscriptionForm() {
                         </label>
 
                         {selectedSub && (
-                            <label className='label2'>
-                                <b>{sessions}</b> sessions {sessions === "unlimited" && <b>except </b>}
-                                 Thursdays until <b>{endDate.toDateString()}</b>
+                            <label className="label2">
+                                <b>{sessions}</b> sessions{" "}
+                                {sessions === "unlimited" && <b>except </b>}
+                                Thursdays until <b>{endDate.toDateString()}</b>
                             </label>
                         )}
 
@@ -134,16 +127,23 @@ function SubscriptionForm() {
                         )}
                     </div>
 
-                    <div style={{ alignItems: "center" }}>
-                        <div className={styles.subscriptionform}>
-                            <button type="button" onClick={handleBackToCheckin}>Back</button>
-                            <button type="submit">Confirm</button>
-                        </div>
+                    <div
+                        className="button-container"
+                        style={{ alignItems: "center" }}>
+                        <button
+                            className="tw-btn"
+                            type="button"
+                            onClick={handleBackToCheckin}>
+                            Back
+                        </button>
+                        <button className="tw-btn" type="submit">
+                            Confirm
+                        </button>
                     </div>
                 </form>
             </main>
             <footer>©Bhakti Lounge - Check-in</footer>
-        </div>
+        </>
     );
 }
 

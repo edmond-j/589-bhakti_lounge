@@ -9,8 +9,9 @@ button {
     margin-top: 15px;
     margin-bottom: 15px;
 }
-  
-input,select {
+
+input,
+select {
     display: block;
     text-align: left;
     padding-left: 15px;
@@ -30,13 +31,13 @@ input,select {
     width: 200px;
 }
 
-.mgt-list-item{
+.mgt-list-item {
     margin: 10px;
 }
 
-    .mgt-list-item:focus {
-        background-color: #fbbb19;
-    }
+.mgt-list-item:focus {
+    background-color: #fbbb19;
+}
 
 .mgt-form {
     border: 1px solid #ccc;
@@ -46,16 +47,16 @@ input,select {
     text-align: left;
 }
 
-    .mgt-form input,
-    .mgt-form select,
-    .mgt-form button {
-        margin-bottom: 10px;
-        width: 100%;
-    }
+.mgt-form input,
+.mgt-form select,
+.mgt-form button {
+    margin-bottom: 10px;
+    width: 100%;
+}
 
-    .mgt-form label {
-        margin-top: 10px;
-    }
+.mgt-form label {
+    margin-top: 10px;
+}
 
 /* MgtHeader */
 .header {
@@ -77,7 +78,8 @@ input,select {
 }
 
 .logo {
-    font-size: 24px; /* 调整为实际logo大小 */
+    font-size: 24px;
+    /* 调整为实际logo大小 */
     font-weight: bold;
 }
 
@@ -86,26 +88,27 @@ input,select {
     list-style: none;
     padding: 0;
 }
-    /* .menu li {
+
+/* .menu li {
   padding: 5px 10px;
   background-color: black;
   color: white;
 } */
 
-    .menu a {
-        padding: 5px 10px;
-        /* background-color: black; */
-        color: white;
-    }
+.menu a {
+    padding: 5px 10px;
+    /* background-color: black; */
+    color: white;
+}
 
 .user-info {
     display: flex;
     align-items: center;
 }
 
-    .user-info span {
-        margin-right: 10px;
-    }
+.user-info span {
+    margin-right: 10px;
+}
 
 .background-blue {
     background-color: #fbbb19;

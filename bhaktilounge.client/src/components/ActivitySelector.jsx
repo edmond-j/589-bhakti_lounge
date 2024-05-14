@@ -49,8 +49,8 @@ function ActivitySelector({ onActivitySelect }) {
     };
 
     return (
-        <div className="form-container">
-            <label className="input-labels">Activities</label>
+        <div className="form-group">
+            <label>Activities</label>
             <input
                 htmlFor="activities"
                 type="text"

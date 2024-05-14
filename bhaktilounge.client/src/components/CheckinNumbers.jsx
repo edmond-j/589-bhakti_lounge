@@ -1,8 +1,7 @@
 import { useEffect, useState } from 'react';
-import '../App.css';
+//import '../App.css';
 
 const CheckinNumbers = () => {
-
     const [checkinNumbers, setCheckinNumbers] = useState([]); // 初始化为空数组
 
     useEffect(() => {
@@ -22,8 +21,8 @@ const CheckinNumbers = () => {
 
     return (
         <div>
-            <h5>Total Check-in Today: {checkinNumbers.totalCheckIns}</h5>
-            <h5>Total Diners Today: {checkinNumbers.dinners}</h5>
+            <p>Check-in: {checkinNumbers.totalCheckIns}</p>
+            <p>Diners: {checkinNumbers.dinners}</p>
         </div>
 
     );

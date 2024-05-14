@@ -7,13 +7,13 @@ import OptionButton from "../../components/management/OptionButton";
 import { itemHighlight } from "./method";
 import spinner from "/public/spinner.svg";
 
-function Event() {
+function Membership() {
     const [items, setItems] = useState([]);
     const [selectedItem, setSelectedItem] = useState(null);
     const [isLoading, setLoading] = useState(true);
     useEffect(() => {
         async function populateActivityData() {
-            fetch("/api/v1/event")
+            fetch("/api/v1/memberclass")
                 .then((response) => response.json())
                 .then((data) => {
                     console.log("acquire", data);
@@ -50,25 +50,22 @@ function Event() {
         } else {
             useEffect(() => {
                 setName(selectedItem.name);
+                setDuration(selectedItem.duration);
+                setPass(selectedItem.pass);
                 setPrice(selectedItem.price);
-                setStartTime(selectedItem.startTime);
-                setEndTime(selectedItem.endTime);
-                setDate(selectedItem.date);
             }, [selectedItem]);
             const [name, setName] = useState(selectedItem.name);
+            const [duration, setDuration] = useState(selectedItem.duration);
+            const [pass, setPass] = useState(selectedItem.pass);
             const [price, setPrice] = useState(selectedItem.price);
-            const [date, setDate] = useState(selectedItem.date);
-            const [startTime, setStartTime] = useState(selectedItem.startTime);
-            const [endTime, setEndTime] = useState(selectedItem.endTime);
 
             function updateData() {
                 let newData = {
                     id: selectedItem.id,
                     name,
+                    duration,
+                    pass,
                     price,
-                    date,
-                    startTime,
-                    endTime,
                 };
 
                 const requestOptions = {
@@ -76,12 +73,10 @@ function Event() {
                     headers: { "Content-Type": "application/json" },
                     body: JSON.stringify(newData),
                 };
-                // console.log(JSON.stringify(newData));
-                fetch("/api/v1/event", requestOptions)
+                fetch("/api/v1/memberclass", requestOptions)
                     .then((response) => response.json())
                     .then((data) => {
                         console.log("Update Succesful:", data);
-                        // alert(data.name + " has been updated!");
                         toast.success(data.name + " has been updated!");
                         const updatedItems = items.map((item) =>
                             item.id === data.id ? data : item
@@ -93,7 +88,7 @@ function Event() {
             }
 
             function deleteData() {
-                const url = "/api/v1/event?Id=" + selectedItem.id;
+                const url = "/api/v1/memberclass?Id=" + selectedItem.id;
                 const requestOptions = {
                     method: "DELETE",
                     headers: { "Content-Type": "application/json" },
@@ -103,7 +98,6 @@ function Event() {
                     toast.success(selectedItem.name + " has been deleted.");
                 });
                 const index = items.indexOf(selectedItem);
-                console.log(index);
                 setItems((currentItems) =>
                     currentItems.filter((item) => item !== selectedItem)
                 ); //remove the deleted activity
@@ -123,14 +117,32 @@ function Event() {
                         <p>ID: {selectedItem.id}</p>
                     </div>
                     <div className="w-64 flex-col">
-                        <label htmlFor="mgt-name">Event Name*</label>
-                        <input
+                        <label htmlFor="mgt-name">Membership Name*</label>
+                        <input  
                             type="text"
                             id="mgt-name"
                             value={name}
                             onChange={(e) => setName(e.target.value)}
-                            className="tw-input"
+                            className=" tw-input"
                             maxLength="30"
+                        />
+                        <label htmlFor="duration">Duration</label>
+                        <input
+                            type="number"
+                            id="duration"
+                            value={duration || 0}
+                            onChange={(e) => setDuration(e.target.value)}
+                            className=" tw-input"
+                            min="0"
+                        />
+                        <label htmlFor="pass">Pass</label>
+                        <input
+                            type="number"
+                            id="pass"
+                            value={pass || 0}
+                            onChange={(e) => setPass(e.target.value)}
+                            className=" tw-input"
+                            min="0"
                         />
                         <label htmlFor="price">Price (NZD)*</label>
                         <input
@@ -138,31 +150,8 @@ function Event() {
                             id="price"
                             value={price}
                             onChange={(e) => setPrice(e.target.value)}
-                            className="tw-input"
-                        />
-                        <label htmlFor="date">Date</label>
-                        <input
-                            type="date"
-                            id="date"
-                            value={date}
-                            onChange={(e) => setDate(e.target.value)}
-                            className="tw-input"
-                        />
-                        <label htmlFor="start-time">Start Time</label>
-                        <input
-                            type="time"
-                            id="start-time"
-                            value={startTime || "00:00"}
-                            onChange={(e) => setStartTime(e.target.value)}
-                            className="tw-input"
-                        />
-                        <label htmlFor="end-time">End Time</label>
-                        <input
-                            type="time"
-                            id="end-time"
-                            value={endTime || "00:00"}
-                            onChange={(e) => setEndTime(e.target.value)}
-                            className="tw-input"
+                            className=" tw-input"
+                            min="0"
                         />
                         <OptionButton
                             updateData={updateData}
@@ -172,11 +161,10 @@ function Event() {
                 </div>
             );
         }
-        // console.log(selectedItem.id);
 
         return (
             <div className="flex flex-col w-192">
-                <ToolBar title="Event" />
+                <ToolBar title="Membership" />
                 {content}
             </div>
         );
@@ -185,7 +173,7 @@ function Event() {
     return (
         <>
             <ItemList
-                type={"event"}
+                type={"memberclass"}
                 items={items}
                 setItem={setItems}
                 setSelectedItem={setSelectedItem}
@@ -195,4 +183,4 @@ function Event() {
     );
 }
 
-export default Event;
+export default Membership;

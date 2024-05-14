@@ -1,27 +1,30 @@
-import React from 'react';
-import { useNavigate } from 'react-router-dom';
-import logo from '../assets/BhaktiLounge-Logo.png';
-import '../App.css';
+import React from "react";
+import { useNavigate } from "react-router-dom";
+import logo from "../assets/BhaktiLounge-Logo.png";
 
 const Header = () => {
     const navigate = useNavigate();
 
-
     const register = () => {
-        navigate('/register');
-    }
+        navigate("/check/register");
+    };
+    const goManagement = () => {
+        navigate("/management/activity");
+    };
 
     return (
         <header className="Header">
-            <img src={logo} alt="BHAKTI Lounge Logo" className="Header-logo" />
-            <span className='line-buttons'>
-                <button className='button-class' >Manage</button>
-                <button className='button-class' onClick={register}>New Customer</button>
-                <button className='button-class'>Log out</button>
-            </span>
-
+            <img src={logo} alt="BHAKTI Lounge Logo" height="80" className="Header-logo" />
+            <div className="button-container">
+                <button className="tw-btn" onClick={goManagement}>
+                    Manage
+                </button>
+                <button className="tw-btn" onClick={register}>
+                    New Customer
+                </button>
+                <button className="tw-btn">Log out</button>
+            </div>
         </header>
-
     );
 };
 
