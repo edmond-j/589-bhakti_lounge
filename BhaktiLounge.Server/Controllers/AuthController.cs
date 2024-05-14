@@ -27,8 +27,8 @@ public class AuthController : ControllerBase
         _userManager = userManager;
     }
 
-    [HttpPost("register")]
-    public async Task<IActionResult> Register([FromBody] RegisterModel userModel)
+    [HttpPost("signup")]
+    public async Task<IActionResult> Signup([FromBody] SignupModel userModel)
     {
         var user = new Admin()
         {
@@ -51,8 +51,8 @@ public class AuthController : ControllerBase
         return BadRequest(resultCreateUser.Errors);
     }
 
-    [HttpPost("login")]
-    public async Task<IActionResult> Login([FromBody] UserModel userModel)
+    [HttpPost("signin")]
+    public async Task<IActionResult> Signin([FromBody] UserModel userModel)
     {
         // Find the user by username
         var user = await _userManager.FindByNameAsync(userModel.UserName);
@@ -86,7 +86,11 @@ public class AuthController : ControllerBase
             signingCredentials: cred
         );
 
-        return Ok(new { token = new JwtSecurityTokenHandler().WriteToken(token) });
+        return Ok(new
+        {
+            username = user.UserName,
+            token = new JwtSecurityTokenHandler().WriteToken(token)
+        });
     }
 
 }
