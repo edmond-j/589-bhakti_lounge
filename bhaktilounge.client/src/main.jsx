@@ -35,11 +35,16 @@ ReactDOM.createRoot(document.getElementById("root")).render(
                 </Route>
 
                     <Route path="/management" element={
-                        <ProtectedRoute>
+
                         <MgmtLayout />
-                        </ProtectedRoute>
+
                         }>
-                        <Route path="activity" element={<Activity />} />
+                        <Route path="activity" element={
+
+                            <Activity />
+
+                        }
+                        />
                         <Route path="event" element={<Event />} />
                         <Route path="membership" element={<Membership />} />
                         <Route path="*" element={<NotFound />} />
