@@ -11,6 +11,10 @@
     -moz-osx-font-smoothing: grayscale;
 }
 
+/* div{
+  border: 1px solid lightblue;
+} */
+
 .chk-body {
     margin: 0;
     display: flex;

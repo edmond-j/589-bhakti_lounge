@@ -32,31 +32,29 @@ function ItemList({ type, items, setItem, setSelectedItem }) {
                     <MdOutlineKeyboardArrowDown className="w-5 h-5" />
                 </div>
                 <div className="absolute z-10 flex-col items-start hidden w-full pb-1 bg-white shadow-lg group-focus:flex">
-                    <a
-                        className="w-full px-4 py-2 text-left hover:bg-gray-300"
-                        href="#">
+                    <a className="w-full px-4 py-2 text-left hover:bg-gray-300" href="#">
                         by Name
                     </a>
-                    <a
-                        className="w-full px-4 py-2 text-left hover:bg-gray-300"
-                        href="#">
+                    <a className="w-full px-4 py-2 text-left hover:bg-gray-300" href="#">
                         by Created Time
                     </a>
                 </div>
             </button>
             <div className="flex flex-col flex-grow p-4">
-                <div className="flex flex-col flex-grow max-h-95 overflow-auto">
+                <div className="flex flex-col grow-0 overflow-y-auto overflow-x-hidden">
                     {items.length > 0 ? (
                         <ul id="mgmt-itemlist">
                             {items.map((item) => (
-                                <li
-                                    className="flex items-center flex-shrink-0 h-9 px-4 my-1 text-base font-medium rounded-lg hover:bg-gray-300"
-                                    id={`item-${item.id}`}
-                                    tabIndex="0"
-                                    key={item.id}
-                                    onClick={() => setSelectedItem(item)}>
-                                    {item.name}
-                                </li>
+                                <React.Fragment key={item.id}>
+                                    <li
+                                        className="flex items-center flex-shrink-0 h-9 px-4 my-1 text-base font-medium rounded-lg text-nowrap hover:bg-gray-300"
+                                        id={`item-${item.id}`}
+                                        tabIndex="0"
+                                        onClick={() => setSelectedItem(item)}>
+                                        {item.name}
+                                    </li>
+                                    <hr />
+                                </React.Fragment>
                             ))}
                         </ul>
                     ) : (
@@ -65,9 +63,7 @@ function ItemList({ type, items, setItem, setSelectedItem }) {
                         </label>
                     )}
                 </div>
-                <button
-                    className="tw-btn flex flex-shrink-0 mt-auto rounded"
-                    onClick={createNew}>
+                <button className="tw-btn flex flex-shrink-0 mt-auto rounded" onClick={createNew}>
                     <IoMdAdd className="w-5 h-5 mr-2" />
                     Add New
                 </button>

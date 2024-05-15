@@ -98,7 +98,9 @@ const Register = () => {
                     <div className='button-container'>
                         <button className="tw-btn" type="submit">Sign Up</button>
                         {/* <button type="submit" onClick={backButton}>Back</button> */}
-                        <button className="tw-btn"><Link to="/check/check-in" >Back</Link></button>
+                        <Link to="/check/check-in" >
+                        <button className="tw-btn">Back</button>
+                        </Link>
                     </div>
                 </form>
             </div>
