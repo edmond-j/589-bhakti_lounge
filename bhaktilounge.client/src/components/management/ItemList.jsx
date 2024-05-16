@@ -41,13 +41,13 @@ function ItemList({ type, items, setItem, setSelectedItem }) {
                 </div>
             </button>
             <div className="flex flex-col flex-grow p-4">
-                <div className="flex flex-col grow-0 overflow-y-auto overflow-x-hidden">
+                <div className="flex flex-col max-h-95 overflow-y-auto overflow-x-hidden">
                     {items.length > 0 ? (
                         <ul id="mgmt-itemlist">
                             {items.map((item) => (
                                 <React.Fragment key={item.id}>
                                     <li
-                                        className="flex items-center flex-shrink-0 h-9 px-4 my-1 text-base font-medium rounded-lg text-nowrap hover:bg-gray-300"
+                                        className="flex items-center flex-shrink-0 h-9 px-4 my-1 text-sm font-medium rounded-lg text-nowrap hover:bg-gray-300"
                                         id={`item-${item.id}`}
                                         tabIndex="0"
                                         onClick={() => setSelectedItem(item)}>

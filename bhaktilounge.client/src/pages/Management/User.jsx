@@ -1,52 +1,50 @@
 import React from "react";
+
 import ToolBar from "../../components/management/ToolBar";
+import { MdOutlineDeleteForever } from "react-icons/md";
 
 function User() {
     return (
-        <div className="flex-grow bg-gray-200">
+        <div className="flex-grow bg-gray-200 rounded-r-2xl">
             <ToolBar title="User" />
-            <div className="flex flex-col mx-12">
-                <div className="grid grid-cols-2 pt-6 min-w-max">
+            <div className="flex flex-col mx-12 my-6">
+                <div className="grid grid-cols-2 gap-x-12 min-w-max">
                     <div className="min-w-max">
-                        <label className="text-nowrap self-center" htmlFor="">
-                            User Name
-                        </label>
+                        <label htmlFor="">User Name</label>
                         <input className="tw-input" type="text" />
                     </div>
 
                     <div className="min-w-max">
-                        <label className="text-nowrap self-center" htmlFor="">
-                            Password
-                        </label>
-                        <input className="tw-input" type="text" />
+                        <label htmlFor="">Password</label>
+                        <input className="tw-input" type="password" />
                     </div>
 
                     <div className="min-w-max">
-                        <label className="text-nowrap self-center" htmlFor="">
-                            Type
-                        </label>
-                        <input className="tw-input" type="text" />
+                        <label htmlFor="">Type</label>
+                        <select id="type" className="tw-input">
+                            <option>Administrator</option>
+                            <option>Stuff</option>
+                        </select>
                     </div>
 
                     <div className="min-w-max">
-                        <label className="text-nowrap self-center" htmlFor="">
-                            Confirm Password
-                        </label>
-                        <input className="tw-input" type="text" />
+                        <label htmlFor="">Confirm Password</label>
+                        <input className="tw-input" type="password" />
                     </div>
                 </div>
                 <div className="flex">
-                    <button className="tw-btn">Add</button>
+                    <button className="tw-btn" onClick={console.log("added")}>Add</button>
                 </div>
             </div>
-            <hr className="border border-gray-900 mx-12 my-6" />
+            {/* <hr className="border border-gray-400 mx-12 my-6" /> */}
+            <hr className=" mx-12 my-6" />
 
             {/* Table */}
             <div className="mx-12">
-                <p className=" text-lg font-bold px-6 mb-2">Existing Users</p>
-                <div className="relative overflow-x-auto shadow-md sm:rounded-lg ">
+                <p className=" text-lg font-bold mb-2">Existing Users</p>
+                <div className="relative overflow-x-auto drop-shadow-md sm:rounded-lg ">
                     <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
-                        <thead className="text-sm text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                        <thead className="text-sm text-gray-700 uppercase bg-slate-300 dark:bg-gray-700 dark:text-gray-400">
                             <tr>
                                 <th scope="col" className="px-6 py-3">
                                     User Name
@@ -61,7 +59,8 @@ function User() {
                                     XXX
                                 </th>
                                 <th scope="col" className="px-6 py-3">
-                                    <span className="sr-only">Edit</span>
+                                    {/* <span className="sr-only">Edit</span> */}
+                                    Edit
                                 </th>
                             </tr>
                         </thead>
@@ -73,14 +72,12 @@ function User() {
                                     Vira
                                 </th>
                                 <td className="px-6 py-4">Administrator</td>
-                                <td className="px-6 py-4">Laptop</td>
-                                <td className="px-6 py-4">$2999</td>
-                                <td className="px-6 py-4 text-right">
-                                    <a
-                                        href="#"
-                                        className="font-bold text-blue-600 dark:text-blue-500 hover:underline">
-                                        Delete
-                                    </a>
+                                <td className="px-6 py-4"> </td>
+                                <td className="px-6 py-4"> </td>
+                                <td className="px-6 ">
+                                    <button className="rounded-3xl p-2 hover:bg-gray-200" onClick={console.log("clicked")}>
+                                        <MdOutlineDeleteForever className="w-6 h-6 text-link"/>
+                                    </button>
                                 </td>
                             </tr>
                         </tbody>

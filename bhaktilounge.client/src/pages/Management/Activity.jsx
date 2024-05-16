@@ -137,7 +137,7 @@ function Activity() {
             content = (
                 <div className="flex grow p-6 bg-gray-200 rounded-br-2xl">
                     <div className="w-64">
-                        <h1 className="text-4xl font-extrabold mb-4 overflow-hidden">{name}</h1>
+                        <h2 className=" mb-4 overflow-hidden">{name}</h2>
                         <p>ID: {selectedItem.id}</p>
                     </div>
                     <div className="w-64 flex-col">

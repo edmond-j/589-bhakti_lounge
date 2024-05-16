@@ -11,7 +11,7 @@ function ActivitySelector({ onActivitySelect }) {
 
     const fetchActivities = async () => {
         try {
-            const response = await fetch(`api/v1/CompData/CustomerOption`);
+            const response = await fetch(`/api/v1/CompData/CustomerOption`);
             const data = await response.json().activities;
             if (data && Array.isArray(data) && data.length > 0) {
                 setActivities(
@@ -61,8 +61,8 @@ function ActivitySelector({ onActivitySelect }) {
             {showList && (
                 <ul className="suggestions-list">
                     {activities.map((activity) => (
-                        <li key={activity.id} className="activity-item">
-                            <label className={`activity-label ${activity.id === -1 ? 'disabled' : ''}`}>
+                        <li key={activity.id} className="multi-select-item">
+                            <label className={`multi-select-label ${activity.id === -1 ? 'disabled' : ''}`}>
                                 {activity.id !== -1 && (
                                     <input
                                         type="checkbox"
@@ -70,7 +70,7 @@ function ActivitySelector({ onActivitySelect }) {
                                         onChange={() => handleSelectActivity(activity.id)}
                                     />
                                 )}
-                                {activity.id !== -1 ? `${activity.name} $${activity.price}` : activity.name}
+                                {activity.id !== -1 ? `${activity.name}: $${activity.price}` : activity.name}
                             </label>
                         </li>
                     ))}
