@@ -1,6 +1,6 @@
 import { useState } from "react";
 // import styles from "./subscribe.module.css";
-import logo from "../assets/BhaktiLounge-Logo.png";
+import logo from "/logo.jpg";
 import { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";

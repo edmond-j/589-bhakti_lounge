@@ -7,6 +7,7 @@ export default {
                 primary: "#FFC107",
                 primaryhover: "#FFD222",
                 darkfont: "#374151",
+                link:"rgb(29,78,216)"
             },
             minWidth: {
                 192: "768px",

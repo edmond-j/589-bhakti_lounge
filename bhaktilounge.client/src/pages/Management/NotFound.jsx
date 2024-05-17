@@ -5,7 +5,7 @@ function NotFound() {
             <div className="max-w-lg mx-auto text-center mt-[-20rem]">
                 <div className="pb-6">
                     <img
-                        src="/public/logo.jpg"
+                        src="/logo.jpg"
                         width={150}
                         className="mx-auto"
                     />

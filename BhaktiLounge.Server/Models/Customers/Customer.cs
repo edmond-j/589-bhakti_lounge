@@ -13,4 +13,5 @@ public class Customer {
     public DateOnly? SubStartDate { get; set; }
     public DateOnly? SubEndDate { get; set; }
     public int? PassRemain { get; set; }
+    public bool? Notification { get; set; }
 }

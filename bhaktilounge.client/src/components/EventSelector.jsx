@@ -8,7 +8,7 @@ function EventSelector({ onEventSelect }) {
 
     const fetchEvents = async (value) => {
         try {
-            const response = await fetch(`api/v1/CompData/CustomerOption`);
+            const response = await fetch(`/api/v1/CompData/CustomerOption`);
             const result = await response.json();
             const data = result.events || [];
             console.log("events data", data);
@@ -62,8 +62,8 @@ function EventSelector({ onEventSelect }) {
             {showList && (
                 <ul className="suggestions-list">
                     {events.map((event) => (
-                        <li key={event.id} className="event-item">
-                            <label className={`event-label ${event.id === -1 ? 'disabled' : ''}`}>
+                        <li key={event.id} className="multi-select-item">
+                            <label className={`multi-select-label ${event.id === -1 ? 'disabled' : ''}`}>
                                 {event.id !== -1 && (
                                     <input
                                         type="checkbox"
@@ -71,7 +71,7 @@ function EventSelector({ onEventSelect }) {
                                         onChange={() => handleSelectEvent(event.id)}
                                     />
                                 )}
-                                {event.id !== -1 ? `${event.name} $${event.price}` : event.name}
+                                {event.id !== -1 ? `${event.name}: $${event.price}` : event.name}
                             </label>
                         </li>
                     ))}
