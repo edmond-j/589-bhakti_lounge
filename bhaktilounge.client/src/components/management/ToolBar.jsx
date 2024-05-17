@@ -1,15 +1,20 @@
 import React from "react";
 import { FaUserCircle } from "react-icons/fa";
 import { Link } from "react-router-dom";
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {useNavigate}  from "react-router-dom";
-import {clearToken} from "../../services/tokenSlice.js";
+import {clearToken} from "@/services/tokenSlice.js";
+import {clearUserName} from "@/services/userNameSlice.js";
+import {clearUserRole} from "@/services/userRoleSlice.js";
 
 function ToolBar({ title }) {
+    const userName = useSelector((state) => state.userName);
     const dispatch = useDispatch();
     const navigate = useNavigate();
     function logout() {
         dispatch(clearToken());
+        dispatch(clearUserName());
+        dispatch(clearUserRole());
         navigate("/");
     }
     return (
@@ -18,7 +23,7 @@ function ToolBar({ title }) {
             <div className="grow"></div>
             <div className="flex items-center justify-end space-x-8 ">
                 <FaUserCircle className="w-8 h-8"/>
-                <label>Administrator</label>
+                <label>{userName.value}</label>
                 <button onClick={logout} className="text-blue-700 font-bold">Logout</button>
             </div>
         </div>

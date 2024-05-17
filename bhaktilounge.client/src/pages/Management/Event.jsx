@@ -6,14 +6,18 @@ import ToolBar from "../../components/management/ToolBar";
 import OptionButton from "../../components/management/OptionButton";
 import { itemHighlight } from "./method";
 import spinner from "/spinner.svg";
+import authFetch from "@/utils/authFetch.js";
+import {useSelector} from "react-redux";
 
 function Event() {
     const [items, setItems] = useState([]);
     const [selectedItem, setSelectedItem] = useState(null);
     const [isLoading, setLoading] = useState(true);
-    useEffect(() => {
-        async function populateActivityData() {
-            fetch("/api/v1/event")
+    const token = useSelector((state) => state.token);
+
+    useEffect(
+        () =>{
+             authFetch("/api/v1/event", token.value)
                 .then((response) => response.json())
                 .then((data) => {
                     console.log("acquire", data);
@@ -22,10 +26,9 @@ function Event() {
                         setItems(data);
                         setSelectedItem(data[0]);
                     }
-                });
+                })
         }
-        populateActivityData();
-    }, []);
+        , []);
 
     useEffect(() => itemHighlight(selectedItem), [selectedItem]);
 

@@ -33,15 +33,12 @@ public class AuthController : ControllerBase
         var user = new Admin()
         {
             UserName = userModel.UserName,
-            FirstName = userModel.FirstName,
-            LastName = userModel.LastName,
-            Email = userModel.Email
         };
         var resultCreateUser = await _userManager.CreateAsync(user, userModel.Password);
 
         if (resultCreateUser.Succeeded )
         {
-            var resultAddRole = await _userManager.AddToRoleAsync(user, "Manager");
+            var resultAddRole = await _userManager.AddToRoleAsync(user, userModel.Role);
             if (resultAddRole.Succeeded)
             {
                 return Ok(new { message = "User registered successfully" });
@@ -51,8 +48,8 @@ public class AuthController : ControllerBase
         return BadRequest(resultCreateUser.Errors);
     }
 
-    [HttpPost("signin")]
-    public async Task<IActionResult> Signin([FromBody] UserModel userModel)
+    [HttpPost("login")]
+    public async Task<IActionResult> Login([FromBody] UserModel userModel)
     {
         // Find the user by username
         var user = await _userManager.FindByNameAsync(userModel.UserName);
@@ -88,7 +85,8 @@ public class AuthController : ControllerBase
 
         return Ok(new
         {
-            username = user.UserName,
+            userName = user.UserName,
+            userRole = roles[0],
             token = new JwtSecurityTokenHandler().WriteToken(token)
         });
     }

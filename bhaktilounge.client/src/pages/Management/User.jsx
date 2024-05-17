@@ -2,40 +2,13 @@ import React from "react";
 
 import ToolBar from "../../components/management/ToolBar";
 import { MdOutlineDeleteForever } from "react-icons/md";
+import {UserSignupPanel} from "@/components/management/UserSignupPanel.jsx";
 
 function User() {
     return (
         <div className="flex-grow bg-gray-200 rounded-r-2xl">
             <ToolBar title="User" />
-            <div className="flex flex-col mx-12 my-6">
-                <div className="grid grid-cols-2 gap-x-12 min-w-max">
-                    <div className="min-w-max">
-                        <label htmlFor="">User Name</label>
-                        <input className="tw-input" type="text" />
-                    </div>
-
-                    <div className="min-w-max">
-                        <label htmlFor="">Password</label>
-                        <input className="tw-input" type="password" />
-                    </div>
-
-                    <div className="min-w-max">
-                        <label htmlFor="">Type</label>
-                        <select id="type" className="tw-input">
-                            <option>Administrator</option>
-                            <option>Stuff</option>
-                        </select>
-                    </div>
-
-                    <div className="min-w-max">
-                        <label htmlFor="">Confirm Password</label>
-                        <input className="tw-input" type="password" />
-                    </div>
-                </div>
-                <div className="flex">
-                    <button className="tw-btn" onClick={console.log("added")}>Add</button>
-                </div>
-            </div>
+            <UserSignupPanel />
             {/* <hr className="border border-gray-400 mx-12 my-6" /> */}
             <hr className=" mx-12 my-6" />
 
