@@ -10,6 +10,7 @@ const Register = () => {
     const [gender, setGender] = useState('');
     const currentTimestamp = new Date().toISOString(); //get current timestamp
     const [acquisition, setAcquisition] = useState('');
+    const [notification, setNotification] = useState('');
     const navigate = useNavigate();
 
     const handleSubmit = (event) => {
@@ -22,6 +23,7 @@ const Register = () => {
             gender: gender,
             acquisition: acquisition,
             initialRegisted: currentTimestamp,
+            notification: notification,
         };
         const requestOptions = {
             method: "POST",
@@ -48,9 +50,9 @@ const Register = () => {
                 <h2>New Customer</h2>
                 <form onSubmit={handleSubmit}>
                     <div className="form-group">
-                        <label>First Name</label>
+                        <label htmlFor='firstname'>First Name</label>
                         <input id="firstname" type="text" required onChange={(e) => setFirstName(e.target.value)}></input>
-                        <label>Last Name</label>
+                        <label htmlFor='lastname'>Last Name</label>
                         <input id="lastname" type="text" required onChange={(e) => setLastName(e.target.value)}></input>
                     </div>
                     <div className="form-group" >
@@ -94,6 +96,11 @@ const Register = () => {
                             <option value="SelfDiscover">Self Discovery</option>
                             <option value="Other">Other</option>
                         </select>
+                    </div>
+                    <div className="form-group">
+                        <label htmlFor='notification'>Enable Notification?</label>
+                        <input id="notification" type="checkbox" onChange={(e) => setNotification(e.target.value)}></input>
+                        
                     </div>
                     <div className='button-container'>
                         <button className="tw-btn" type="submit">Sign Up</button>
