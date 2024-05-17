@@ -20,6 +20,7 @@ function App() {
                     </button>
                     </Link>
                 <div className="flex mt-6 justify-center text-xs">
+                    <p className="block">Temporary Entry:</p>
                     <a className="text-blue-400 hover:text-blue-500" href="/check/check-in">Check In</a>
                     <span className="mx-2 text-gray-300">/</span>
                     <a className="text-blue-400 hover:text-blue-500" href="/management/activity">Management</a>

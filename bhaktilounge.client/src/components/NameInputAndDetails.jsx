@@ -54,6 +54,8 @@ function NameInput() {
         console.log(inputValue);
         if (inputValue.length > 1) {
             debouncedFetchOptions(inputValue);
+        }else if(inputValue.length == 0){
+            setCustomerSuggestions("")
         }
     };
 
@@ -189,7 +191,7 @@ function NameInput() {
                     <label className='input-labels'>Customer Name</label>
                     <input
                         type='text'
-                        placeholder='Customer Name'
+                        placeholder='2 letters or more'
                         onChange={handleNameInputChange}
                         value={customerName || ''}
                     />
