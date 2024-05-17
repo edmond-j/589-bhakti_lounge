@@ -40,9 +40,7 @@ function Event() {
         } else if (!selectedItem) {
             content = (
                 <div className="flex p-6 h-full bg-gray-200 rounded-br-2xl justify-center">
-                    <label
-                        className="font-bold text-4xl text-gray-400 mt-40"
-                        htmlFor="">
+                    <label className="font-bold text-4xl text-gray-400 mt-40" htmlFor="">
                         No Data
                     </label>
                 </div>
@@ -104,9 +102,7 @@ function Event() {
                 });
                 const index = items.indexOf(selectedItem);
                 console.log(index);
-                setItems((currentItems) =>
-                    currentItems.filter((item) => item !== selectedItem)
-                ); //remove the deleted activity
+                setItems((currentItems) => currentItems.filter((item) => item !== selectedItem)); //remove the deleted activity
                 if (index > 0) {
                     setSelectedItem(items[index - 1]);
                 } else {
@@ -119,7 +115,7 @@ function Event() {
             content = (
                 <div className="flex grow p-6 bg-gray-200 rounded-br-2xl">
                     <div className="w-64">
-                        <h1 className="text-4xl font-extrabold mb-4 overflow-hidden">{name}</h1>
+                        <h2 className=" mb-4 overflow-hidden">{name}</h2>
                         <p>ID: {selectedItem.id}</p>
                     </div>
                     <div className="w-64 flex-col">
@@ -164,10 +160,7 @@ function Event() {
                             onChange={(e) => setEndTime(e.target.value)}
                             className="tw-input"
                         />
-                        <OptionButton
-                            updateData={updateData}
-                            deleteData={deleteData}
-                        />
+                        <OptionButton updateData={updateData} deleteData={deleteData} />
                     </div>
                 </div>
             );
