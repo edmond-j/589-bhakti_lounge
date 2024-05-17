@@ -32,11 +32,31 @@ ReactDOM.createRoot(document.getElementById("root")).render(
                         element={<SubscriptionForm />}
                     />
                 </Route>
-                <Route path="/management" element={<MgmtLayout />}>
-                    <Route path="activity" element={<Activity />} />
-                    <Route path="event" element={<Event />} />
-                    <Route path="membership" element={<Membership />} />
-                    <Route path="user" element={<User />} />
+                <Route path="/management" element={
+                    <ProtectedRoute>
+                    <MgmtLayout />
+                    </ProtectedRoute>
+                }>
+                    <Route path="activity" element={
+                        <ProtectedRoute>
+                        <Activity />
+                        </ProtectedRoute>
+                    } />
+                    <Route path="event" element={
+                        <ProtectedRoute>
+                        <Event />
+                        </ProtectedRoute>
+                    } />
+                    <Route path="membership" element={
+                        <ProtectedRoute>
+                        <Membership />
+                        </ProtectedRoute>
+                    } />
+                    <Route path="user" element={
+                        <ProtectedRoute>
+                        <User />
+                        </ProtectedRoute>
+                    } />
                     <Route path="*" element={<NotFound />} />
                 </Route>
             </Routes>
