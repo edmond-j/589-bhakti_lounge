@@ -23,35 +23,35 @@ namespace BhaktiLounge.Server.Controllers {
         }
 
         [HttpPost]
-        public async Task<ActionResult> AddMemberClass([FromBody] MemberClass? newMemberClass) {
-            newMemberClass ??= new MemberClass();
-            _context.MemberClass.Add(newMemberClass);
+        public async Task<ActionResult> AddMemberClass([FromBody] MemberClass? newItem) {
+            newItem ??= new MemberClass();
+            _context.MemberClass.Add(newItem);
             await _context.SaveChangesAsync();
-            return Ok(newMemberClass);
+            return Ok(newItem);
         }
 
         [HttpPut]
-        public async Task<ActionResult> UpdateMemberClass([FromBody] MemberClass memberClass) {
-            var updatedMemberClass = await _context.MemberClass.FindAsync(memberClass.Id);
-            if (updatedMemberClass is null) {
+        public async Task<ActionResult> UpdateMemberClass([FromBody] MemberClass updated) {
+            var target = await _context.MemberClass.FindAsync(updated.Id);
+            if (target is null) {
                 return NotFound("Item Not Found");
             }
-            updatedMemberClass.Name = memberClass.Name;
-            updatedMemberClass.Price = memberClass.Price;
-            updatedMemberClass.Duration = memberClass.Duration;
-            updatedMemberClass.Pass = memberClass.Pass;
-            _context.MemberClass.Update(updatedMemberClass);
+            target.Name = updated.Name;
+            target.Price = updated.Price;
+            target.Duration = updated.Duration;
+            target.Pass = updated.Pass;
+            _context.MemberClass.Update(target);
             await _context.SaveChangesAsync();
-            return Ok(updatedMemberClass);
+            return Ok(target);
         }
 
         [HttpDelete]
         public async Task<ActionResult> DeleteMemberClass(int Id) {
-            var memberClass = await _context.MemberClass.FindAsync(Id);
-            if (memberClass is null) {
+            var toDel = await _context.MemberClass.FindAsync(Id);
+            if (toDel is null) {
                 return NotFound("Item Not Found");
             }
-            _context.MemberClass.Remove(memberClass);
+            _context.MemberClass.Remove(toDel);
             await _context.SaveChangesAsync();
             return Ok("Item Deleted");
         }

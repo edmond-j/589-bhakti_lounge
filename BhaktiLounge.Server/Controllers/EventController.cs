@@ -1,11 +1,11 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using BhaktiLounge.Server.Models;
 using BhaktiLounge.Server.Data;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
 
 namespace BhaktiLounge.Server.Controllers {
+
     [Authorize]
     [Route("api/v1/[controller]")]
     [ApiController]
@@ -27,42 +27,42 @@ namespace BhaktiLounge.Server.Controllers {
         }
 
         [HttpPost]
-        public async Task<ActionResult> AddEvent([FromBody] Event? newEvent) {
-            //if (newEvent == null) {
+        public async Task<ActionResult> AddEvent([FromBody] Event? newItem) {
+            //if (newItem == null) {
             //    return BadRequest("Activity data is required.");
             //}
-            //_context.Event.Add(newEvent);
+            //_context.Event.Add(newItem);
             //await _context.SaveChangesAsync();
-            //return Ok(newEvent);
-            newEvent ??= new Event();
-            _context.Event.Add(newEvent);
+            //return Ok(newItem);
+            newItem ??= new Event();
+            _context.Event.Add(newItem);
             await _context.SaveChangesAsync();
-            return Ok(newEvent);
+            return Ok(newItem);
         }
 
         [HttpPut]
-        public async Task<ActionResult> UpdateEvent([FromBody] Event updateEvent) {
-            var updatedEvent = await _context.Event.FindAsync(updateEvent.Id);
-            if (updatedEvent is null) {
+        public async Task<ActionResult> UpdateEvent([FromBody] Event updated) {
+            var target = await _context.Event.FindAsync(updated.Id);
+            if (target is null) {
                 return NotFound("Item Not Found");
             }
-            updatedEvent.Name = updateEvent.Name;
-            updatedEvent.Price = updateEvent.Price;
-            updatedEvent.Date = updateEvent.Date;
-            updatedEvent.StartTime = updateEvent.StartTime;
-            updatedEvent.EndTime = updateEvent.EndTime;
-            _context.Event.Update(updatedEvent);
+            target.Name = updated.Name;
+            target.Price = updated.Price;
+            target.Date = updated.Date;
+            target.StartTime = updated.StartTime;
+            target.EndTime = updated.EndTime;
+            _context.Event.Update(target);
             await _context.SaveChangesAsync();
-            return Ok(updatedEvent);
+            return Ok(target);
         }
 
         [HttpDelete]
         public async Task<ActionResult> DeleteEvent(int Id) {
-            var oneEvent = await _context.Event.FindAsync(Id);
-            if (oneEvent is null) {
+            var toDel = await _context.Event.FindAsync(Id);
+            if (toDel is null) {
                 return NotFound("Item Not Found");
             }
-            _context.Event.Remove(oneEvent);
+            _context.Event.Remove(toDel);
             await _context.SaveChangesAsync();
             return Ok("Item Deleted");
         }

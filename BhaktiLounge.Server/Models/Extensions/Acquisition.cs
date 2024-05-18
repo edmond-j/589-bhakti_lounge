@@ -1,17 +1,6 @@
 ﻿namespace BhaktiLounge.Server.Models;
 
-public enum Acquisition
-{
-    Facebook,
-    Instagram,
-    WordOfMouth,
-    Flyer,
-    Poster,
-    GoogleSearch,
-    Eventbrite,
-    EventFinder,
-    Humanitix,
-    BhaktiLoungeWebsite,
-    SelfDiscover,
-    Other
+public class Acquisition {
+    public int Id { get; set; }
+    public string? Name { get; set; } = "~New";
 }
