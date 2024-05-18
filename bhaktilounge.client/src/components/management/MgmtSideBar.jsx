@@ -41,9 +41,9 @@ function MgmtSideBar() {
                         <FaPeopleGroup className="tw-sidebar-icon" />
                         <span className="tw-sidebar-item">Membership</span>
                     </NavLink>
-                    <NavLink className={linkClass} to="misc">
+                    <NavLink className={linkClass} to="acquisition">
                         <MdOutlineDisplaySettings className="tw-sidebar-icon" />
-                        <span className="tw-sidebar-item">Misc</span>
+                        <span className="tw-sidebar-item">Acquisition</span>
                     </NavLink>
                 </div>
                 <div className="flex flex-col items-center w-full mt-2 border-t border-gray-700">

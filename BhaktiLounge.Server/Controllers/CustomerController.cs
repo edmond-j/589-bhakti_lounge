@@ -1,6 +1,5 @@
 ﻿using BhaktiLounge.Server.Data;
 using BhaktiLounge.Server.Models;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -17,7 +16,7 @@ namespace BhaktiLounge.Server.Controllers {
             _logger = logger;
         }
 
-        //Search a customer
+        //Search a target
         [HttpGet]
         public async Task<IActionResult> Search(string? name) {
             var lowName = name == null ? "" : name.ToLower();
@@ -33,28 +32,28 @@ namespace BhaktiLounge.Server.Controllers {
 
         //New Customer registration
         [HttpPost]
-        public async Task<IActionResult> Register([FromBody] Customer newCustomer) {
-            _context.Customer.Add(newCustomer);
+        public async Task<IActionResult> Register([FromBody] Customer newItem) {
+            _context.Customer.Add(newItem);
             await _context.SaveChangesAsync();
-            return Ok(newCustomer);
+            return Ok(newItem);
         }
 
         //Subscribe, extend membership or modify profile
         [HttpPut]
-        public async Task<IActionResult> Modifiy([FromBody] Customer newCustomer) {
-            var customer = await _context.Customer.FindAsync(newCustomer.Id);
-            if (customer == null) {
+        public async Task<IActionResult> Modifiy([FromBody] Customer updated) {
+            var target = await _context.Customer.FindAsync(updated.Id);
+            if (target == null) {
                 return NotFound("Item Not Found");
             }
-            customer.FirstName = newCustomer.FirstName;
-            customer.LastName = newCustomer.LastName;
-            customer.Email = newCustomer.Email;
-            customer.SubStartDate = newCustomer.SubStartDate;
-            customer.SubEndDate = newCustomer.SubEndDate;
-            customer.PassRemain = newCustomer.PassRemain;
-            _context.Customer.Update(customer);
+            target.FirstName = updated.FirstName;
+            target.LastName = updated.LastName;
+            target.Email = updated.Email;
+            target.SubStartDate = updated.SubStartDate;
+            target.SubEndDate = updated.SubEndDate;
+            target.PassRemain = updated.PassRemain;
+            _context.Customer.Update(target);
             await _context.SaveChangesAsync();
-            return Ok(customer);
+            return Ok(target);
         }
     }
 }

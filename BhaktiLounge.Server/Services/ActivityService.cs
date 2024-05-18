@@ -9,7 +9,7 @@ public class ActivityService : IActivityService {
     private readonly ApplicationDbContext _context;
 
     public ActivityService(ApplicationDbContext context) {
-        _context = context;  // 在这里赋值
+        _context = context;
     }
 
     public async Task<List<Activity>> GetAllActivity() {

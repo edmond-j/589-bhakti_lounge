@@ -27,38 +27,38 @@ namespace BhaktiLounge.Server.Controllers {
         }
 
         [HttpPost]
-        public async Task<ActionResult> AddActivity([FromBody] Activity? newActivity) {
-            if (newActivity == null) {
+        public async Task<ActionResult> AddActivity([FromBody] Activity? newItem) {
+            if (newItem == null) {
                 return BadRequest("Activity data is required.");
             }
-            return await _service.AddActivity(newActivity)? Ok(newActivity) : BadRequest("Failed to add activity.") ;
+            return await _service.AddActivity(newItem) ? Ok(newItem) : BadRequest("Failed to add activity.");
         }
 
         [HttpPut]
-        public async Task<ActionResult> UpdateActivity([FromBody] Activity newActivity) {
-            var activity = await _context.Activity.FindAsync(newActivity.Id);
-            if (activity is null) {
+        public async Task<ActionResult> UpdateActivity([FromBody] Activity updated) {
+            var target = await _context.Activity.FindAsync(updated.Id);
+            if (target is null) {
                 return NotFound("Item Not Found");
             }
-            activity.Name = newActivity.Name;
-            activity.Price = newActivity.Price;
-            activity.StartTime = newActivity.StartTime;
-            activity.EndTime = newActivity.EndTime;
-            activity.DaysOfWeek = newActivity.DaysOfWeek;
-            activity.IncludeYoga = newActivity.IncludeYoga;
-            activity.IncludeDinner = newActivity.IncludeDinner;
-            _context.Activity.Update(activity);
+            target.Name = updated.Name;
+            target.Price = updated.Price;
+            target.StartTime = updated.StartTime;
+            target.EndTime = updated.EndTime;
+            target.DaysOfWeek = updated.DaysOfWeek;
+            target.IncludeYoga = updated.IncludeYoga;
+            target.IncludeDinner = updated.IncludeDinner;
+            _context.Activity.Update(target);
             await _context.SaveChangesAsync();
-            return Ok(activity);
+            return Ok(target);
         }
 
         [HttpDelete]
         public async Task<ActionResult> DeleteActivity(int Id) {
-            var activitiy = await _context.Activity.FindAsync(Id);
-            if (activitiy is null) {
+            var toDel = await _context.Activity.FindAsync(Id);
+            if (toDel is null) {
                 return NotFound("Item Not Found");
             }
-            _context.Activity.Remove(activitiy);
+            _context.Activity.Remove(toDel);
             await _context.SaveChangesAsync();
             return Ok("Item Deleted");
         }
