@@ -12,7 +12,8 @@ function ActivitySelector({ onActivitySelect }) {
     const fetchActivities = async () => {
         try {
             const response = await fetch(`/api/v1/CompData/CustomerOption`);
-            const data = await response.json().activities;
+            const result = await response.json()
+            const data=result.activities;
             if (data && Array.isArray(data) && data.length > 0) {
                 setActivities(
                     data.map((activity) => ({

@@ -89,7 +89,7 @@ function NameInput() {
     };
 
     const handleSelectedActivities = (selected) => {
-        // setSelectedActivities(selected);
+        setSelectedActivities(selected);
         console.log(selected);
     };
 
