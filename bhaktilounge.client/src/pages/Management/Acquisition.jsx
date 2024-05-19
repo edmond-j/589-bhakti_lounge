@@ -113,7 +113,7 @@ function Acquisition() {
                             className=' tw-input'
                             maxLength='30'
                         />
-                        
+
                         <OptionButton updateData={updateData} deleteData={deleteData} />
                     </div>
                 </div>

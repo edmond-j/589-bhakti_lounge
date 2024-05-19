@@ -5,6 +5,7 @@ import { BrowserRouter, Routes, Route, Router } from 'react-router-dom';
 import CheckIn from './pages/CheckIn.jsx';
 import Register from './pages/Register.jsx';
 import TopUp from './pages/TopUp.jsx';
+import Dashboard from './pages/Management/Dashboard.jsx';
 import Activity from './pages/Management/Activity.jsx';
 import Event from './pages/Management/Event.jsx';
 import Membership from './pages/Management/Membership.jsx';
@@ -40,6 +41,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
                                 <MgmtLayout />
                             </ProtectedRoute>
                         }>
+                        <Route path='dashboard' element={<Dashboard />} />
                         <Route path='activity' element={<Activity />} />
                         <Route path='event' element={<Event />} />
                         <Route path='membership' element={<Membership />} />
