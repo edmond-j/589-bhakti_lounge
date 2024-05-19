@@ -4,6 +4,7 @@ import logo from "/logo.jpg";
 import { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+import { FaCheck } from 'react-icons/fa';
 
 const isoDate = (date) => {
     return date.toISOString().substring(0, 10);
@@ -15,7 +16,7 @@ function SubscriptionForm() {
     const [subscription, setSubscription] = useState({ id });
     const [products, setProducts] = useState([]);
     const navigate = useNavigate();
-
+    const [showCheckmark, setShowCheckmark] = useState(false);
     useEffect(() => {
         fetch("/api/v1/MemberClass", {
             method: "GET",
@@ -70,6 +71,14 @@ function SubscriptionForm() {
 
             if (response.ok) {
                 console.log("Subscription successful", await response.json());
+
+                setShowCheckmark(true);
+
+                setTimeout(() => {
+                    setShowCheckmark(false);
+                }, 2000);
+
+
             } else {
                 throw new Error("Failed to submit subscription");
             }
@@ -140,6 +149,7 @@ function SubscriptionForm() {
                             Confirm
                         </button>
                     </div>
+                    {showCheckmark && <FaCheck style={{ margin: 'auto', color: 'green' }} />} 
                 </form>
             </main>
             <footer>©Bhakti Lounge - Check-in</footer>
