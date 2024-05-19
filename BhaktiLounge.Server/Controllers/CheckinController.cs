@@ -47,10 +47,10 @@ public class CheckinController : ControllerBase {
     }
 
     [HttpPost]
-    public async Task<ActionResult> AddCheckin([FromBody] Checkin? newCheckin) {
-        if (newCheckin == null) {
+    public async Task<ActionResult> AddCheckin([FromBody] Checkin? newItem) {
+        if (newItem == null) {
             return BadRequest("Checkin data is required.");
         }
-        return await _service.AddCheckin(newCheckin) ? Ok(newCheckin) : BadRequest("Failed to add checkin.");
+        return await _service.AddCheckin(newItem) ? Ok(newItem) : BadRequest("Failed to add checkin.");
     }
 }
