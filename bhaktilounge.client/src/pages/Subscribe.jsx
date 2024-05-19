@@ -95,7 +95,7 @@ function SubscriptionForm() {
         <>
             <img src={logo} alt="BHAKTI Lounge Logo" className="Header-logo" />
             <main>
-                <h2>Renew subscription</h2>
+                <h2>Renew Membership</h2>
                 <h3>
                     for: {firstName} {lastName}{" "}
                 </h3>
