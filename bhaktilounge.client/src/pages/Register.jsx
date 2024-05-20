@@ -41,7 +41,7 @@ const Register = () => {
       })
       .catch((error) => console.error("Error:", error));
     const customerName = FirstName + " " + LastName;
-    navigate("check/check-in", { state: { FirstName } });
+    navigate("/check/check-in", { state: { FirstName } });
   };
 
   return (
@@ -96,53 +96,51 @@ const Register = () => {
             </select>
           </div>
 
-          <div className="form-group">
-            <label htmlFor="channel">How did you hear about us?</label>
-            <select
-              id="channel"
-              value={acquisition}
-              name="channel"
-              required
-              onChange={(e) => setAcquisition(e.target.value)}
-            >
-              <option value="" disabled hidden>
-                Choose one
-              </option>
-              <option value="Facebook">Facebook</option>
-              <option value="Instagram">Instagram</option>
-              <option value="WordOfMouth">Word of Mouth</option>
-              <option value="Flyer">Flyer</option>
-              <option value="Poster">Poster</option>
-              <option value="GoogleSearch">Google Search</option>
-              <option value="Eventbrite">Eventbrite</option>
-              <option value="EventFinder">EventFinder</option>
-              <option value="Humanitix">Humanitix</option>
-              <option value="BhaktiLoungeWebsite">Bhakti Lounge Website</option>
-              <option value="SelfDiscover">Self Discovery</option>
-              <option value="Other">Other</option>
-            </select>
-          </div>
-          <div className="form-group">
-            <label htmlFor="notification">Enable Notification?</label>
-            <input
-              id="notification"
-              type="checkbox"
-              onChange={(e) => setNotification(e.target.value)}
-            ></input>
-          </div>
-          <div className="button-container">
-            <button className="tw-btn" type="submit">
-              Sign Up
-            </button>
-            {/* <button type="submit" onClick={backButton}>Back</button> */}
-            <Link to="/check/check-in">
-              <button className="tw-btn">Back</button>
-            </Link>
-          </div>
-        </form>
-      </div>
-    </div>
-  );
+                    <div className='form-group'>
+                        <label htmlFor='channel'>How did you hear about us?</label>
+                        <select
+                            id='channel'
+                            value={acquisition}
+                            name='channel'
+                            required
+                            onChange={(e) => setAcquisition(e.target.value)}>
+                            <option value='' disabled hidden>
+                                Choose one
+                            </option>
+                            <option value='Facebook'>Facebook</option>
+                            <option value='Instagram'>Instagram</option>
+                            <option value='WordOfMouth'>Word of Mouth</option>
+                            <option value='Flyer'>Flyer</option>
+                            <option value='Poster'>Poster</option>
+                            <option value='GoogleSearch'>Google Search</option>
+                            <option value='Eventbrite'>Eventbrite</option>
+                            <option value='EventFinder'>EventFinder</option>
+                            <option value='Humanitix'>Humanitix</option>
+                            <option value='BhaktiLoungeWebsite'>Bhakti Lounge Website</option>
+                            <option value='SelfDiscover'>Self Discovery</option>
+                            <option value='Other'>Other</option>
+                        </select>
+                    </div>
+                    <div className='form-group'>
+                        <label htmlFor='notification'>Would you like to be added to our email list?</label>
+                        <input
+                            id='notification'
+                            type='checkbox'
+                            onChange={(e) => setNotification(e.target.checked)}></input>
+                    </div>
+                    <div className='button-container'>
+                        <button className='tw-btn' type='submit'>
+                            Sign Up
+                        </button>
+                        {/* <button type="submit" onClick={backButton}>Back</button> */}
+                        <Link to='/check/check-in'>
+                            <button className='tw-btn'>Back</button>
+                        </Link>
+                    </div>
+                </form>
+            </div>
+        </div>
+    );
 };
 
 export default Register;

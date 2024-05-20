@@ -25,9 +25,9 @@ function MgmtSideBar() {
 
             <div className="w-64 px-2">
                 <div className="flex flex-col items-center w-full mt-3 border-t border-gray-700">
-                    <NavLink className={linkClass} to="report">
+                    <NavLink className={linkClass} to="dashboard">
                         <GrDashboard className="tw-sidebar-icon" />
-                        <span className="tw-sidebar-item">Dasboard</span>
+                        <span className="tw-sidebar-item">Dashboard</span>
                     </NavLink>
                     <NavLink className={linkClass} to="activity">
                         <GrYoga className="tw-sidebar-icon" />

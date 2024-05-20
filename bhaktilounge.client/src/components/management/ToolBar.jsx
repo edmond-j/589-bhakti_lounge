@@ -18,7 +18,7 @@ function ToolBar({ title }) {
         navigate("/");
     }
     return (
-        <div className="flex items-center flex-shrink-0 h-16 px-8  bg-white rounded-tr-2xl">
+        <div className="flex items-center flex-shrink-0 h-16 px-8 border-b bg-white rounded-tr-2xl">
             <h1 className="text-2xl font-bold">{title}</h1>
             <div className="grow"></div>
             <div className="flex items-center justify-end space-x-8 ">
