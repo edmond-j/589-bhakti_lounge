@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import Header from "../components/Header.jsx";
 import authFetch from "@/utils/authFetch.js";
+import { useEffect } from "react";
 
 const Register = () => {
   const [FirstName, setFirstName] = useState("");
@@ -13,6 +14,32 @@ const Register = () => {
   const [acquisition, setAcquisition] = useState("");
   const [notification, setNotification] = useState("");
   const navigate = useNavigate();
+  const [channel, setChannel] = useState([]);
+  
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await authFetch("/api/v1/Acquisition", {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
+
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        const data = await response.json();
+        setChannel(data);
+      } catch (err) {
+        console.error("Failed to fetch data:", err);
+      }
+    };
+
+    fetchData();
+  }, []);
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -96,51 +123,46 @@ const Register = () => {
             </select>
           </div>
 
-                    <div className='form-group'>
-                        <label htmlFor='channel'>How did you hear about us?</label>
-                        <select
-                            id='channel'
-                            value={acquisition}
-                            name='channel'
-                            required
-                            onChange={(e) => setAcquisition(e.target.value)}>
-                            <option value='' disabled hidden>
-                                Choose one
-                            </option>
-                            <option value='Facebook'>Facebook</option>
-                            <option value='Instagram'>Instagram</option>
-                            <option value='WordOfMouth'>Word of Mouth</option>
-                            <option value='Flyer'>Flyer</option>
-                            <option value='Poster'>Poster</option>
-                            <option value='GoogleSearch'>Google Search</option>
-                            <option value='Eventbrite'>Eventbrite</option>
-                            <option value='EventFinder'>EventFinder</option>
-                            <option value='Humanitix'>Humanitix</option>
-                            <option value='BhaktiLoungeWebsite'>Bhakti Lounge Website</option>
-                            <option value='SelfDiscover'>Self Discovery</option>
-                            <option value='Other'>Other</option>
-                        </select>
-                    </div>
-                    <div className='form-group'>
-                        <label htmlFor='notification'>Would you like to be added to our email list?</label>
-                        <input
-                            id='notification'
-                            type='checkbox'
-                            onChange={(e) => setNotification(e.target.checked)}></input>
-                    </div>
-                    <div className='button-container'>
-                        <button className='tw-btn' type='submit'>
-                            Sign Up
-                        </button>
-                        {/* <button type="submit" onClick={backButton}>Back</button> */}
-                        <Link to='/check/check-in'>
-                            <button className='tw-btn'>Back</button>
-                        </Link>
-                    </div>
-                </form>
-            </div>
-        </div>
-    );
+          <div className='form-group'>
+            <label htmlFor='channel'>How did you hear about us?</label>
+            <select
+              id='channel'
+              value={acquisition}
+              name='channel'
+              required
+              onChange={(e) => setAcquisition(e.target.value)}
+            >
+              <option value='' disabled hidden>
+                Choose one
+              </option>
+              {channel.map((p) => {
+                return (
+                  <option value={p.name}>
+                    {p.name}
+                  </option>
+                );
+              })}
+            </select>
+          </div>
+          <div className='form-group'>
+            <label htmlFor='notification'>Would you like to be added to our email list?</label>
+            <input
+              id='notification'
+              type='checkbox'
+              onChange={(e) => setNotification(e.target.checked)}></input>
+          </div>
+          <div className='button-container'>
+            <button className='tw-btn' type='submit'>
+              Sign Up
+            </button>
+            <Link to='/check/check-in'>
+              <button className='tw-btn'>Back</button>
+            </Link>
+          </div>
+        </form>
+      </div>
+    </div>
+  );
 };
 
 export default Register;
