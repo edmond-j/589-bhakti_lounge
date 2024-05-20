@@ -22,7 +22,7 @@ namespace BhaktiLounge.Server.Controllers {
             var memberClasses = await _context.MemberClass.OrderBy(m => m.Name).ToArrayAsync();
             return Ok(memberClasses);
         }
-
+        [Authorize (Roles = "Manager")]
         [HttpPost]
         public async Task<ActionResult> AddMemberClass([FromBody] MemberClass? newItem) {
             newItem ??= new MemberClass();
@@ -30,7 +30,7 @@ namespace BhaktiLounge.Server.Controllers {
             await _context.SaveChangesAsync();
             return Ok(newItem);
         }
-
+        [Authorize (Roles = "Manager")]
         [HttpPut]
         public async Task<ActionResult> UpdateMemberClass([FromBody] MemberClass updated) {
             var target = await _context.MemberClass.FindAsync(updated.Id);
@@ -45,7 +45,7 @@ namespace BhaktiLounge.Server.Controllers {
             await _context.SaveChangesAsync();
             return Ok(target);
         }
-
+        [Authorize (Roles = "Manager")]
         [HttpDelete]
         public async Task<ActionResult> DeleteMemberClass(int Id) {
             var toDel = await _context.MemberClass.FindAsync(Id);

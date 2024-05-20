@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
 
 namespace BhaktiLounge.Server.Controllers {
-    [Authorize]
+    [Authorize (Roles = "Manager")]
     [Route("api/v1/[controller]")]
     [ApiController]
     public class ActivityController : ControllerBase {

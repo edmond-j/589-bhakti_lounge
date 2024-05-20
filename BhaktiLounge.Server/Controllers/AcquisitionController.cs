@@ -20,7 +20,7 @@ namespace BhaktiLounge.Server.Controllers {
             var acquisition = await _context.Acquisition.OrderBy(a => a.Id).ToListAsync();
             return Ok(acquisition);
         }
-
+        [Authorize (Roles = "Manager")]
         [HttpPost]
         public async Task<ActionResult> AddEvent([FromBody] Acquisition? newItem) {
             newItem ??= new Acquisition();
@@ -28,7 +28,7 @@ namespace BhaktiLounge.Server.Controllers {
             await _context.SaveChangesAsync();
             return Ok(newItem);
         }
-
+        [Authorize (Roles = "Manager")]
         [HttpPut]
         public async Task<ActionResult> UpdateAcquisition([FromBody] Acquisition updatedAcqu) {
             var target = await _context.Acquisition.FindAsync(updatedAcqu.Id);
@@ -40,7 +40,7 @@ namespace BhaktiLounge.Server.Controllers {
             await _context.SaveChangesAsync();
             return Ok(target);
         }
-
+        [Authorize (Roles = "Manager")]
         [HttpDelete]
         public async Task<ActionResult> DeleteAcquisition(int Id) {
             var toDel = await _context.Acquisition.FindAsync(Id);
