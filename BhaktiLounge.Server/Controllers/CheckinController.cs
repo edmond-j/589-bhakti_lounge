@@ -19,7 +19,7 @@ public class CheckinController : ControllerBase {
         _logger = logger;
         _service = service;
     }
-
+    [Authorize (Roles = "Manager")]
     [HttpGet]
     public async Task<ActionResult> GetAllCheckins() {
         var checkins = await _service.GetAllCheckins();
