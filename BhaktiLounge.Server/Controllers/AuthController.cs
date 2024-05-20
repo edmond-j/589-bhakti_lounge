@@ -26,7 +26,7 @@ public class AuthController : ControllerBase
         _configuration = configuration;
         _userManager = userManager;
     }
-
+    [Authorize (Roles = "Manager")]
     [HttpPost("signup")]
     public async Task<IActionResult> Signup([FromBody] SignupModel userModel)
     {
@@ -49,7 +49,7 @@ public class AuthController : ControllerBase
     }
 
     [HttpPost("login")]
-    public async Task<IActionResult> Login([FromBody] UserModel userModel)
+    public async Task<IActionResult> Login([FromBody] LoginModel userModel)
     {
         // Find the user by username
         var user = await _userManager.FindByNameAsync(userModel.UserName);
@@ -90,5 +90,19 @@ public class AuthController : ControllerBase
             token = new JwtSecurityTokenHandler().WriteToken(token)
         });
     }
+    [Authorize (Roles = "Manager")]
+    [HttpPost("delete")]
+    public async Task<IActionResult> Delete([FromBody] UserModel userModel)
+    {
+        var user = await _userManager.FindByNameAsync(userModel.UserName);
+        if (user == null)
+            return NotFound("No this user found!");
 
+        var result = await _userManager.DeleteAsync(user);
+        if (result.Succeeded)
+        {
+            return Ok("User deleted successfully");
+        }
+        return BadRequest(result.Errors);
+    }
 }

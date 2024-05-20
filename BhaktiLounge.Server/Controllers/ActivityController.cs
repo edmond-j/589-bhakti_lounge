@@ -3,10 +3,11 @@ using Microsoft.AspNetCore.Mvc;
 using BhaktiLounge.Server.Models;
 using BhaktiLounge.Server.Data;
 using BhaktiLounge.Server.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
 
 namespace BhaktiLounge.Server.Controllers {
-
+    [Authorize]
     [Route("api/v1/[controller]")]
     [ApiController]
     public class ActivityController : ControllerBase {
