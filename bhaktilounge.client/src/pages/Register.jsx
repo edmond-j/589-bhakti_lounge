@@ -41,7 +41,7 @@ const Register = () => {
       })
       .catch((error) => console.error("Error:", error));
     const customerName = FirstName + " " + LastName;
-    navigate("check/check-in", { state: { FirstName } });
+    navigate("/check/check-in", { state: { FirstName } });
   };
 
   return (
@@ -122,7 +122,7 @@ const Register = () => {
                         </select>
                     </div>
                     <div className='form-group'>
-                        <label htmlFor='notification'>Enable Notification?</label>
+                        <label htmlFor='notification'>Would you like to be added to our email list?</label>
                         <input
                             id='notification'
                             type='checkbox'
