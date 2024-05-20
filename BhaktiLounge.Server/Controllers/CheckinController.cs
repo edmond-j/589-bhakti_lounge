@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace BhaktiLounge.Server.Controllers;
-
+[Authorize]
 [Route("api/v1/[controller]")]
 [ApiController]
 public class CheckinController : ControllerBase {
@@ -19,7 +19,7 @@ public class CheckinController : ControllerBase {
         _logger = logger;
         _service = service;
     }
-
+    [Authorize (Roles = "Manager")]
     [HttpGet]
     public async Task<ActionResult> GetAllCheckins() {
         var checkins = await _service.GetAllCheckins();
