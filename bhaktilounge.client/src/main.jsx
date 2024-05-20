@@ -14,53 +14,100 @@ import MgmtLayout from "./pages/Mgmt-Layout.jsx";
 import ChkLayout from "./pages/Chk-Layout.jsx";
 import SubscriptionForm from "./pages/Subscribe.jsx";
 import ProtectedRoute from "@/ProtectedRoute.jsx";
-import { Provider } from 'react-redux';
-import store from './services/store.js';
+import { Provider } from "react-redux";
+import store from "./services/store.js";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
-    <React.StrictMode>
+  <React.StrictMode>
     <Provider store={store}>
-        <BrowserRouter>
-            <Routes>
-                <Route path="/" element={<App />} />
-                <Route path="/check" element={<ChkLayout/>}>
-                    <Route path="check-in" element={<CheckIn />} />
-                    <Route path="register" element={<Register />} />
-                    <Route path="top-up" element={<TopUp />} />
-                    <Route
-                        path="subscribe/:id/:firstName/:lastName/:email"
-                        element={<SubscriptionForm />}
-                    />
-                </Route>
-                <Route path="/management" element={
-                    <ProtectedRoute>
-                    <MgmtLayout />
-                    </ProtectedRoute>
-                }>
-                    <Route path="activity" element={
-                        <ProtectedRoute>
-                        <Activity />
-                        </ProtectedRoute>
-                    } />
-                    <Route path="event" element={
-                        <ProtectedRoute>
-                        <Event />
-                        </ProtectedRoute>
-                    } />
-                    <Route path="membership" element={
-                        <ProtectedRoute>
-                        <Membership />
-                        </ProtectedRoute>
-                    } />
-                    <Route path="user" element={
-                        <ProtectedRoute>
-                        <User />
-                        </ProtectedRoute>
-                    } />
-                    <Route path="*" element={<NotFound />} />
-                </Route>
-            </Routes>
-        </BrowserRouter>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<App />} />
+          <Route
+            path="/check"
+            element={
+              <ProtectedRoute>
+                <ChkLayout />
+              </ProtectedRoute>
+            }
+          >
+            <Route
+              path="check-in"
+              element={
+                <ProtectedRoute>
+                  <CheckIn />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="register"
+              element={
+                <ProtectedRoute>
+                  <Register />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="top-up"
+              element={
+                <ProtectedRoute>
+                  <TopUp />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="subscribe/:id/:firstName/:lastName/:email"
+              element={
+                <ProtectedRoute>
+                  <SubscriptionForm />
+                </ProtectedRoute>
+              }
+            />
+          </Route>
+          <Route
+            path="/management"
+            element={
+              <ProtectedRoute>
+                <MgmtLayout />
+              </ProtectedRoute>
+            }
+          >
+            <Route
+              path="activity"
+              element={
+                <ProtectedRoute>
+                  <Activity />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="event"
+              element={
+                <ProtectedRoute>
+                  <Event />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="membership"
+              element={
+                <ProtectedRoute>
+                  <Membership />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="user"
+              element={
+                <ProtectedRoute>
+                  <User />
+                </ProtectedRoute>
+              }
+            />
+            <Route path="*" element={<NotFound />} />
+          </Route>
+        </Routes>
+      </BrowserRouter>
     </Provider>
-    </React.StrictMode>
+  </React.StrictMode>,
 );

@@ -1,5 +1,6 @@
 ﻿using BhaktiLounge.Server.Data;
 using BhaktiLounge.Server.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -7,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace BhaktiLounge.Server.Controllers
 {
+    [Authorize]
     [Route("api/v1/[controller]")]
     [ApiController]
     public class SubscribeController : ControllerBase
