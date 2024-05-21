@@ -12,7 +12,7 @@ const Register = () => {
   const [gender, setGender] = useState("");
   const currentTimestamp = new Date().toISOString(); //get current timestamp
   const [acquisition, setAcquisition] = useState("");
-  const [notification, setNotification] = useState("");
+  const [notification, setNotification] = useState();
   const navigate = useNavigate();
   const [channel, setChannel] = useState([]);
   
