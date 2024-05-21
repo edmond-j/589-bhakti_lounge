@@ -64,8 +64,8 @@ const Register = () => {
       .then((response) => response.json())
       .then((data) => {
         console.log("Update Successful:", data);
-        alert(FirstName + LastName + " has been registered!");
-        navigate("/check/check-in", { state: { FirstName } });
+        alert(FirstName +" "+ LastName + " has been registered!");
+        navigate(`/check/check-in?firstname=${encodeURIComponent(FirstName)}`);
       })
       .catch((error) => console.error("Error:", error));
     const customerName = FirstName + " " + LastName;
