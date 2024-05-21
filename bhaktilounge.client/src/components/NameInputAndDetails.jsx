@@ -192,7 +192,7 @@ function NameInput() {
                         selectedCustomer.lastName +
                         " has been checked in! ",
                     );
-                    // navigate(0);
+                    navigate("/check/check-in");
                     handleBackClick();
                 } else {
                     console.error("Failed to add check-in:", await response.text());
