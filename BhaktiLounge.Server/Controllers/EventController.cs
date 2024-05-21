@@ -25,7 +25,7 @@ namespace BhaktiLounge.Server.Controllers {
             var events = await _context.Event.OrderBy(a => a.Id).ToListAsync();
             return Ok(events);
         }
-
+        [Authorize (Roles = "Manager")]
         [HttpPost]
         public async Task<ActionResult> AddEvent([FromBody] Event? newItem) {
             //if (newItem == null) {
@@ -39,7 +39,7 @@ namespace BhaktiLounge.Server.Controllers {
             await _context.SaveChangesAsync();
             return Ok(newItem);
         }
-
+        [Authorize (Roles = "Manager")]
         [HttpPut]
         public async Task<ActionResult> UpdateEvent([FromBody] Event updated) {
             var target = await _context.Event.FindAsync(updated.Id);
@@ -55,7 +55,7 @@ namespace BhaktiLounge.Server.Controllers {
             await _context.SaveChangesAsync();
             return Ok(target);
         }
-
+        [Authorize (Roles = "Manager")]
         [HttpDelete]
         public async Task<ActionResult> DeleteEvent(int Id) {
             var toDel = await _context.Event.FindAsync(Id);
