@@ -1,14 +1,49 @@
 import React from "react";
 
 import ToolBar from "../../components/management/ToolBar";
+import { useState, useEffect } from "react";
 import { MdOutlineDeleteForever } from "react-icons/md";
-import {UserSignupPanel} from "@/components/management/UserSignupPanel.jsx";
+import { toast } from "react-toastify";
+import UserSignupPanel from "@/components/management/UserSignupPanel.jsx";
+import authFetch from "@/utils/authFetch.js";
 
 function User() {
+    const [users, setUsers] = useState([]);
+    async function populateData() {
+        authFetch(`/api/v1/Auth/user-list`)
+            .then((response) => response.json())
+            .then((data) => {
+                console.log(data);
+                setUsers(data);
+            });
+    }
+    useEffect(() => {
+        populateData();
+        console.log(users);
+    }, []);
+
+    function deleteUser(userToDel) {
+        const option = {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+                userName: userToDel.name,
+            }),
+        };
+        authFetch(`/api/v1/Auth/delete`, option).then((response) => {
+            if (response.ok) {
+                console.log(response);
+                toast.success(userToDel.name + " has been deleted.");
+                //在列表中删除
+                setUsers((currentUsers) => currentUsers.filter((user) => user !== userToDel));
+            }
+        });
+    }
+
     return (
         <div className="flex-grow bg-gray-200 rounded-r-2xl">
             <ToolBar title="User" />
-            <UserSignupPanel />
+            <UserSignupPanel populateData={populateData}/>
             {/* <hr className="border border-gray-400 mx-12 my-6" /> */}
             <hr className=" mx-12 my-6" />
 
@@ -26,10 +61,7 @@ function User() {
                                     Type
                                 </th>
                                 <th scope="col" className="px-6 py-3">
-                                    XXX
-                                </th>
-                                <th scope="col" className="px-6 py-3">
-                                    XXX
+                                    Id
                                 </th>
                                 <th scope="col" className="px-6 py-3">
                                     {/* <span className="sr-only">Edit</span> */}
@@ -38,21 +70,22 @@ function User() {
                             </tr>
                         </thead>
                         <tbody>
-                            <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                                <th
-                                    scope="row"
-                                    className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                    Vira
-                                </th>
-                                <td className="px-6 py-4">Administrator</td>
-                                <td className="px-6 py-4"> </td>
-                                <td className="px-6 py-4"> </td>
-                                <td className="px-6 ">
-                                    <button className="rounded-3xl p-2 hover:bg-gray-200" onClick={console.log("clicked")}>
-                                        <MdOutlineDeleteForever className="w-6 h-6 text-link"/>
-                                    </button>
-                                </td>
-                            </tr>
+                            {users.map((user) => {
+                                return (
+                                    <tr key={user.id} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                                        <th scope="row" className="px-6 py-4">
+                                            {user.name}
+                                        </th>
+                                        <td className="px-6 py-4">{user.role}</td>
+                                        <td className="px-6 py-4">{user.id.slice(0, 8)} </td>
+                                        <td className="px-6 ">
+                                            <button className="rounded-3xl p-2 hover:bg-gray-200" onClick={() => deleteUser(user)}>
+                                                <MdOutlineDeleteForever className="w-6 h-6 text-link" />
+                                            </button>
+                                        </td>
+                                    </tr>
+                                );
+                            })}
                         </tbody>
                     </table>
                 </div>
