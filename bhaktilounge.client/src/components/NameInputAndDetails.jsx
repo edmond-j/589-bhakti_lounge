@@ -21,9 +21,15 @@ function NameInput() {
 
     //get name data from register page
     const location = useLocation();
-    const [customerName, setCustomerName] = useState(
-        location.state?.FirstName || "",
-    );
+    const [customerName, setCustomerName] = useState("");
+
+    useEffect(() => {
+        const params = new URLSearchParams(location.search);
+        const firstname = params.get('firstname');
+        if (firstname) {
+            setCustomerName(firstname);
+        }
+      }, [location]);
 
     useEffect(() => {
         if (customerName && customerName.length > 1) {
@@ -186,7 +192,8 @@ function NameInput() {
                         selectedCustomer.lastName +
                         " has been checked in! ",
                     );
-                    navigate(0);
+                    // navigate(0);
+                    handleBackClick();
                 } else {
                     console.error("Failed to add check-in:", await response.text());
                 }
