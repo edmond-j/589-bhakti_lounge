@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import authFetch from "@/utils/authFetch.js";
 
 const CheckinNumbers = () => {
-  const [checkinNumbers, setCheckinNumbers] = useState([]); // 初始化为空数组
+  const [checkinNumbers, setCheckinNumbers] = useState([]);
 
   useEffect(() => {
     async function fetchCheckinNumber() {
@@ -30,7 +30,8 @@ const CheckinNumbers = () => {
   return (
     <div>
       <p>Check-in: {checkinNumbers.totalCheckIns}</p>
-      <p>Diners: {checkinNumbers.dinners}</p>
+      <p>Dine-in: {checkinNumbers.dineInDinners}</p>
+      <p>Takeaway: {checkinNumbers.takeawayDinners}</p>
     </div>
   );
 };
