@@ -14,17 +14,21 @@ function Event() {
   const [selectedItem, setSelectedItem] = useState(null);
   const [isLoading, setLoading] = useState(true);
 
-  useEffect(() => {
+  async function populateData(){
     authFetch("/api/v1/event")
-      .then((response) => response.json())
-      .then((data) => {
-        console.log("acquire", data);
-        setLoading(false);
-        if (data.length > 0) {
-          setItems(data);
-          setSelectedItem(data[0]);
-        }
-      });
+    .then((response) => response.json())
+    .then((data) => {
+      console.log("acquire", data);
+      setLoading(false);
+      if (data.length > 0) {
+        setItems(data);
+        setSelectedItem(data[0]);
+      }
+    });
+  }
+
+  useEffect(() => {
+    populateData();
   }, []);
 
   useEffect(() => itemHighlight(selectedItem), [selectedItem]);
@@ -98,21 +102,28 @@ function Event() {
         };
         authFetch(url, requestOptions).then((response) => {
           console.log(response);
-          toast.success(selectedItem.name + " has been deleted.");
+          if(response.ok){
+            toast.success(selectedItem.name + " has been deleted.");
+            const index = items.indexOf(selectedItem);
+            console.log(index);
+            setItems((currentItems) =>
+              currentItems.filter((item) => item !== selectedItem),
+            ); //remove the deleted activity
+            if (index > 0) {
+              setSelectedItem(items[index - 1]);
+            } else {
+              if (items.length == 1)
+                //when the activities has only 1 element
+                setSelectedItem(null);
+              else setSelectedItem(items[1]);
+            }
+          }else{
+            toast.error(response.status+": "+response.statusText)
+            populateData();
+            console.log(response.status+": "+response.statusText)
+          }
         });
-        const index = items.indexOf(selectedItem);
-        console.log(index);
-        setItems((currentItems) =>
-          currentItems.filter((item) => item !== selectedItem),
-        ); //remove the deleted activity
-        if (index > 0) {
-          setSelectedItem(items[index - 1]);
-        } else {
-          if (items.length == 1)
-            //when the activities has only 1 element
-            setSelectedItem(null);
-          else setSelectedItem(items[1]);
-        }
+        
       }
       content = (
         <div className="flex grow p-6 bg-gray-200 rounded-br-2xl">
