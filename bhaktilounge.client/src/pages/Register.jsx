@@ -15,7 +15,7 @@ const Register = () => {
   const [notification, setNotification] = useState();
   const navigate = useNavigate();
   const [channel, setChannel] = useState([]);
-  
+
 
   useEffect(() => {
     const fetchData = async () => {
@@ -50,7 +50,7 @@ const Register = () => {
       email: email,
       gender: gender,
       acquisition: acquisition,
-      initialRegisted: currentTimestamp,
+      initialRegistered: currentTimestamp,
       notification: notification,
     };
     const requestOptions = {
@@ -64,11 +64,12 @@ const Register = () => {
       .then((response) => response.json())
       .then((data) => {
         console.log("Update Successful:", data);
-        alert(FirstName + LastName + " has been registered!");
+        alert(FirstName +" "+ LastName + " has been registered!");
+        navigate(`/check/check-in?firstname=${encodeURIComponent(FirstName)}`);
       })
       .catch((error) => console.error("Error:", error));
     const customerName = FirstName + " " + LastName;
-    navigate("/check/check-in", { state: { FirstName } });
+
   };
 
   return (

@@ -11,7 +11,7 @@ function PaymentSelector({ onPaymentSelect, hasMembership }) {
             { id: 4, name: 'Card', selected: false },
             { id: 5, name: 'Online bank transfer', selected: false },
             { id: 6, name: 'Service Exchange', selected: false },
-            { id: 7, name: 'Devotee - $6 payment', selected: false },
+            { id: 7, name: 'Devotee - $7 payment', selected: false },
             { id: 8, name: 'Devotee - no payment', selected: false }
         ];
 
