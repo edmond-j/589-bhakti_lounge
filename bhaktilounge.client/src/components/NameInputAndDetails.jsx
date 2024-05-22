@@ -8,10 +8,12 @@ import { useLocation } from "react-router-dom";
 import authFetch from "@/utils/authFetch.js";
 
 function NameInput() {
+    //get name data from register page
+    const location = useLocation();
     const [suggestions, setCustomerSuggestions] = useState([]);
-    const [selectedCustomer, setSelectedCustomer] = useState(null);
+    const [selectedCustomer, setSelectedCustomer] = useState(location.state?.customer ? location.state?.customer : null);
     const [hasMembership, setHasMembership] = useState(false);
-    const [showDetails, setShowCustomerDetails] = useState(false);
+    const [showDetails, setShowCustomerDetails] = useState(location.state?.customer ? ture : false);
     const [selectedActivities, setSelectedActivities] = useState([]);
     const [selectedEvents, setSelectedEvents] = useState([]);
     const [selectedPayment, setSelectedPayment] = useState(null);
@@ -19,8 +21,7 @@ function NameInput() {
     const [editableTotalPrice, setEditableTotalPrice] = useState(0);
     const [membershipDetail, setMembershipDetail] = useState("");
 
-    //get name data from register page
-    const location = useLocation();
+
     const [customerName, setCustomerName] = useState("");
 
     useEffect(() => {
@@ -29,7 +30,7 @@ function NameInput() {
         if (firstname) {
             setCustomerName(firstname);
         }
-      }, [location]);
+    }, [location]);
 
     useEffect(() => {
         if (customerName && customerName.length > 1) {
@@ -124,7 +125,7 @@ function NameInput() {
 
     const subscribe = () => {
         navigate(
-            `/check/subscribe/${selectedCustomer.id}/${selectedCustomer.firstName}/${selectedCustomer.lastName}/${selectedCustomer.email}`,
+            `/check/subscribe/${selectedCustomer.id}`,
         );
     };
 
