@@ -1,0 +1,4 @@
+﻿.gitignore
+node_modules/
+obj/
+dist/
