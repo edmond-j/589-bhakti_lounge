@@ -59,11 +59,11 @@ function EventSelector({ onEventSelect }) {
 
   return (
     <div className="form-group">
-      <label>Events</label>
+      <label>Thursday Event</label>
       <input
         htmlFor="events"
         type="text"
-        value={"Select Events ▼"}
+        value={"Select Event ▼"}
         readOnly
         onClick={toggleList}
       />
@@ -72,9 +72,8 @@ function EventSelector({ onEventSelect }) {
           {events.map((event) => (
             <li key={event.id} className="multi-select-item">
               <label
-                className={`multi-select-label ${
-                  event.id === -1 ? "disabled" : ""
-                }`}
+                className={`multi-select-label ${event.id === -1 ? "disabled" : ""
+                  }`}
               >
                 {event.id !== -1 && (
                   <input
