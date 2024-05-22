@@ -30,7 +30,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
                         <Route path='register' element={<Register />} />
                         <Route path='top-up' element={<TopUp />} />
                         <Route
-                            path='subscribe/:id/:firstName/:lastName/:email'
+                            path='subscribe/:id'
                             element={<SubscriptionForm />}
                         />
                     </Route>

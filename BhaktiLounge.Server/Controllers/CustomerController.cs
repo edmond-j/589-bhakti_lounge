@@ -36,6 +36,14 @@ namespace BhaktiLounge.Server.Controllers {
             }
         }
 
+        [HttpGet]
+        [Route("{customerId}")]
+        public async Task<IActionResult> GetCustomer(int customerId)
+        {
+            var customer = await _context.Customer.SingleOrDefaultAsync(c=>c.Id == customerId);                  
+            return Ok(customer);
+        }
+
         //New Customer registration
         [HttpPost]
         public async Task<IActionResult> Register([FromBody] Customer newItem) {
