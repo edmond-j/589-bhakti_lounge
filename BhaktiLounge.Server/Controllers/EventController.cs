@@ -20,12 +20,15 @@ namespace BhaktiLounge.Server.Controllers {
 
         [HttpGet]
         public async Task<IActionResult> GetAllEvents() {
-            //var events = new List<Event>();
-            //events.Add(new Event { Id = 1, Name = "Yoga Nidia" });
-            var events = await _context.Event.OrderBy(a => a.Id).ToListAsync();
-            return Ok(events);
+            try {
+                var events = await _context.Event.OrderBy(a => a.Id).ToListAsync();
+                return Ok(events);
+            } catch (Exception ex) {
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+            }
         }
-        [Authorize (Roles = "Manager")]
+
+        [Authorize(Roles = "Manager")]
         [HttpPost]
         public async Task<ActionResult> AddEvent([FromBody] Event? newItem) {
             //if (newItem == null) {
@@ -34,37 +37,51 @@ namespace BhaktiLounge.Server.Controllers {
             //_context.Event.Add(newItem);
             //await _context.SaveChangesAsync();
             //return Ok(newItem);
-            newItem ??= new Event();
-            _context.Event.Add(newItem);
-            await _context.SaveChangesAsync();
-            return Ok(newItem);
+            try {
+                newItem ??= new Event();
+                _context.Event.Add(newItem);
+                await _context.SaveChangesAsync();
+                return Ok(newItem);
+            } catch (Exception ex) {
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+            }
         }
-        [Authorize (Roles = "Manager")]
+
+        [Authorize(Roles = "Manager")]
         [HttpPut]
         public async Task<ActionResult> UpdateEvent([FromBody] Event updated) {
-            var target = await _context.Event.FindAsync(updated.Id);
-            if (target is null) {
-                return NotFound("Item Not Found");
+            try {
+                var target = await _context.Event.FindAsync(updated.Id);
+                if (target is null) {
+                    return NotFound("Item Not Found");
+                }
+                target.Name = updated.Name;
+                target.Price = updated.Price;
+                target.Date = updated.Date;
+                target.StartTime = updated.StartTime;
+                target.EndTime = updated.EndTime;
+                _context.Event.Update(target);
+                await _context.SaveChangesAsync();
+                return Ok(target);
+            } catch (Exception ex) {
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
-            target.Name = updated.Name;
-            target.Price = updated.Price;
-            target.Date = updated.Date;
-            target.StartTime = updated.StartTime;
-            target.EndTime = updated.EndTime;
-            _context.Event.Update(target);
-            await _context.SaveChangesAsync();
-            return Ok(target);
         }
-        [Authorize (Roles = "Manager")]
+
+        [Authorize(Roles = "Manager")]
         [HttpDelete]
         public async Task<ActionResult> DeleteEvent(int Id) {
-            var toDel = await _context.Event.FindAsync(Id);
-            if (toDel is null) {
-                return NotFound("Item Not Found");
+            try {
+                var toDel = await _context.Event.FindAsync(Id);
+                if (toDel is null) {
+                    return NotFound("Item Not Found");
+                }
+                _context.Event.Remove(toDel);
+                await _context.SaveChangesAsync();
+                return Ok("Item Deleted");
+            } catch (Exception ex) {
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
-            _context.Event.Remove(toDel);
-            await _context.SaveChangesAsync();
-            return Ok("Item Deleted");
         }
     }
 }

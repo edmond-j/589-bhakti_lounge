@@ -18,6 +18,7 @@ function NameInput() {
     const [totalPrice, setTotalPrice] = useState(0);
     const [editableTotalPrice, setEditableTotalPrice] = useState(0);
     const [membershipDetail, setMembershipDetail] = useState("");
+    const [isFirstTime, setIsFirstTime] = useState(false);
 
     //get name data from register page
     const location = useLocation();
@@ -28,7 +29,9 @@ function NameInput() {
         const firstname = params.get('firstname');
         if (firstname) {
             setCustomerName(firstname);
+            setIsFirstTime(true);
         }
+        console.log("first time? "+isFirstTime)
       }, [location]);
 
     useEffect(() => {
@@ -172,9 +175,9 @@ function NameInput() {
                 activitiesId: selectedActivities.map((activity) => activity.id),
                 eventsId: selectedEvents.map((event) => event.id),
                 totalPrice: parseFloat(editableTotalPrice),
-                isFirstTime: true, // 这个值根据实际业务逻辑进行设置
+                isFirstTime: isFirstTime, // 这个值根据实际业务逻辑进行设置
             };
-
+            console.log("newCheckin"+isFirstTime)
             try {
                 const response = await authFetch("/api/v1/Checkin", {
                     method: "POST",
@@ -192,7 +195,7 @@ function NameInput() {
                         selectedCustomer.lastName +
                         " has been checked in! ",
                     );
-                    // navigate(0);
+                    navigate("/check/check-in");
                     handleBackClick();
                 } else {
                     console.error("Failed to add check-in:", await response.text());

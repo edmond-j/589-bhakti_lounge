@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace BhaktiLounge.Server.Controllers {
+
     [Authorize]
     [Route("api/v1/[controller]")]
     [ApiController]
@@ -20,41 +21,53 @@ namespace BhaktiLounge.Server.Controllers {
         //Search a target
         [HttpGet]
         public async Task<IActionResult> Search(string? name) {
-            var lowName = name == null ? "" : name.ToLower();
-            //var lowName = name.ToLower();
-            var customers = await _context.Customer
-                                .Where(c => c.FirstName.ToLower().Contains(lowName) || c.LastName.ToLower().Contains(lowName))
-                                .Take(8)
-                                .OrderBy(c => c.LastName)
-                                .ThenBy(c => c.FirstName)
-                                .ToArrayAsync();
-            return Ok(customers);
+            try {
+                var lowName = name == null ? "" : name.ToLower();
+                //var lowName = name.ToLower();
+                var customers = await _context.Customer
+                                    .Where(c => c.FirstName.ToLower().Contains(lowName) || c.LastName.ToLower().Contains(lowName))
+                                    .Take(8)
+                                    .OrderBy(c => c.LastName)
+                                    .ThenBy(c => c.FirstName)
+                                    .ToArrayAsync();
+                return Ok(customers);
+            } catch (Exception ex) {
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+            }
         }
 
         //New Customer registration
         [HttpPost]
         public async Task<IActionResult> Register([FromBody] Customer newItem) {
-            _context.Customer.Add(newItem);
-            await _context.SaveChangesAsync();
-            return Ok(newItem);
+            try {
+                _context.Customer.Add(newItem);
+                await _context.SaveChangesAsync();
+                return Ok(newItem);
+            } catch (Exception ex) {
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+            }
         }
 
         //Subscribe, extend membership or modify profile
         [HttpPut]
         public async Task<IActionResult> Modifiy([FromBody] Customer updated) {
-            var target = await _context.Customer.FindAsync(updated.Id);
-            if (target == null) {
-                return NotFound("Item Not Found");
+            try {
+                var target = await _context.Customer.FindAsync(updated.Id);
+                if (target == null) {
+                    return NotFound("Item Not Found");
+                }
+                target.FirstName = updated.FirstName;
+                target.LastName = updated.LastName;
+                target.Email = updated.Email;
+                target.SubStartDate = updated.SubStartDate;
+                target.SubEndDate = updated.SubEndDate;
+                target.PassRemain = updated.PassRemain;
+                _context.Customer.Update(target);
+                await _context.SaveChangesAsync();
+                return Ok(target);
+            } catch (Exception ex) {
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
-            target.FirstName = updated.FirstName;
-            target.LastName = updated.LastName;
-            target.Email = updated.Email;
-            target.SubStartDate = updated.SubStartDate;
-            target.SubEndDate = updated.SubEndDate;
-            target.PassRemain = updated.PassRemain;
-            _context.Customer.Update(target);
-            await _context.SaveChangesAsync();
-            return Ok(target);
         }
     }
 }
