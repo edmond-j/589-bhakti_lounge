@@ -17,6 +17,8 @@ function SubscriptionForm() {
     const [customer, setCustomer] = useState();
     const [products, setProducts] = useState([]);
     const navigate = useNavigate();
+  
+
 
     useEffect(() => {
         authFetch("/api/v1/MemberClass", {
@@ -54,6 +56,10 @@ function SubscriptionForm() {
             ...prevSubscription,
             [name]: value,
         }));
+    };
+  
+    const handleBackToCheckin = () => {
+        navigate("/check/check-in", { state: { showDetails: true , customer } });
     };
 
     const selectedSub = products.find((p) => p.id == subscription.memberClassId);
@@ -99,9 +105,7 @@ function SubscriptionForm() {
         }
     };
 
-    const handleBackToCheckin = () => {
-        navigate("/check/check-in", { state: { customer } });
-    };
+   
 
     return (
         <>
