@@ -68,7 +68,7 @@ function UserSignupPanel({populateData}) {
                 </div>
 
                 <div className="min-w-max">
-                    <label htmlFor="password">Password_123</label>
+                    <label htmlFor="password">Password</label>
                     <input className="tw-input" type="password" id="password" value={password} onChange={handlePasswordChange} />
                 </div>
 

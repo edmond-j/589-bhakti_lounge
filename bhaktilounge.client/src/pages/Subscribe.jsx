@@ -17,8 +17,6 @@ function SubscriptionForm() {
     const [customer, setCustomer] = useState();
     const [products, setProducts] = useState([]);
     const navigate = useNavigate();
-  
-
 
     useEffect(() => {
         authFetch("/api/v1/MemberClass", {
@@ -31,7 +29,6 @@ function SubscriptionForm() {
                 resp.json().then((d) => setProducts(d));
             })
             .catch((err) => console.log(err));
-
 
         authFetch(`/api/v1/Customer/${id}`, {
             method: "GET",
@@ -47,7 +44,6 @@ function SubscriptionForm() {
                 });
             })
             .catch((err) => console.log(err));
-
     }, [id]);
 
     const handleInputChange = (event) => {
@@ -57,13 +53,15 @@ function SubscriptionForm() {
             [name]: value,
         }));
     };
-  
+
     const handleBackToCheckin = () => {
-        navigate("/check/check-in", { state: { showDetails: true , customer } });
+        customer.subEndDate = endDate.toLocaleDateString();
+        setCustomer(customer);
+        navigate("/check/check-in", { state: { customer } });
     };
 
     const selectedSub = products.find((p) => p.id == subscription.memberClassId);
-    let sessions = 0;
+    // let sessions = 0;
 
     let today = new Date();
     let startDate = customer && customer.subEndDate && new Date(customer.subEndDate) > today ? new Date(customer.subStartDate) : today;
@@ -71,7 +69,7 @@ function SubscriptionForm() {
 
     if (selectedSub) {
         console.log(startDate, subscription)
-        sessions = selectedSub.pass > 0 ? selectedSub.pass : "unlimited";
+        // sessions = selectedSub.pass > 0 ? selectedSub.pass : "unlimited";
         endDate.setDate(endDate.getDate() + selectedSub.duration);
     }
 
@@ -104,8 +102,6 @@ function SubscriptionForm() {
             console.error("Error submitting subscription:", error);
         }
     };
-
-   
 
     return (
         <>
@@ -143,9 +139,9 @@ function SubscriptionForm() {
 
                         {selectedSub && (
                             <label className="label2">
-                                <b>{sessions}</b> sessions{" "}
-                                {sessions === "unlimited" && <b>except </b>}
-                                Thursdays until <b>{endDate.toDateString()}</b>
+                                {/* <b>{sessions}</b> sessions{" "}
+                                {sessions === "unlimited" && <b>except </b>} */}
+                                Membership Valid until <b>{endDate.toLocaleDateString()}</b>
                             </label>
                         )}
 
@@ -166,7 +162,7 @@ function SubscriptionForm() {
                             Confirm
                         </button>
                     </div>
-                   
+
                 </form>
             </main>
             <footer>©Bhakti Lounge - Check-in</footer>

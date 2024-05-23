@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace BhaktiLounge.Server.Controllers {
 
-    [Authorize]
+    [Authorize(Roles = "Manager")]
     [Route("api/v1/[controller]")]
     [ApiController]
     public class EventController : ControllerBase {
@@ -28,7 +28,7 @@ namespace BhaktiLounge.Server.Controllers {
             }
         }
 
-        [Authorize(Roles = "Manager")]
+        [Authorize]
         [HttpPost]
         public async Task<ActionResult> AddEvent([FromBody] Event? newItem) {
             //if (newItem == null) {
@@ -47,7 +47,7 @@ namespace BhaktiLounge.Server.Controllers {
             }
         }
 
-        [Authorize(Roles = "Manager")]
+        [Authorize]
         [HttpPut]
         public async Task<ActionResult> UpdateEvent([FromBody] Event updated) {
             try {
@@ -68,7 +68,7 @@ namespace BhaktiLounge.Server.Controllers {
             }
         }
 
-        [Authorize(Roles = "Manager")]
+        [Authorize]
         [HttpDelete]
         public async Task<ActionResult> DeleteEvent(int Id) {
             try {
