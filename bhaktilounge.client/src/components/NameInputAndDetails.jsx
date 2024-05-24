@@ -13,11 +13,10 @@ function NameInput() {
     const [suggestions, setCustomerSuggestions] = useState([]);
     const [selectedCustomer, setSelectedCustomer] = useState(location.state?.customer ? location.state?.customer : null);
     const [hasMembership, setHasMembership] = useState(false);
-    const [showDetails, setShowCustomerDetails] = useState(location.state?.customer ? ture : false);
+    const [showDetails, setShowCustomerDetails] = useState(location.state?.customer ? true : false);
     const [selectedActivities, setSelectedActivities] = useState([]);
     const [selectedEvents, setSelectedEvents] = useState([]);
     const [selectedPayment, setSelectedPayment] = useState(null);
-    const [totalPrice, setTotalPrice] = useState(0);
     const [editableTotalPrice, setEditableTotalPrice] = useState(0);
     const [membershipDetail, setMembershipDetail] = useState("");
 
@@ -144,8 +143,8 @@ function NameInput() {
     };
 
     const handleBackClick = () => {
-        setSelectedCustomer(null); // 清空选中的客户信息
-        setShowCustomerDetails(false); // 隐藏会员详细信息
+        setSelectedCustomer(null);
+        setShowCustomerDetails(false);
     };
 
     const isCheckInEnabled =
@@ -228,7 +227,6 @@ function NameInput() {
         } else {
             newTotalPrice = activitiesPrice + eventsPrice;
         }
-        setTotalPrice(newTotalPrice);
         setEditableTotalPrice(newTotalPrice);
     };
 
