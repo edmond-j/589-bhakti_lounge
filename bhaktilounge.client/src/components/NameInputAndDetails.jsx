@@ -19,24 +19,27 @@ function NameInput() {
     const [selectedPayment, setSelectedPayment] = useState(null);
     const [editableTotalPrice, setEditableTotalPrice] = useState(0);
     const [membershipDetail, setMembershipDetail] = useState("");
+    const [isFirstTime, setIsFirstTime] = useState(location.state?.firstTime ? true : false);
 
+    //get name data from register page
 
     const [customerName, setCustomerName] = useState("");
 
-    useEffect(() => {
-        const params = new URLSearchParams(location.search);
-        const firstname = params.get('firstname');
-        if (firstname) {
-            setCustomerName(firstname);
-        }
-    }, [location]);
+    // useEffect(() => {
+    //     const params = new URLSearchParams(location.search);
+    //     const firstname = params.get('firstname');
+    //     if (firstname) {
+    //         setCustomerName(firstname);
+    //         setIsFirstTime(true);
+    //     }
+    //     console.log("first time? " + isFirstTime)
+    // }, [location]);
 
     useEffect(() => {
         if (customerName && customerName.length > 1) {
             fetchOptions(customerName);
         }
     }, [customerName]);
-
 
     const fetchOptions = async (value) => {
         try {
@@ -87,7 +90,10 @@ function NameInput() {
         if (customerSuggestion.id === -1) {
             setCustomerName("");
             navigate("/check/register");
-        } else {
+        } else if(customerSuggestion.id === -2){
+            return
+        }
+        else {
             setSelectedCustomer(customerSuggestion);
             setShowCustomerDetails(true);
             setCustomerSuggestions([]);
@@ -143,8 +149,9 @@ function NameInput() {
     };
 
     const handleBackClick = () => {
-        setSelectedCustomer(null);
-        setShowCustomerDetails(false);
+        setSelectedCustomer(null); // 清空选中的客户信息
+        setShowCustomerDetails(false); // 隐藏会员详细信息
+        setIsFirstTime(false);
     };
 
     const isCheckInEnabled =
@@ -170,11 +177,10 @@ function NameInput() {
                 customerId: selectedCustomer.id,
                 payment: selectedPayment.id,
                 activitiesId: selectedActivities.map((activity) => activity.id),
-                eventsId: selectedEvents.map((event) => event.id),
+                eventId: selectedEvents[0].id,
                 totalPrice: parseFloat(editableTotalPrice),
-                isFirstTime: true, // 这个值根据实际业务逻辑进行设置
+                isFirstTime: isFirstTime, // 这个值根据实际业务逻辑进行设置
             };
-
             try {
                 const response = await authFetch("/api/v1/Checkin", {
                     method: "POST",
@@ -183,7 +189,6 @@ function NameInput() {
                     },
                     body: JSON.stringify(newCheckin),
                 });
-
                 if (response.ok) {
                     console.log("Check-in successful:", await response.json());
                     alert(
@@ -192,7 +197,7 @@ function NameInput() {
                         selectedCustomer.lastName +
                         " has been checked in! ",
                     );
-                    navigate("/check/check-in");
+                    navigate("/check/check-in",{ state: { firstTime: false} });
                     handleBackClick();
                 } else {
                     console.error("Failed to add check-in:", await response.text());
