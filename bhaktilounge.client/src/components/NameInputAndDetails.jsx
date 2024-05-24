@@ -17,7 +17,6 @@ function NameInput() {
     const [selectedActivities, setSelectedActivities] = useState([]);
     const [selectedEvents, setSelectedEvents] = useState([]);
     const [selectedPayment, setSelectedPayment] = useState(null);
-    const [totalPrice, setTotalPrice] = useState(0);
     const [editableTotalPrice, setEditableTotalPrice] = useState(0);
     const [membershipDetail, setMembershipDetail] = useState("");
     const [isFirstTime, setIsFirstTime] = useState(location.state?.firstTime ? true : false);
@@ -233,7 +232,6 @@ function NameInput() {
         } else {
             newTotalPrice = activitiesPrice + eventsPrice;
         }
-        setTotalPrice(newTotalPrice);
         setEditableTotalPrice(newTotalPrice);
     };
 

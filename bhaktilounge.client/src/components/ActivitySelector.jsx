@@ -45,8 +45,13 @@ function ActivitySelector({ onActivitySelect }) {
 
   const handleSelectActivity = (id) => {
     const updatedActivities = activities.map((activity) => {
+      // Check if the current activity includes dinner
+      const includesDinner = activity.includeDinner;
       if (activity.id === id) {
         return { ...activity, selected: !activity.selected };
+      } else if (includesDinner && activity.includeDinner) {
+        // If the clicked activity includes dinner, disable other dinner-including activities
+        return { ...activity, selected: false };
       }
       return activity;
     });
@@ -56,6 +61,10 @@ function ActivitySelector({ onActivitySelect }) {
     );
     onActivitySelect(selectedActivities);
   };
+
+  function someDinnerActivityIsSelected() {
+    return activities.some(activity => activity.includeDinner && activity.selected);
+  }
 
   const toggleList = () => {
     setShowList(!showList);
@@ -76,15 +85,15 @@ function ActivitySelector({ onActivitySelect }) {
           {activities.map((activity) => (
             <li key={activity.id} className="multi-select-item">
               <label
-                className={`multi-select-label ${
-                  activity.id === -1 ? "disabled" : ""
-                }`}
+                className={`multi-select-label ${activity.id === -1 ? "disabled" : ""
+                  }`}
               >
                 {activity.id !== -1 && (
                   <input
                     type="checkbox"
                     checked={activity.selected || false}
                     onChange={() => handleSelectActivity(activity.id)}
+                    disabled={activity.includeDinner && someDinnerActivityIsSelected() && !activity.selected}
                   />
                 )}
                 {activity.id !== -1
