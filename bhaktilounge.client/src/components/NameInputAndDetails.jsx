@@ -178,11 +178,10 @@ function NameInput() {
                 customerId: selectedCustomer.id,
                 payment: selectedPayment.id,
                 activitiesId: selectedActivities.map((activity) => activity.id),
-                eventsId: selectedEvents.map((event) => event.id),
+                eventId: selectedEvents[0].id,
                 totalPrice: parseFloat(editableTotalPrice),
                 isFirstTime: isFirstTime, // 这个值根据实际业务逻辑进行设置
             };
-            console.log("newCheckin" + isFirstTime)
             try {
                 const response = await authFetch("/api/v1/Checkin", {
                     method: "POST",
@@ -191,7 +190,6 @@ function NameInput() {
                     },
                     body: JSON.stringify(newCheckin),
                 });
-
                 if (response.ok) {
                     console.log("Check-in successful:", await response.json());
                     alert(
