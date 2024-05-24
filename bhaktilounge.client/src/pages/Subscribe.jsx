@@ -52,12 +52,27 @@ function SubscriptionForm() {
             ...prevSubscription,
             [name]: value,
         }));
+        // if (name === "memberClassId") {
+        //     const selectedSub = products.find((p) => p.id == value);
+        //     if (selectedSub && customer) {
+        //         let startDate = customer.subEndDate ? new Date(customer.subEndDate) : new Date();
+        //         let endDate = new Date(startDate);
+        //         endDate.setDate(startDate.getDate() + selectedSub.durationValue);
+
+        //         setCustomer((prevCustomer) => ({
+        //             ...prevCustomer,
+        //             subEndDate: isoDate(endDate),
+        //         }));
+        //     }
+        // }
     };
 
-    const handleBackToCheckin = () => {
-        customer.subEndDate = endDate.toLocaleDateString();
-        setCustomer(customer);
-        navigate("/check/check-in", { state: { customer } });
+    const handleDateChange = (event) => {
+        const { value } = event.target;
+        setCustomer((prevCustomer) => ({
+            ...prevCustomer,
+            subEndDate: value,
+        }));
     };
 
     const selectedSub = products.find((p) => p.id == subscription.memberClassId);
@@ -68,7 +83,7 @@ function SubscriptionForm() {
     let endDate = customer && customer.subEndDate && new Date(customer.subEndDate) > today ? new Date(customer.subEndDate) : today;
 
     if (selectedSub) {
-        console.log(startDate, subscription)
+        console.log(startDate, subscription);
         // sessions = selectedSub.pass > 0 ? selectedSub.pass : "unlimited";
         endDate.setDate(endDate.getDate() + selectedSub.duration);
     }
@@ -94,7 +109,9 @@ function SubscriptionForm() {
 
             if (response.ok) {
                 console.log("Subscription successful", await response.json());
-                handleBackToCheckin();
+                customer.subEndDate = endDate.toLocaleDateString();
+                setCustomer(customer);
+                navigate("/check/check-in", { state: { customer } });
             } else {
                 throw new Error("Failed to submit subscription");
             }
@@ -108,61 +125,48 @@ function SubscriptionForm() {
             <img src={logo} alt="BHAKTI Lounge Logo" className="Header-logo" />
             <main>
                 <h2>Renew Membership</h2>
-                {customer &&
+                {customer && (
                     <h3>
-                        for: {customer.firstName} {customer.lastName}{" "}
+                        {customer.firstName} {customer.lastName}{" "}
                     </h3>
-                }
-                <form
-                    className="form-group"
-                    onSubmit={handleSubmit}
-                    style={{ display: "flex", flexDirection: "column" }}
-                >
+                )}
+                <form className="form-group" onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column" }}>
                     <div className="sbscriptionformContent">
                         <label>
                             Select Membership Type
-                            <select
-                                name="memberClassId"
-                                value={subscription.memberClassId}
-                                onChange={handleInputChange}
-                            >
+                            <select name="memberClassId" value={subscription.memberClassId} onChange={handleInputChange}>
                                 <option></option>
-                                {products.map((p) => {
-                                    return (
-                                        <option key={p.id} value={p.id}>
-                                            {p.name}
-                                        </option>
-                                    );
-                                })}
+                                {products.map((p) => (
+                                    <option key={p.id} value={p.id}>
+                                        {p.name}
+                                    </option>
+                                ))}
                             </select>
                         </label>
 
                         {selectedSub && (
-                            <label className="label2">
-                                {/* <b>{sessions}</b> sessions{" "}
+                            <>
+                                <label className="label2">
+                                    {/* <b>{sessions}</b> sessions{" "}
                                 {sessions === "unlimited" && <b>except </b>} */}
-                                Membership Valid until <b>{endDate.toLocaleDateString()}</b>
-                            </label>
+                                    Membership Valid until <b>{endDate.toLocaleDateString()}</b>
+                                </label>
+                                <label htmlFor="date">Date</label>
+                                <input type="date" id="date" value={customer ? customer.subEndDate : ""} onChange={handleDateChange} className="tw-input" />
+                            </>
                         )}
 
-                        {selectedSub && (
-                            <p style={{ fontSize: "" }}>${selectedSub.price} to be paid</p>
-                        )}
+                        {selectedSub && <h3 className="mt-6 font-semibold">Price: ${selectedSub.price}</h3>}
                     </div>
 
                     <div className="button-container" style={{ alignItems: "center" }}>
-                        <button
-                            className="tw-btn"
-                            type="button"
-                            onClick={handleBackToCheckin}
-                        >
+                        <button className="tw-btn" type="button" onClick={() => navigate("/check/check-in", { state: { customer } })}>
                             Back
                         </button>
                         <button className="tw-btn" type="submit">
                             Confirm
                         </button>
                     </div>
-
                 </form>
             </main>
             <footer>©Bhakti Lounge - Check-in</footer>
