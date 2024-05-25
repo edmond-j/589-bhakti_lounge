@@ -38,9 +38,8 @@ namespace BhaktiLounge.Server.Controllers {
 
         [HttpGet]
         [Route("{customerId}")]
-        public async Task<IActionResult> GetCustomer(int customerId)
-        {
-            var customer = await _context.Customer.SingleOrDefaultAsync(c=>c.Id == customerId);                  
+        public async Task<IActionResult> GetCustomer(int customerId) {
+            var customer = await _context.Customer.SingleOrDefaultAsync(c => c.Id == customerId);
             return Ok(customer);
         }
 
@@ -64,9 +63,9 @@ namespace BhaktiLounge.Server.Controllers {
                 if (target == null) {
                     return NotFound("Item Not Found");
                 }
-                target.FirstName = updated.FirstName;
-                target.LastName = updated.LastName;
-                target.Email = updated.Email;
+                //target.FirstName = updated.FirstName;
+                //target.LastName = updated.LastName;
+                //target.Email = updated.Email;
                 target.SubStartDate = updated.SubStartDate;
                 target.SubEndDate = updated.SubEndDate;
                 target.PassRemain = updated.PassRemain;
