@@ -15,7 +15,8 @@ namespace BhaktiLounge.Server.Models {
         public Customer? Customer { get; set; }
         public Payment Payment { get; set; }
         public List<int>? ActivitiesId { get; set; }
-        public List<int>? EventsId { get; set; }
+        public int? EventId { get; set; }
+        public Event? Event { get; set; }
         public double TotalPrice { get; set; }
         public bool IsFirstTime { get; set; }
     }

@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace BhaktiLounge.Server.Controllers {
+
     [Authorize]
     [Route("api/v1/[controller]")]
     [ApiController]
@@ -19,42 +20,61 @@ namespace BhaktiLounge.Server.Controllers {
 
         [HttpGet]
         public async Task<IActionResult> GetAllMemberClass() {
-            var memberClasses = await _context.MemberClass.OrderBy(m => m.Name).ToArrayAsync();
-            return Ok(memberClasses);
+            try {
+                var memberClasses = await _context.MemberClass.OrderBy(m => m.Name).ToArrayAsync();
+                return Ok(memberClasses);
+            } catch (Exception ex) {
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+            }
         }
-        [Authorize (Roles = "Manager")]
+
+        [Authorize(Roles = "Manager")]
         [HttpPost]
         public async Task<ActionResult> AddMemberClass([FromBody] MemberClass? newItem) {
-            newItem ??= new MemberClass();
-            _context.MemberClass.Add(newItem);
-            await _context.SaveChangesAsync();
-            return Ok(newItem);
+            try {
+                newItem ??= new MemberClass();
+                _context.MemberClass.Add(newItem);
+                await _context.SaveChangesAsync();
+                return Ok(newItem);
+            } catch (Exception ex) {
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+            }
         }
-        [Authorize (Roles = "Manager")]
+
+        [Authorize(Roles = "Manager")]
         [HttpPut]
         public async Task<ActionResult> UpdateMemberClass([FromBody] MemberClass updated) {
-            var target = await _context.MemberClass.FindAsync(updated.Id);
-            if (target is null) {
-                return NotFound("Item Not Found");
+            try {
+                var target = await _context.MemberClass.FindAsync(updated.Id);
+                if (target is null) {
+                    return NotFound("Item Not Found");
+                }
+                target.Name = updated.Name;
+                target.Price = updated.Price;
+                target.Duration = updated.Duration;
+                target.Pass = updated.Pass;
+                _context.MemberClass.Update(target);
+                await _context.SaveChangesAsync();
+                return Ok(target);
+            } catch (Exception ex) {
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
-            target.Name = updated.Name;
-            target.Price = updated.Price;
-            target.Duration = updated.Duration;
-            target.Pass = updated.Pass;
-            _context.MemberClass.Update(target);
-            await _context.SaveChangesAsync();
-            return Ok(target);
         }
-        [Authorize (Roles = "Manager")]
+
+        [Authorize(Roles = "Manager")]
         [HttpDelete]
         public async Task<ActionResult> DeleteMemberClass(int Id) {
-            var toDel = await _context.MemberClass.FindAsync(Id);
-            if (toDel is null) {
-                return NotFound("Item Not Found");
+            try {
+                var toDel = await _context.MemberClass.FindAsync(Id);
+                if (toDel is null) {
+                    return NotFound("Item Not Found");
+                }
+                _context.MemberClass.Remove(toDel);
+                await _context.SaveChangesAsync();
+                return Ok("Item Deleted");
+            } catch (Exception ex) {
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
-            _context.MemberClass.Remove(toDel);
-            await _context.SaveChangesAsync();
-            return Ok("Item Deleted");
         }
     }
 }

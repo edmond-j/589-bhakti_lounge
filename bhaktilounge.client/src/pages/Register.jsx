@@ -65,10 +65,10 @@ const Register = () => {
       .then((data) => {
         console.log("Update Successful:", data);
         alert(FirstName +" "+ LastName + " has been registered!");
-        navigate(`/check/check-in?firstname=${encodeURIComponent(FirstName)}`);
+        navigate(`/check/check-in`,{ state: { firstTime: true, customer: data } });
       })
       .catch((error) => console.error("Error:", error));
-    const customerName = FirstName + " " + LastName;
+    // const customerName = FirstName + " " + LastName;
 
   };
 
@@ -138,7 +138,7 @@ const Register = () => {
               </option>
               {channel.map((p) => {
                 return (
-                  <option value={p.name}>
+                  <option key={p.id} value={p.name}>
                     {p.name}
                   </option>
                 );
@@ -153,12 +153,12 @@ const Register = () => {
               onChange={(e) => setNotification(e.target.checked)}></input>
           </div>
           <div className='button-container'>
-            <button className='tw-btn' type='submit'>
-              Sign Up
-            </button>
             <Link to='/check/check-in'>
               <button className='tw-btn'>Back</button>
             </Link>
+            <button className='tw-btn' type='submit'>
+              Sign Up
+            </button>
           </div>
         </form>
       </div>
