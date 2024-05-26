@@ -13,7 +13,7 @@ namespace BhaktiLounge.Server.Models {
         public int CustomerId { get; set; }
 
         public Customer? Customer { get; set; }
-        public Payment Payment { get; set; }
+        public string? Payment { get; set; }
         public List<int>? ActivitiesId { get; set; }
         public int? EventId { get; set; }
         public Event? Event { get; set; }

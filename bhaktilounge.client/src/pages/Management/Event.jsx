@@ -64,7 +64,7 @@ function Event() {
                 let newData = {
                     id: selectedItem.id,
                     name,
-                    price,
+                    price: price || 0,
                     date,
                     startTime,
                     endTime,

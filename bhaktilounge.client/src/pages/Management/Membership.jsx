@@ -62,10 +62,11 @@ function Membership() {
                 let newData = {
                     id: selectedItem.id,
                     name,
-                    duration,
-                    pass,
-                    price,
+                    duration: duration || 0,
+                    pass: pass || 0,
+                    price: price || 0,
                 };
+                console.log("memberclass", newData);
                 updateData("memberclass", newData, items, setItems, setSelectedItem);
             }
 

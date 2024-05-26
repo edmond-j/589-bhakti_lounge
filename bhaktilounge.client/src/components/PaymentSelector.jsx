@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 
-
 function PaymentSelector({ onPaymentSelect, hasMembership }) {
     const [payments, setPayments] = useState([]);
 
@@ -32,7 +31,7 @@ function PaymentSelector({ onPaymentSelect, hasMembership }) {
         setPayments(updatedPayments);
         const selectedPayment = updatedPayments.find((payment) => payment.selected);
         // 调用父组件的回调函数，传递所有选中的事件的ID数组
-        onPaymentSelect(selectedPayment ? selectedPayment.id : null); // 传递单个ID或 null
+        onPaymentSelect(selectedPayment ? selectedPayment : null); // 传递单个ID或 null
     };
 
     const toggleList = () => {
