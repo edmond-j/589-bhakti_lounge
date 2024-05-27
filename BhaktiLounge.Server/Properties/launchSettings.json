@@ -40,7 +40,7 @@
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development",
         "ASPNETCORE_HOSTINGSTARTUPASSEMBLIES": "Microsoft.AspNetCore.SpaProxy",
-        "HOME_LAB": "true"
+        "PROFILE": "HOME_LAB"
       }
     },
     "IIS Express": {
