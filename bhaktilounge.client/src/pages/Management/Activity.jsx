@@ -76,7 +76,7 @@ function Activity() {
                 let newData = {
                     id: selectedItem.id,
                     name, // name:name,
-                    price,
+                    price: price || 0,
                     startTime,
                     endTime,
                     daysOfWeek,

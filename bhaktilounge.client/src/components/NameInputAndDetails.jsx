@@ -16,7 +16,7 @@ function NameInput() {
     const [showDetails, setShowCustomerDetails] = useState(location.state?.customer ? true : false);
     const [selectedActivities, setSelectedActivities] = useState([]);
     const [selectedEvents, setSelectedEvents] = useState([]);
-    const [selectedPayment, setSelectedPayment] = useState(null);
+    const [selectedPayment, setSelectedPayment] = useState({ id: null, name: null });
     const [editableTotalPrice, setEditableTotalPrice] = useState(0);
     const [membershipDetail, setMembershipDetail] = useState("");
     const [isFirstTime, setIsFirstTime] = useState(location.state?.firstTime ? true : false);
@@ -90,7 +90,7 @@ function NameInput() {
         if (customerSuggestion.id === -1) {
             setCustomerName("");
             navigate("/check/register");
-        } else if(customerSuggestion.id === -2){
+        } else if (customerSuggestion.id === -2) {
             return
         }
         else {
@@ -156,7 +156,7 @@ function NameInput() {
 
     const isCheckInEnabled =
         (selectedEvents.length > 0 || selectedActivities.length > 0) &&
-        selectedPayment !== null;
+        selectedPayment.id !== null;
 
     const handleCheckInClick = async () => {
         if (isCheckInEnabled) {
@@ -175,9 +175,9 @@ function NameInput() {
                 date: formattedDate,
                 time: formattedTime,
                 customerId: selectedCustomer.id,
-                payment: selectedPayment.id,
+                payment: selectedPayment.name,
                 activitiesId: selectedActivities.map((activity) => activity.id),
-                eventId: selectedEvents[0].id,
+                eventId: selectedEvents.length > 0 ? selectedEvents[0].id : null,
                 totalPrice: parseFloat(editableTotalPrice),
                 isFirstTime: isFirstTime, // 这个值根据实际业务逻辑进行设置
             };
@@ -197,7 +197,7 @@ function NameInput() {
                         selectedCustomer.lastName +
                         " has been checked in! ",
                     );
-                    navigate("/check/check-in",{ state: { firstTime: false} });
+                    navigate("/check/check-in", { state: { firstTime: false } });
                     handleBackClick();
                 } else {
                     console.error("Failed to add check-in:", await response.text());
@@ -220,13 +220,13 @@ function NameInput() {
             0,
         );
         let newTotalPrice;
-        if (selectedPayment === 7) {
+        if (selectedPayment.id === 7) {
             newTotalPrice = 7;
         } else if (
-            selectedPayment === 1 ||
-            selectedPayment === 2 ||
-            selectedPayment === 6 ||
-            selectedPayment === 8
+            selectedPayment.id === 1 ||
+            selectedPayment.id === 2 ||
+            selectedPayment.id === 6 ||
+            selectedPayment.id === 8
         ) {
             newTotalPrice = 0;
         } else {
@@ -237,7 +237,7 @@ function NameInput() {
 
     useEffect(() => {
         calculateTotalPrice();
-    }, [selectedActivities, selectedEvents, selectedPayment]);
+    }, [selectedActivities, selectedEvents, selectedPayment.id]);
 
     return (
         <div className="form-group">

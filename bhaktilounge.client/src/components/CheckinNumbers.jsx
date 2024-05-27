@@ -28,7 +28,7 @@ const CheckinNumbers = () => {
   // };
 
   return (
-    <div>
+    <div className="flex justify-evenly">
       <p>Check-in: {checkinNumbers.totalCheckIns}</p>
       <p>Dine-in: {checkinNumbers.dineInDinners}</p>
       <p>Takeaway: {checkinNumbers.takeawayDinners}</p>
