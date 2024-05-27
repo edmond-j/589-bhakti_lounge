@@ -19,7 +19,7 @@ namespace BhaktiLounge.Server {
             ConfigureServices(builder);
 
             var app = builder.Build();
-
+            MigrateDatabase(app);
             // Configure middleware and endpoints
             ConfigureApp(app);
 
@@ -43,6 +43,8 @@ namespace BhaktiLounge.Server {
                         option.UseNpgsql(builder.Configuration.GetConnectionString("ProductionConnection")));
                     break;
             }
+
+
 
             // JSON converters and controllers
             builder.Services.AddControllers().AddJsonOptions(options => {
@@ -85,7 +87,23 @@ namespace BhaktiLounge.Server {
 
         }
 
-
+        private static void MigrateDatabase(WebApplication app)
+        {
+            using (var scope = app.Services.CreateScope())
+            {
+                var services = scope.ServiceProvider;
+                try
+                {
+                    var context = services.GetRequiredService<ApplicationDbContext>();
+                    context.Database.Migrate();
+                }
+                catch (Exception ex)
+                {
+                    var logger = services.GetRequiredService<ILogger<Program>>();
+                    logger.LogError(ex, "An error occurred while migrating the database.");
+                }
+            }
+        }
 
         private static void ConfigureApp(WebApplication app) {
             // Static files and HTTP redirection
@@ -124,5 +142,6 @@ namespace BhaktiLounge.Server {
                 }
             }
         }
+
     }
 }
