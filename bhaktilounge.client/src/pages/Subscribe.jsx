@@ -8,7 +8,9 @@ import { toast } from "react-toastify";
 import authFetch from "@/utils/authFetch.js";
 
 const isoDate = (date) => {
-    return date.toISOString().substring(0, 10);
+    return date.getFullYear() + '-' + 
+    String(date.getMonth() + 1).padStart(2, '0') + '-' + 
+    String(date.getDate()).padStart(2, '0');
 };
 
 function SubscriptionForm() {
