@@ -202,6 +202,7 @@ function NameInput() {
                     );
                     navigate("/check/check-in", { state: { firstTime: false } });
                     handleBackClick();
+                    window.location.reload();
                 } else {
                     console.error("Failed to add check-in:", await response.text());
                 }
