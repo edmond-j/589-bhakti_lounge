@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { setToken } from "@/services/tokenSlice.js";
 import { setUserName } from "@/services/userNameSlice.js";
@@ -6,8 +6,8 @@ import { setUserRole } from "@/services/userRoleSlice.js";
 import { useNavigate } from "react-router-dom";
 
 export function LoginPanel() {
-  const [username, setUsername] = useState("admin");
-  const [password, setPassword] = useState("Password123!");
+  const [username, setUsername] = useState();
+  const [password, setPassword] = useState();
   const dispatch = useDispatch();
   const handleUsernameChange = (event) => {
     setUsername(event.target.value);
