@@ -36,16 +36,24 @@ public class CheckinController : ControllerBase
         var todayCheckins = await _context.Checkin
                 .Where(c => c.Date == todayDate)
                 .ToArrayAsync();
-        var activityIds = await _context.Activity
-                        .Where(a => a.IncludeDinner == true)
-                        .Select(a => a.Id)
-                        .ToListAsync();
 
-        var totalDinnerCheckins = todayCheckins.Where(c => c.ActivitiesId.Any(a => activityIds.Contains(a))).ToList();
+        var activityIncludeDinnerIds = await _context.Activity
+                .Where(a => a.IncludeDinner == true)
+                .Select(a => a.Id)
+                .ToListAsync();
+
+        var totalDinnerCheckins = todayCheckins
+                .Where(c => c.ActivitiesId.Any(a => activityIncludeDinnerIds.Contains(a)) || c.EventId.HasValue)
+                .ToList();
+
+        var dinnerTimeIds = await _context.Activity
+                .Where(a => EF.Functions.Like(a.Name.ToLower(), "%7:15%") && EF.Functions.Like(a.Name.ToLower(), "%yoga%") || EF.Functions.Like(a.Name.ToLower(), "%takeaway%"))
+                .Select(a => a.Id)
+                .ToListAsync();
 
         var takeawayDinnerCheckins = todayCheckins
-        .Where(c => c.ActivitiesId.Contains(6) && c.ActivitiesId.Any(a => activityIds.Contains(a)))
-        .ToList();
+                .Where(c => c.ActivitiesId.Any(a => dinnerTimeIds.Contains(a)) && c.ActivitiesId.Any(a => activityIncludeDinnerIds.Contains(a)))
+                .ToList();
 
         var result = new
         {

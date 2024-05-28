@@ -141,6 +141,9 @@ function NameInput() {
 
     const handleSelectedEvents = (selected) => {
         setSelectedEvents(selected);
+        if (selected) {
+            setHasMembership(false);
+        }
         console.log(selected);
     };
 
@@ -221,7 +224,7 @@ function NameInput() {
         );
         let newTotalPrice;
         if (selectedPayment.id === 7) {
-            newTotalPrice = 7;
+            newTotalPrice = 7.50;
         } else if (
             selectedPayment.id === 1 ||
             selectedPayment.id === 2 ||

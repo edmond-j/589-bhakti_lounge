@@ -10,11 +10,10 @@ function PaymentSelector({ onPaymentSelect, hasMembership }) {
             { id: 4, name: 'Card', selected: false },
             { id: 5, name: 'Online bank transfer', selected: false },
             { id: 6, name: 'Service Exchange', selected: false },
-            { id: 7, name: 'Devotee - $7 payment', selected: false },
+            { id: 7, name: 'Devotee - $7.50 payment', selected: false },
             { id: 8, name: 'Devotee - no payment', selected: false }
         ];
 
-        // 如果用户拥有会员资格，添加 Membership 选项
         if (hasMembership) {
             defaultPayments.unshift({ id: 1, name: 'Membership', selected: false });
         }
@@ -22,7 +21,7 @@ function PaymentSelector({ onPaymentSelect, hasMembership }) {
         setPayments(defaultPayments);
     }, [hasMembership]);
 
-    const [showList, setShowList] = useState(false); // 状态控制下拉列表的显示
+    const [showList, setShowList] = useState(false);
 
     const handleSelectPayment = (id) => {
         const updatedPayments = payments.map(payment => {
@@ -30,8 +29,8 @@ function PaymentSelector({ onPaymentSelect, hasMembership }) {
         });
         setPayments(updatedPayments);
         const selectedPayment = updatedPayments.find((payment) => payment.selected);
-        // 调用父组件的回调函数，传递所有选中的事件的ID数组
-        onPaymentSelect(selectedPayment ? selectedPayment : null); // 传递单个ID或 null
+
+        onPaymentSelect(selectedPayment ? selectedPayment : null);
     };
 
     const toggleList = () => {
