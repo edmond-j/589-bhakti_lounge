@@ -52,6 +52,7 @@ export function LoginPanel() {
       <form className="flex flex-col bg-white rounded shadow-lg p-12 mt-12">
         <label className="font-semibold text-sm">Username</label>
         <input
+          data-testid="username-input"
           className="tw-input"
           type="text"
           value={username}
@@ -59,12 +60,13 @@ export function LoginPanel() {
         />
         <label className="font-semibold text-sm mt-3">Password</label>
         <input
+          data-testid="password-input"
           className="tw-input"
           type="password"
           value={password}
           onChange={handlePasswordChange}
         />
-        <button className="tw-btn w-64 mt-8" onClick={login}>
+        <button data-testid="login-button" className="tw-btn w-64 mt-8" onClick={login}>
           Login
         </button>
         {/*                <div className="flex mt-6 justify-center text-xs">
