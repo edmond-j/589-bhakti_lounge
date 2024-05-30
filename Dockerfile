@@ -25,6 +25,4 @@ WORKDIR /app
 COPY --from=build-frontend /app/dist/ ./wwwroot
 COPY --from=build-backend /app/out/ .
 EXPOSE 8080
-COPY ./conf/web/startup/entrypoint.sh /app/
-RUN chmod +x /app/entrypoint.sh
-ENTRYPOINT ["/app/entrypoint.sh"]
+ENTRYPOINT ["dotnet", "BhaktiLounge.Server.dll"]

@@ -141,6 +141,9 @@ function NameInput() {
 
     const handleSelectedEvents = (selected) => {
         setSelectedEvents(selected);
+        if (selected) {
+            setHasMembership(false);
+        }
         console.log(selected);
     };
 
@@ -199,6 +202,7 @@ function NameInput() {
                     );
                     navigate("/check/check-in", { state: { firstTime: false } });
                     handleBackClick();
+                    window.location.reload();
                 } else {
                     console.error("Failed to add check-in:", await response.text());
                 }
@@ -221,7 +225,7 @@ function NameInput() {
         );
         let newTotalPrice;
         if (selectedPayment.id === 7) {
-            newTotalPrice = 7;
+            newTotalPrice = 7.50;
         } else if (
             selectedPayment.id === 1 ||
             selectedPayment.id === 2 ||
