@@ -79,25 +79,25 @@ const Register = () => {
         <h2>New Customer</h2>
         <form onSubmit={handleSubmit}>
           <div className="form-group">
-            <label htmlFor="firstname">First Name</label>
+            <label htmlFor="register-firstname-input">First Name</label>
             <input
-              id="firstname"
+              id="register-firstname-input"
               type="text"
               required
               onChange={(e) => setFirstName(e.target.value)}
             ></input>
-            <label htmlFor="lastname">Last Name</label>
+            <label htmlFor="register-lastname-input">Last Name</label>
             <input
-              id="lastname"
+              id="register-lastname-input"
               type="text"
               required
               onChange={(e) => setLastName(e.target.value)}
             ></input>
           </div>
           <div className="form-group">
-            <label htmlFor="email">Email</label>
+            <label htmlFor="register-email-input">Email</label>
             <input
-              id="email"
+              id="register-email-input"
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
@@ -106,9 +106,9 @@ const Register = () => {
             />
           </div>
           <div className="form-group">
-            <label htmlFor="pronouns">Pronouns</label>
+            <label htmlFor="register-pronouns-select">Pronouns</label>
             <select
-              id="pronouns"
+              id="register-pronouns-select"
               value={gender}
               name="pronouns"
               required
@@ -125,9 +125,9 @@ const Register = () => {
           </div>
 
           <div className='form-group'>
-            <label htmlFor='channel'>How did you hear about us?</label>
+            <label htmlFor='register-channel-select'>How did you hear about us?</label>
             <select
-              id='channel'
+              id='register-channel-select'
               value={acquisition}
               name='channel'
               required
@@ -146,17 +146,17 @@ const Register = () => {
             </select>
           </div>
           <div className='form-group'>
-            <label htmlFor='notification'>Would you like to be added to our email list?</label>
+            <label htmlFor='register-notification-checkbox'>Would you like to be added to our email list?</label>
             <input
-              id='notification'
+              id='register-notification-checkbox'
               type='checkbox'
               onChange={(e) => setNotification(e.target.checked)}></input>
           </div>
           <div className='button-container'>
             <Link to='/check/check-in'>
-              <button className='tw-btn'>Back</button>
+              <button id="register-back-button" className='tw-btn'>Back</button>
             </Link>
-            <button className='tw-btn' type='submit'>
+            <button id="register-signup-button" className='tw-btn' type='submit'>
               Sign Up
             </button>
           </div>

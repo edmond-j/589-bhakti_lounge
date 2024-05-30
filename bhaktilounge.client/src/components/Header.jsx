@@ -34,7 +34,7 @@ const Header = () => {
       />
       <div className="button-container">
         {userRole.value === "Manager" && (
-          <button className="tw-btn" onClick={goManagement}>
+          <button data-testid="manage-button" className="tw-btn" onClick={goManagement}>
             Manage
           </button>
         )}

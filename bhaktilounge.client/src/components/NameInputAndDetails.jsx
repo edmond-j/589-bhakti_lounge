@@ -245,6 +245,7 @@ function NameInput() {
                 <>
                     <label className="input-labels">Customer Name</label>
                     <input
+                        id="search-searchbar-input"
                         type="text"
                         placeholder="2 letters or more"
                         onChange={handleNameInputChange}
@@ -286,6 +287,7 @@ function NameInput() {
                         />
                         <label>Email</label>
                         <input
+                            id="detail-email-input"    
                             type="text"
                             placeholder="Email"
                             value={selectedCustomer.email}
@@ -293,6 +295,7 @@ function NameInput() {
                         />
                         <label>Membership</label>
                         <input
+                            id="detail-membership-input"
                             type="text"
                             placeholder="Membership"
                             value={membershipDetail}
@@ -320,10 +323,11 @@ function NameInput() {
                         </div>
                     </div>
                     <span className="button-container">
-                        <button className="tw-btn" onClick={handleBackClick}>
+                        <button id="detail-back-button" className="tw-btn" onClick={handleBackClick}>
                             Back
                         </button>
                         <button
+                            id="detail-checkin-button"
                             className={`tw-btn ${isCheckInEnabled ? "enabled" : "disabled"}`}
                             onClick={handleCheckInClick}
                             disabled={!isCheckInEnabled}
