@@ -34,8 +34,26 @@ jobs:
         SSH_PASSWORD: ${{ secrets.SSH_PASSWORD }}
         PROD_DSN: ${{ secrets.PROD_DSN }}
       run: |
+    
+        echo "POSTGRES_DB=$POSTGRES_DB" > .env
+        echo "POSTGRES_PASSWORD=$POSTGRES_PASSWORD" >> .env
+        echo "POSTGRES_USER=$POSTGRES_USER" >> .env
+        echo "MB_DB_TYPE=$MB_DB_TYPE" >> .env
+        echo "MB_DB_DBNAME=$MB_DB_DBNAME" >> .env
+        echo "MB_DB_PORT=$MB_DB_PORT" >> .env
+        echo "MB_DB_USER=$MB_DB_USER" >> .env
+        echo "MB_DB_PASS=$MB_DB_PASS" >> .env
+        echo "MB_DB_HOST=$MB_DB_HOST" >> .env
+        echo "PROD_DSN=$PROD_DSN" >> .env
+        
+        sshpass -p "$SSH_PASSWORD" scp -o StrictHostKeyChecking=no -r \
+          ./docker-compose.yml \
+          .env \
+          root@$SSH_HOST:/root/
+    
+        # SSH into the server and execute commands
         sshpass -p "$SSH_PASSWORD" ssh -o StrictHostKeyChecking=no root@$SSH_HOST '
           cd /root/
-          docker compose pull
-          docker compose up -d
+          docker compose --env-file .env pull
+          docker compose --env-file .env up -d
         '
