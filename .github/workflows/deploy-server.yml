@@ -25,7 +25,7 @@ jobs:
         SSH_PASSWORD: ${{ secrets.SSH_PASSWORD }}
         PROD_DSN: ${{ secrets.PROD_DSN }}
       run: |
-        ssh -o StrictHostKeyChecking=no root@$SSH_HOST '
+        sshpass -p "$SSH_PASSWORD" ssh -o StrictHostKeyChecking=no root@$SSH_HOST '
           export PROD_DSN=$PROD_DSN
           cd /root/
           docker-compose pull
