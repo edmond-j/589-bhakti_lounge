@@ -10,31 +10,14 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Set up SSH
-      env:
-        SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
-        SSH_HOST: ${{ secrets.HOST_IP }}
-      run: |
-        mkdir -p ~/.ssh
-        echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
-        chmod 600 ~/.ssh/id_rsa
-        ssh-keyscan -H $SSH_HOST >> ~/.ssh/known_hosts
-        # Debugging: Verify the SSH key file
-        echo "SSH key (first 10 chars): $(head -c 10 ~/.ssh/id_rsa)"
-        echo "SSH known hosts:"
-        cat ~/.ssh/known_hosts
-
-    - name: Test SSH Connection
+    
+    - name: Copy docker-compose.yml using password
       env:
         SSH_HOST: ${{ secrets.HOST_IP }}
+        SSH_PASSWORD: ${{ secrets.SSH_PASSWORD }}
       run: |
-        ssh -i ~/.ssh/id_rsa -o StrictHostKeyChecking=no root@$SSH_HOST "echo 'SSH connection successful'"
-
+        sshpass -p "$SSH_PASSWORD" scp -o StrictHostKeyChecking=no -r ./docker-compose.yml root@$SSH_HOST:/root/
         
-    - name: Copy docker-compose.yml
-      run: |
-        scp -o StrictHostKeyChecking=no -r ./docker-compose.yml root@${{ secrets.HOST_IP }}:/root/
-
     - name: Deploy to Server
       run: |
         ssh -o StrictHostKeyChecking=no root@${{ secrets.HOST_IP }} '
