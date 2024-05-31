@@ -30,7 +30,7 @@ function PaymentSelector({ onPaymentSelect, hasMembership }) {
         setPayments(updatedPayments);
         const selectedPayment = updatedPayments.find((payment) => payment.selected);
 
-        onPaymentSelect(selectedPayment ? selectedPayment : null);
+        onPaymentSelect(selectedPayment ? selectedPayment : { id: null, name: null });
     };
 
     const toggleList = () => {

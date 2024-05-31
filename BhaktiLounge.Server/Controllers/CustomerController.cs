@@ -76,5 +76,20 @@ namespace BhaktiLounge.Server.Controllers {
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
         }
+
+        [HttpDelete("delete-all")]
+        public async Task<ActionResult> DeleteCustomer(string email) {
+            try {
+                var toDel = _context.Customer.Where(u => u.Email == email).ToList();
+                if (toDel is null) {
+                    return NotFound("Item Not Found");
+                }
+                _context.Customer.RemoveRange(toDel);
+                await _context.SaveChangesAsync();
+                return Ok("Item Deleted");
+            } catch (Exception ex) {
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+            }
+        }
     }
 }

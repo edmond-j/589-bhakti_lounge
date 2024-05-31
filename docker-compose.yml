@@ -2,11 +2,13 @@ services:
   postgres:
     image: "postgres"
     environment:
-      POSTGRES_USER: vuw589
-      POSTGRES_PASSWORD: Admin2024
-      POSTGRES_DB: metabase
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    volumes:
+      - /var/lib/postgresql/data/:/var/lib/postgresql/data/
   web:
-    build: .
+    image: "ghcr.io/arcatva/bhakti-lounge:latest"
     depends_on:
       - postgres
     environment:
@@ -16,18 +18,21 @@ services:
     depends_on:
       - postgres
     environment:
-      MB_DB_TYPE: postgres
-      MB_DB_DBNAME: metabase
-      MB_DB_PORT: 5432
-      MB_DB_USER: vuw589
-      MB_DB_PASS: Admin2024
-      MB_DB_HOST: postgres
+      MB_DB_TYPE: ${MB_DB_TYPE}
+      MB_DB_DBNAME: ${MB_DB_DBNAME}
+      MB_DB_PORT: ${MB_DB_PORT}
+      MB_DB_USER: ${MB_DB_USER}
+      MB_DB_PASS: ${MB_DB_PASS}
+      MB_DB_HOST: ${MB_DB_HOST}
   nginx:
     image: "nginx"
     ports:
       - "80:80"
+      - "443:443"
     depends_on:
       - web
       - metabase
     volumes:
-      - ./conf/nginx/conf.d:/etc/nginx/conf.d
+      - /etc/nginx/conf.d/:/etc/nginx/conf.d/
+      # bind host nginx configuration to container, template defined in project's /conf/nginx/nginx.conf
+      - /etc/nginx/ssl:/etc/nginx/ssl/

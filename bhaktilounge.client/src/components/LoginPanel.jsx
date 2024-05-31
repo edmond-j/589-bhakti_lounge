@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { setToken } from "@/services/tokenSlice.js";
 import { setUserName } from "@/services/userNameSlice.js";
@@ -6,8 +6,8 @@ import { setUserRole } from "@/services/userRoleSlice.js";
 import { useNavigate } from "react-router-dom";
 
 export function LoginPanel() {
-  const [username, setUsername] = useState("admin");
-  const [password, setPassword] = useState("Password123!");
+  const [username, setUsername] = useState();
+  const [password, setPassword] = useState();
   const dispatch = useDispatch();
   const handleUsernameChange = (event) => {
     setUsername(event.target.value);
@@ -52,6 +52,7 @@ export function LoginPanel() {
       <form className="flex flex-col bg-white rounded shadow-lg p-12 mt-12">
         <label className="font-semibold text-sm">Username</label>
         <input
+          data-testid="username-input"
           className="tw-input"
           type="text"
           value={username}
@@ -59,12 +60,13 @@ export function LoginPanel() {
         />
         <label className="font-semibold text-sm mt-3">Password</label>
         <input
+          data-testid="password-input"
           className="tw-input"
           type="password"
           value={password}
           onChange={handlePasswordChange}
         />
-        <button className="tw-btn w-64 mt-8" onClick={login}>
+        <button data-testid="login-button" className="tw-btn w-64 mt-8" onClick={login}>
           Login
         </button>
         {/*                <div className="flex mt-6 justify-center text-xs">
