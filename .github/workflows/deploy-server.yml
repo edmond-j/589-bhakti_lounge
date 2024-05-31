@@ -8,9 +8,10 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
-
     steps:
-    
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
     - name: Copy docker-compose.yml using password
       env:
         SSH_HOST: ${{ secrets.HOST_IP }}
@@ -19,9 +20,13 @@ jobs:
         sshpass -p "$SSH_PASSWORD" scp -o StrictHostKeyChecking=no -r ./docker-compose.yml root@$SSH_HOST:/root/
         
     - name: Deploy to Server
+      env:
+        SSH_HOST: ${{ secrets.HOST_IP }}
+        SSH_PASSWORD: ${{ secrets.SSH_PASSWORD }}
+        PROD_DSN: ${{ secrets.PROD_DSN }}
       run: |
-        ssh -o StrictHostKeyChecking=no root@${{ secrets.HOST_IP }} '
-          export PROD_DSN=${{ secrets.PROD_DSN }}
+        ssh -o StrictHostKeyChecking=no root@$SSH_HOST '
+          export PROD_DSN=$PROD_DSN
           cd /root/
           docker-compose pull
           docker-compose up -d
