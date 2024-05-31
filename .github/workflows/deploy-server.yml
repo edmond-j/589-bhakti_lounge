@@ -6,16 +6,17 @@ on:
       - main
 
 jobs:
-  build-and-deploy:
+  deploy:
     runs-on: ubuntu-latest
 
     steps:
     - name: Set up SSH
-      uses: webfactory/ssh-agent@v0.5.4
+      uses: invi5H/ssh-action@v1.0.0
       with:
-        ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
-
-    - name: Copy files via SCP
+        # A unique name for the server
+        SSH_USER: root
+        SSH_HOST: ${{ secrets.HOST_IP }}
+        SSH_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
       run: |
         scp -o StrictHostKeyChecking=no -r ./docker-compose.yml root@${{ secrets.HOST_IP }}:/root/
 
@@ -23,7 +24,7 @@ jobs:
       env:
         SECRET_DSN: ${{ secrets.PROD_DSN }}
       run: |
-        ssh -o StrictHostKeyChecking=no user@remote_host '
+        ssh -o StrictHostKeyChecking=no root@${{ secrets.HOST_IP }} '
           export PROD_DSN=${{ secrets.PROD_DSN }}
           cd /root/
           docker-compose pull
