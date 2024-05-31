@@ -1,9 +1,8 @@
 name: Deploy ASP.NET Application
 
 on:
-  push:
-    branches:
-      - main
+  repository_dispatch:
+    types: [package-pushed]
 
 jobs:
   deploy:
@@ -28,6 +27,6 @@ jobs:
         sshpass -p "$SSH_PASSWORD" ssh -o StrictHostKeyChecking=no root@$SSH_HOST '
           export PROD_DSN=$PROD_DSN
           cd /root/
-          docker-compose pull
-          docker-compose up -d
+          docker compose pull
+          docker compose up -d
         '
