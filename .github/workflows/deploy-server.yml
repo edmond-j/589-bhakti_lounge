@@ -17,12 +17,12 @@ jobs:
         SSH_USER: root
         SSH_HOST: ${{ secrets.HOST_IP }}
         SSH_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+        
+    - name: Copy docker-compose.yml
       run: |
         scp -o StrictHostKeyChecking=no -r ./docker-compose.yml root@${{ secrets.HOST_IP }}:/root/
 
     - name: Deploy to Server
-      env:
-        SECRET_DSN: ${{ secrets.PROD_DSN }}
       run: |
         ssh -o StrictHostKeyChecking=no root@${{ secrets.HOST_IP }} '
           export PROD_DSN=${{ secrets.PROD_DSN }}
