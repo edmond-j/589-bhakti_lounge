@@ -45,6 +45,7 @@ jobs:
           export MB_DB_PASS=$MB_DB_PASS
           export MB_DB_HOST=$MB_DB_HOST
           export PROD_DSN=$PROD_DSN
+          echo $POSTGRES_USER
           cd /root/
           docker compose pull
           docker compose up -d
