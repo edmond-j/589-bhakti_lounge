@@ -21,3 +21,9 @@ jobs:
 
       - name: Push Docker image
         run: docker push ghcr.io/${{ github.actor }}/bhakti-lounge:latest
+
+      - name: Trigger deployment workflow
+        uses: peter-evans/repository-dispatch@v2
+        with:
+          token: ${{ secrets.TOKEN }}
+          event-type: package-pushed
