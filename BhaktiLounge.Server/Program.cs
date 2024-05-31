@@ -40,7 +40,7 @@ namespace BhaktiLounge.Server {
                     break;
                 case "PRODUCTION":
                     builder.Services.AddDbContext<ApplicationDbContext>(option =>
-                        option.UseNpgsql(builder.Configuration.GetConnectionString("ProductionConnection")));
+                        option.UseNpgsql(Environment.GetEnvironmentVariable("PROD_DSN")));
                     break;
             }
 
