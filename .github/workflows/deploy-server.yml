@@ -35,6 +35,15 @@ jobs:
         PROD_DSN: ${{ secrets.PROD_DSN }}
       run: |
         sshpass -p "$SSH_PASSWORD" ssh -o StrictHostKeyChecking=no root@$SSH_HOST '
+          export POSTGRES_DB=$POSTGRES_DB
+          export POSTGRES_PASSWORD=$POSTGRES_PASSWORD
+          export POSTGRES_USER=$POSTGRES_USER
+          export MB_DB_TYPE=$MB_DB_TYPE
+          export MB_DB_DBNAME=$MB_DB_DBNAME
+          export MB_DB_PORT=$MB_DB_PORT
+          export MB_DB_USER=$MB_DB_USER
+          export MB_DB_PASS=$MB_DB_PASS
+          export MB_DB_HOST=$MB_DB_HOST
           export PROD_DSN=$PROD_DSN
           cd /root/
           docker compose pull
