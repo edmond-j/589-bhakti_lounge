@@ -5,7 +5,7 @@ function Dashboard() {
   const logo = "/metabase.svg";
   const title = "MetaBase Business Intelligence";
   const article = "Visit";
-  const navigate = useNavigate();
+
   return (
     <div className="flex flex-col w-full">
       <ToolBar title="Dashboard" />
@@ -17,9 +17,9 @@ function Dashboard() {
           <p className="text-gray-800 text-3xl font-semibold">{title}</p>
           <p className="text-gray-600 mt-3">{article}</p>
           <a
-            className="text-blue-600 "
+            className="text-blue-600 hover:mouse-pointer"
             onClick={() => {
-              navigate("/metabase");
+              window.location.href = `${window.location.origin}/metabase`;
             }}
           >
             Metabase
