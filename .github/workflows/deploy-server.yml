@@ -1,0 +1,31 @@
+name: Deploy ASP.NET Application
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Set up SSH
+      uses: webfactory/ssh-agent@v0.5.4
+      with:
+        ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+
+    - name: Copy files via SCP
+      run: |
+        scp -o StrictHostKeyChecking=no -r ./docker-compose.yml root@${{ secrets.HOST_IP }}:/root/
+
+    - name: Deploy to Server
+      env:
+        SECRET_DSN: ${{ secrets.PROD_DSN }}
+      run: |
+        ssh -o StrictHostKeyChecking=no user@remote_host '
+          export PROD_DSN=${{ secrets.PROD_DSN }}
+          cd /root/
+          docker-compose pull
+          docker-compose up -d
+        '
