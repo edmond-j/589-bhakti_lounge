@@ -1,0 +1,48 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.tw-btn {
+    @apply items-center justify-center h-10 px-4 text-sm font-bold rounded-lg drop-shadow-lg bg-primary;
+    transition: background-color 0.2s ease-in-out;
+}
+
+.tw-btn:hover {
+    @apply bg-primaryhover;
+}
+
+.tw-input {
+    @apply bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg w-64 block p-2 mt-1 mb-4 drop-shadow-md focus:outline-none focus:ring-2 focus:bg-white;
+}
+
+.tw-check {
+    @apply bg-gray-50 my-1 drop-shadow-md;
+}
+
+.tw-sidebar-icon {
+    @apply w-6 h-6 stroke-current;
+}
+
+.tw-sidebar-item {
+    @apply ml-4 text-base font-medium;
+}
+
+h1 {
+    @apply text-4xl font-bold;
+}
+h2 {
+    @apply text-3xl font-semibold;
+}
+h3 {
+    @apply text-2xl font-medium;
+}
+h4 {
+    @apply text-xl font-medium;
+}
+h5 {
+    @apply text-lg font-normal;
+}
+h6 {
+    @apply text-base font-normal;
+}
+

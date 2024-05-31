@@ -1,0 +1,164 @@
+﻿@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@200;400;600;700&display=swap");
+
+.chk-root {
+    max-width: 1280px;
+    min-width: 640px;
+    min-height: 500px;
+    margin: 0 auto;
+    padding: 2rem;
+    text-align: center;
+    font-family: "Poppins", sans-serif;
+    color: #374151;
+    background-color: #fff;
+}
+
+/* .form-group {
+    display: flex;
+    flex-direction: column;
+} */
+
+/* Check in page */
+/* .CheckIn {
+    text-align: center;
+    position: relative;
+    height: 100%;
+} */
+
+/* .check-in-container {
+    display: block;
+    margin: 50px auto;
+    width: 50%;
+} */
+
+/* Header Component */
+.Header {
+    background-color: #fff;
+    padding: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    justify-content: space-around;
+    top: 0;
+}
+
+.Header-logo {
+    height: 80px;
+    margin-right: 10px;
+}
+
+/* .line-buttons {
+    display: flex;
+    
+    align-self: center;
+} */
+
+/* .button-class {
+    margin: 5px 10px;
+    padding: 3px 8px;
+    font-size: 0.8em;
+    font-weight: 200;
+    background-color: #fbbb19;
+    color: #000;
+} */
+
+.tw-btn.disabled {
+    background-color: rgb(195, 192, 192);
+    cursor: not-allowed;
+}
+
+.tw-btn.disabled:hover {
+    background-color: rgb(168, 168, 168);
+}
+/* h1,
+h2,
+h3,
+h4,
+h5 {
+    flex-basis: 100%;
+    text-align: center;
+    font-weight: 200;
+} */
+
+/* Footer Component */
+.Footer {
+    color: #666;
+    text-align: center;
+    padding: 10px 0;
+    bottom: 0;
+    width: 100%;
+    font-size: 0.8em;
+    display: block;
+}
+
+/* Name Input Component */
+/* .form-container {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: auto;
+    min-height: 100%;
+} */
+
+/* input:not([type="checkbox"]),
+select {
+    background-color: #f2f2f2;
+    border-radius: 15px;
+    height: 25px;
+    min-width: 250px;
+    max-width: 80%;
+    text-align: center;
+    padding: 5px;
+    color: #000;
+    margin: 0 0 5px 0;
+} */
+
+/* .input-labels {
+    font-size: 1em;
+    display: block;
+    margin: 5px;
+    width: 100%;
+    font-weight: 200;
+} */
+
+.suggestions-list {
+    min-width: 250px;
+    max-width: 80%;
+    background: white;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    list-style: none;
+    margin-top: 2px;
+    padding: 0;
+}
+
+.suggestions-list li {
+    padding: 8px;
+    cursor: pointer;
+    font-size: 0.6em;
+    font-weight: 200;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.suggestions-list label {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.suggestions-list li:hover {
+    background-color: #f0f0f0;
+}
+
+.suggestions-list input[type="checkbox"] {
+    margin-right: 10px;
+    vertical-align: middle;
+}
+
+.suggestions-list label.disabled {
+    cursor: default;
+    color: #999;
+}
