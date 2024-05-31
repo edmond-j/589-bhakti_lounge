@@ -19,7 +19,18 @@ jobs:
         echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
         chmod 600 ~/.ssh/id_rsa
         ssh-keyscan -H $SSH_HOST >> ~/.ssh/known_hosts
-    
+        # Debugging: Verify the SSH key file
+        echo "SSH key (first 10 chars): $(head -c 10 ~/.ssh/id_rsa)"
+        echo "SSH known hosts:"
+        cat ~/.ssh/known_hosts
+
+    - name: Test SSH Connection
+      env:
+        SSH_HOST: ${{ secrets.HOST_IP }}
+      run: |
+        ssh -i ~/.ssh/id_rsa -o StrictHostKeyChecking=no root@$SSH_HOST "echo 'SSH connection successful'"
+
+        
     - name: Copy docker-compose.yml
       run: |
         scp -o StrictHostKeyChecking=no -r ./docker-compose.yml root@${{ secrets.HOST_IP }}:/root/
