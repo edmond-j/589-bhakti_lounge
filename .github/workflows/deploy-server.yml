@@ -17,9 +17,19 @@ jobs:
         SSH_PASSWORD: ${{ secrets.SSH_PASSWORD }}
       run: |
         sshpass -p "$SSH_PASSWORD" scp -o StrictHostKeyChecking=no -r ./docker-compose.yml root@$SSH_HOST:/root/
+        sshpass -p "$SSH_PASSWORD" scp -o StrictHostKeyChecking=no -r ./conf/nginx/conf.d/default.conf root@$SSH_HOST:/etc/nginx/conf.d/default.conf
         
     - name: Deploy to Server
       env:
+        POSTGRES_DB: ${{ secrets.POSTGRES_DB }}
+        POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
+        POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
+        MB_DB_TYPE: ${{ secrets.MB_DB_TYPE }}
+        MB_DB_DBNAME: ${{ secrets.MB_DB_DBNAME }}
+        MB_DB_PORT: ${{ secrets.MB_DB_PORT }}
+        MB_DB_USER: ${{ secrets.MB_DB_USER }}
+        MB_DB_PASS: ${{ secrets.MB_DB_PASS }}
+        MB_DB_HOST: ${{ secrets.MB_DB_HOST }}
         SSH_HOST: ${{ secrets.HOST_IP }}
         SSH_PASSWORD: ${{ secrets.SSH_PASSWORD }}
         PROD_DSN: ${{ secrets.PROD_DSN }}
