@@ -11,13 +11,12 @@ jobs:
 
     steps:
     - name: Set up SSH
-      uses: invi5H/ssh-action@v1.0.0
-      with:
-        # A unique name for the server
-        SSH_USER: root
-        SSH_HOST: ${{ secrets.HOST_IP }}
-        SSH_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
-        
+      run: |
+        mkdir -p ~/.ssh
+        echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
+        chmod 600 ~/.ssh/id_rsa
+        ssh-keyscan -H ${{ secrets.HOST_IP }} >> ~/.ssh/known_hosts
+    
     - name: Copy docker-compose.yml
       run: |
         scp -o StrictHostKeyChecking=no -r ./docker-compose.yml root@${{ secrets.HOST_IP }}:/root/
