@@ -1,16 +1,13 @@
+import "./main.css"
+import "./style.css"
+import React, {useState} from "react";
+import {LoginPanel} from "@/components/LoginPanel.jsx";
 
-import "./App.css";
-import { Link } from "react-router-dom";
 
 function App() {
-    return (
-        <div>
-          <h1 id="tabelLabel">User Login</h1>
-          <p>This component demonstrates fetching data from the server.</p>
-          
-          <Link to="/check-in">Login</Link>
-        </div>
-      );
+        return(
+            <LoginPanel/>
+        )
 }
 
 export default App;

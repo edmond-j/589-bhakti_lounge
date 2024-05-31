@@ -1,0 +1,33 @@
+services:
+  postgres:
+    image: "postgres"
+    environment:
+      POSTGRES_USER: vuw589
+      POSTGRES_PASSWORD: Admin2024
+      POSTGRES_DB: metabase
+  web:
+    build: .
+    depends_on:
+      - postgres
+    environment:
+      PROFILE: PRODUCTION
+  metabase:
+    image: "metabase/metabase"
+    depends_on:
+      - postgres
+    environment:
+      MB_DB_TYPE: postgres
+      MB_DB_DBNAME: metabase
+      MB_DB_PORT: 5432
+      MB_DB_USER: vuw589
+      MB_DB_PASS: Admin2024
+      MB_DB_HOST: postgres
+  nginx:
+    image: "nginx"
+    ports:
+      - "80:80"
+    depends_on:
+      - web
+      - metabase
+    volumes:
+      - ./conf/nginx/conf.d:/etc/nginx/conf.d

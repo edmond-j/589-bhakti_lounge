@@ -1,19 +1,11 @@
 @BhaktiLounge.Server_HostAddress = https://localhost:7106
 
-GET {{BhaktiLounge.Server_HostAddress}}/weatherforecast/
-Accept: application/json
+GET {{BhaktiLounge.Server_HostAddress}}/api/v1/activity
 
 ###
 
-GET {{BhaktiLounge.Server_HostAddress}}/activity
 
-###
-
-GET {{BhaktiLounge.Server_HostAddress}}/api/event
-
-###
-
-POST {{BhaktiLounge.Server_HostAddress}}/api/activity
+POST {{BhaktiLounge.Server_HostAddress}}/api/v1/activity
 Content-Type: application/json
 
 {
@@ -22,11 +14,45 @@ Content-Type: application/json
 
 ###
 
-PUT {{BhaktiLounge.Server_HostAddress}}/api/activity
+PUT {{BhaktiLounge.Server_HostAddress}}/api/v1/activity
 Content-Type: application/json
 
 {
   //Activity
 }
+
+###
+
+DELETE {{BhaktiLounge.Server_HostAddress}}/api/v1/activity?Id=0
+
+###
+
+GET {{BhaktiLounge.Server_HostAddress}}/api/v1/event
+
+###
+
+POST {{BhaktiLounge.Server_HostAddress}}/api/v1/event
+Content-Type: application/json
+
+{
+  //Event
+}
+
+###
+
+PUT {{BhaktiLounge.Server_HostAddress}}/api/v1/event
+Content-Type: application/json
+
+{
+  //Event
+}
+
+###
+
+DELETE {{BhaktiLounge.Server_HostAddress}}/api/v1/event?Id=0
+
+###
+
+GET {{BhaktiLounge.Server_HostAddress}}/api/customer?name=string
 
 ###

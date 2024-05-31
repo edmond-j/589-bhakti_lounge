@@ -1,0 +1,106 @@
+/* CheckInPage.css */
+/* body {
+    font-family: "Arial", sans-serif;
+    margin: 0;
+    padding: 0;
+    background: #f7f7f7;
+} */
+
+.page-container {
+    width: auto;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.main-content {
+    margin: 50px auto;
+    padding: 20px;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.main-content h2 {
+    margin-top: 0;
+    color: #333;
+}
+
+/* .form-group1 {
+    margin-bottom: 20px;
+    display: flex;
+    gap: 20px;
+    align-items: center;
+} */
+
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+    margin-top: 15px;
+    /* color: #666; */
+}
+
+.form-group input,
+.form-group select {
+    display: block;
+    width: 60%;
+    height: auto;
+    padding: 5px;
+    /* padding-left: 15px; */
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    box-sizing: border-box;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+    background-color: #f2f2f2;
+}
+
+/* .form-group select {
+    width: 100%;
+    height: auto;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+    margin-left: auto;
+    margin-right: auto;
+} */
+
+/* .form-group select option:first-of-type {
+    color: #999;
+} */
+
+/* .button-container button:hover {
+    background-color: #ec971f;
+} */
+
+.button-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 30px;
+    gap: 20px;
+}
+
+/* .button-container button {
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: #f0ad4e;
+    border: none;
+    border-radius: 5px;
+    color: white;
+    cursor: pointer;
+    width: auto;
+} */
+
+.info-value {
+    padding: 0.5rem;
+    font-size: 1rem;
+    background-color: #f0f0f0;
+    border-radius: 4px;
+}
+
+.white-text {
+    color: white;
+}

@@ -1,0 +1,74 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;400;600;700&display=swap');
+
+.subscriptionform {
+    --buttonColor: #ffc107;
+    --buttontextColor: #ffffff;
+    --buttonHoverColor: #a6c8e1;
+    --inputBorderColor: #e1e1e1;
+    --headerColor: #333;
+    font-size: calc(1vw + 1vh + 0.5vmin);
+    margin: 1vh auto;
+    padding: 1vmin;
+}
+.subscptionformContent {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.subscriptionform form label {
+  display: block;
+  margin-bottom: 1vh;
+  font-size: 2vh;
+}
+
+.subscriptionform form select {
+  width: 70%;
+  height: 4vh;
+  font-size: calc(0.8vw + 0.8vh);
+  padding: 0 1vw;
+  margin-top: 0.5vh;
+  margin-left: auto;
+  margin-right: auto;
+  border: 2px solid var(--inputBorderColor);
+  border-radius: 1vmin;
+  box-sizing: border-box;
+}
+
+.subscriptionform form button {
+  border: none;
+  background-color: var(--buttonColor);
+  color: var(--buttontextColor);
+  cursor: pointer;
+  font-size: 2vmin;
+  border-radius: 1.5vmin;
+  padding: 1vmin 2vmin;
+  transition: all 0.3s;
+  width: 16vmin;
+  margin: 1vmin;
+}
+
+.subscriptionform form button:hover {
+  background-color: var(--buttonHoverColor);
+  box-shadow: 0 0.2vmin 0.4vmin rgba(0, 0, 0, 0.1);
+}
+
+.label2{
+    margin-top:2vh;
+}
+.subscriptionform p {
+    background-color: #fff0c2;
+    padding: 0.5vmin;
+    border-radius: 1vmin;
+    margin-top: 3vh;
+}
+
+.subscriptionform footer {
+  text-align: center;
+  margin-top: 2vh;
+  color: #888;
+}
+
+.formactions {
+  display: inline;
+}
