@@ -1,18 +1,18 @@
 services:
   postgres:
     image: "postgres"
-    environment:
+#    environment:
 #      POSTGRES_USER: vuw589
 #      POSTGRES_PASSWORD: Admin2024
 #      POSTGRES_DB: metabase
+    volumes:
+      - /var/lib/postgresql/data/:/var/lib/postgresql/data/
   web:
     image: "ghcr.io/arcatva/bhakti-lounge:latest"
     depends_on:
       - postgres
     environment:
       PROFILE: PRODUCTION
-    volumes:
-      - /var/lib/postgresql/data:/var/lib/postgresql/data
   metabase:
     image: "metabase/metabase"
     depends_on:
@@ -28,8 +28,11 @@ services:
     image: "nginx"
     ports:
       - "80:80"
+      - "443:443"
     depends_on:
       - web
       - metabase
     volumes:
-      - /etc/nginx:/etc/nginx # bind host nginx configuration to container, template defined in project's /conf/nginx/nginx.conf
+      - /etc/nginx/conf.d/:/etc/nginx/conf.d/
+      # bind host nginx configuration to container, template defined in project's /conf/nginx/nginx.conf
+      - /etc/nginx/ssl:/etc/nginx/ssl/
