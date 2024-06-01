@@ -54,6 +54,6 @@ jobs:
         # SSH into the server and execute commands
         sshpass -p "$SSH_PASSWORD" ssh -o StrictHostKeyChecking=no root@$SSH_HOST '
           cd /root/
-          docker compose --env-file .env pull
-          docker compose --env-file .env up -d
+          docker compose --env-file .env pull -f /root/docker-compose.yml
+          docker compose --env-file .env up -d -f /root/docker-compose.yml
         '
