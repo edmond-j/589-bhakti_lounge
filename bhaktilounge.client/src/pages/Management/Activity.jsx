@@ -34,7 +34,7 @@ function Activity() {
 
   useEffect(() => {
     itemHighlight(selectedItem);
-  }, [selectedItem]);
+  }, [selectedItem, items]);
 
   function UpdateActivity() {
     let content = null;

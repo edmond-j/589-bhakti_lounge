@@ -29,14 +29,14 @@ function ItemList({ type, items, setItems, setSelectedItem }) {
     // const box=document.getElementById("sortButtonBox")
     // box.style="display:none"
     const sortedItems = items.sort((a, b) => a.name.localeCompare(b.name));
-    setItems(sortedItems);
+    setItems([...sortedItems]);
     console.log(sortedItems[0]);
     setSelectedItem(sortedItems[0]);
   }
 
   function sortByID() {
     const sortedItems = items.sort((a, b) => a.id - b.id);
-    setItems(sortedItems);
+    setItems([...sortedItems]);
     console.log(sortedItems);
     setSelectedItem(sortedItems[0]);
   }
