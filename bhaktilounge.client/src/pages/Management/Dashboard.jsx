@@ -19,9 +19,9 @@ function Dashboard() {
                     <a
                         className="text-blue-600 hover:mouse-pointer"
                         href={`${window.location.origin}/metabase`}
-                        {/*onClick={() => {*/}
-                        {/*  window.location.href = `${window.location.origin}/metabase`;*/}
-                        {/*}}*/}
+                        // onClick={() => {
+                        //   window.location.href = `${window.location.origin}/metabase`;
+                        // }}
                     >
                         Metabase
                     </a>

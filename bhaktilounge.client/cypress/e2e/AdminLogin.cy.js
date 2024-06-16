@@ -3,16 +3,16 @@ describe("Authenticated User Tests", () => {
     const password = "Password123!";
 
     before(() => {
-        cy.loginAndGetToken("admin", "Password123!");
+        cy.loginAndGetToken(username, password);
     });
 
     beforeEach(() => {
         cy.session(
-            ["admin"],
+            [username],
             () => {
                 cy.visit("/");
-                cy.get('[data-testid="username-input"]').clear().type("admin");
-                cy.get('[data-testid="password-input"]').clear().type("Password123!");
+                cy.get('[data-testid="username-input"]').clear().type(username);
+                cy.get('[data-testid="password-input"]').clear().type(password);
                 cy.get('[data-testid="login-button"]').click();
                 cy.url().should("include", "/check/check-in");
             },
