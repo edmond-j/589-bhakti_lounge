@@ -1,0 +1,59 @@
+name: Deploy ASP.NET Application
+
+on:
+  repository_dispatch:
+    types: [package-pushed]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Copy docker-compose.yml using password
+      env:
+        SSH_HOST: ${{ secrets.HOST_IP }}
+        SSH_PASSWORD: ${{ secrets.SSH_PASSWORD }}
+      run: |
+        sshpass -p "$SSH_PASSWORD" scp -o StrictHostKeyChecking=no -r ./docker-compose.yml root@$SSH_HOST:/root/
+        sshpass -p "$SSH_PASSWORD" scp -o StrictHostKeyChecking=no -r ./conf/nginx/conf.d/default.conf root@$SSH_HOST:/etc/nginx/conf.d/default.conf
+        
+    - name: Deploy to Server
+      env:
+        POSTGRES_DB: ${{ secrets.POSTGRES_DB }}
+        POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
+        POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
+        MB_DB_TYPE: ${{ secrets.MB_DB_TYPE }}
+        MB_DB_DBNAME: ${{ secrets.MB_DB_DBNAME }}
+        MB_DB_PORT: ${{ secrets.MB_DB_PORT }}
+        MB_DB_USER: ${{ secrets.MB_DB_USER }}
+        MB_DB_PASS: ${{ secrets.MB_DB_PASS }}
+        MB_DB_HOST: ${{ secrets.MB_DB_HOST }}
+        SSH_HOST: ${{ secrets.HOST_IP }}
+        SSH_PASSWORD: ${{ secrets.SSH_PASSWORD }}
+        PROD_DSN: ${{ secrets.PROD_DSN }}
+      run: |
+    
+        echo "POSTGRES_DB=$POSTGRES_DB" > .env
+        echo "POSTGRES_PASSWORD=$POSTGRES_PASSWORD" >> .env
+        echo "POSTGRES_USER=$POSTGRES_USER" >> .env
+        echo "MB_DB_TYPE=$MB_DB_TYPE" >> .env
+        echo "MB_DB_DBNAME=$MB_DB_DBNAME" >> .env
+        echo "MB_DB_PORT=$MB_DB_PORT" >> .env
+        echo "MB_DB_USER=$MB_DB_USER" >> .env
+        echo "MB_DB_PASS=$MB_DB_PASS" >> .env
+        echo "MB_DB_HOST=$MB_DB_HOST" >> .env
+        echo "PROD_DSN=$PROD_DSN" >> .env
+        
+        sshpass -p "$SSH_PASSWORD" scp -o StrictHostKeyChecking=no -r \
+          ./docker-compose.yml \
+          .env \
+          root@$SSH_HOST:/root/
+    
+        # SSH into the server and execute commands
+        sshpass -p "$SSH_PASSWORD" ssh -o StrictHostKeyChecking=no root@$SSH_HOST '
+          cd /root/
+          docker compose -f /root/docker-compose.yml --env-file .env pull
+          docker compose -f /root/docker-compose.yml --env-file .env up -d
+        '
