@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace BhaktiLounge.Server.Controllers {
+
     [Authorize]
     [Route("api/v1/[controller]")]
     [ApiController]
@@ -18,20 +19,16 @@ namespace BhaktiLounge.Server.Controllers {
 
         [HttpGet("CustomerOption")]
         public async Task<IActionResult> GetBusinessOption() {
-            //var customer = await _context.Customer.FindAsync(customerId);
             var currentTime = TimeOnly.FromDateTime(DateTime.Now);
             var todayWeekDay = DateTime.Today.DayOfWeek;
             var todayDate = DateOnly.FromDateTime(DateTime.Now);
             var activities = await _context.Activity.ToListAsync();
 
-            // 在内存中进行过滤
+            // filter in the memory
             activities = activities
                 .Where(a => a.GetEndTime() > currentTime &&
                             (a.DaysOfWeek == null || a.DaysOfWeek.Contains(todayWeekDay)))
                 .ToList();
-            //var activities = await _context.Activity
-            //                    .Where(a => a.GetEndTime() > currentTime && ((a.DaysOfWeek == null) || a.DaysOfWeek.Contains(todayWeekDay)))
-            //                    .ToListAsync();
             var events = await _context.Event
                                 .Where(e => e.Date == todayDate)
                                 .ToListAsync();
@@ -43,6 +40,5 @@ namespace BhaktiLounge.Server.Controllers {
             };
             return Ok(result);
         }
-        
     }
 }

@@ -34,7 +34,7 @@ function User() {
             if (response.ok) {
                 console.log(response);
                 toast.success(userToDel.name + " has been deleted.");
-                //在列表中删除
+                //delete in the list
                 setUsers((currentUsers) => currentUsers.filter((user) => user !== userToDel));
             }
         });
@@ -43,11 +43,9 @@ function User() {
     return (
         <div className="flex-grow bg-gray-200 rounded-r-2xl">
             <ToolBar title="User" />
-            <UserSignupPanel populateData={populateData}/>
-            {/* <hr className="border border-gray-400 mx-12 my-6" /> */}
+            <UserSignupPanel populateData={populateData} />
             <hr className=" mx-12 my-6" />
 
-            {/* Table */}
             <div className="mx-12">
                 <p className=" text-lg font-bold mb-2">Existing Users</p>
                 <div className="relative overflow-x-auto drop-shadow-md sm:rounded-lg ">

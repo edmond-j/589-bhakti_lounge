@@ -63,9 +63,6 @@ namespace BhaktiLounge.Server.Controllers {
                 if (target == null) {
                     return NotFound("Item Not Found");
                 }
-                //target.FirstName = updated.FirstName;
-                //target.LastName = updated.LastName;
-                //target.Email = updated.Email;
                 target.SubStartDate = updated.SubStartDate;
                 target.SubEndDate = updated.SubEndDate;
                 target.PassRemain = updated.PassRemain;

@@ -36,7 +36,7 @@ function PaymentSelector({ onPaymentSelect, hasMembership }) {
     };
 
     const toggleList = () => {
-        setShowList(!showList); // 切换列表显示状态
+        setShowList(!showList);
     };
 
     return (
