@@ -11,7 +11,9 @@ function PaymentSelector({ onPaymentSelect, hasMembership }) {
             { id: 5, name: 'Online bank transfer', selected: false },
             { id: 6, name: 'Service Exchange', selected: false },
             { id: 7, name: 'Devotee - $7.50 payment', selected: false },
-            { id: 8, name: 'Devotee - no payment', selected: false }
+            { id: 8, name: 'Devotee - no payment', selected: false },
+            { id: 9, name: 'Using Momo 10 trip', selected: false },
+            { id: 10, name: 'Pre-paid online ticket', selected: false },
         ];
 
         if (hasMembership) {
@@ -34,7 +36,7 @@ function PaymentSelector({ onPaymentSelect, hasMembership }) {
     };
 
     const toggleList = () => {
-        setShowList(!showList); // 切换列表显示状态
+        setShowList(!showList);
     };
 
     return (

@@ -11,11 +11,9 @@ namespace BhaktiLounge.Server.Controllers {
     [ApiController]
     public class MemberClassController : ControllerBase {
         private readonly ApplicationDbContext _context;
-        private readonly ILogger<SubscribeController> _logger;
 
-        public MemberClassController(ApplicationDbContext context, ILogger<SubscribeController> logger) {
+        public MemberClassController(ApplicationDbContext context) {
             _context = context;
-            _logger = logger;
         }
 
         [HttpGet]
