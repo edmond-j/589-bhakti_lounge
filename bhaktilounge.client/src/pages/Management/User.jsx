@@ -2,12 +2,15 @@ import React from "react";
 
 import ToolBar from "../../components/management/ToolBar";
 import { useState, useEffect } from "react";
+import { useSelector } from "react-redux";
 import { MdOutlineDeleteForever } from "react-icons/md";
 import { toast } from "react-toastify";
 import UserSignupPanel from "@/components/management/UserSignupPanel.jsx";
 import authFetch from "@/utils/authFetch.js";
 
+
 function User() {
+    const currentUser = useSelector((state) => state.userName);
     const [users, setUsers] = useState([]);
     async function populateData() {
         authFetch(`/api/v1/Auth/user-list`)
@@ -23,6 +26,10 @@ function User() {
     }, []);
 
     function deleteUser(userToDel) {
+        if (userToDel.name == currentUser.value) {
+            toast.error("A user cannot delete itself");
+            return;
+        }
         const option = {
             method: "POST",
             headers: { "Content-Type": "application/json" },

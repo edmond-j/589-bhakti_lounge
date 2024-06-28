@@ -74,7 +74,7 @@ namespace BhaktiLounge.Server.Controllers {
             }
         }
 
-        [HttpDelete("delete-all")]
+        [HttpDelete("delete-by-email")]
         public async Task<ActionResult> DeleteCustomer(string email) {
             try {
                 var toDel = _context.Customer.Where(u => u.Email == email).ToList();
