@@ -218,7 +218,8 @@ function NameInput() {
             selectedPayment.id === 6 ||
             selectedPayment.id === 8 ||
             selectedPayment.id === 9 ||
-            selectedPayment.id === 10 
+            selectedPayment.id === 10 ||
+            selectedPayment.id === 11 
         ) {
             newTotalPrice = 0;
         } else {

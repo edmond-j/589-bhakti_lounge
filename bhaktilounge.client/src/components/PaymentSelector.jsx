@@ -14,6 +14,7 @@ function PaymentSelector({ onPaymentSelect, hasMembership }) {
             { id: 8, name: 'Devotee - no payment', selected: false },
             { id: 9, name: 'Using Momo 10 trip', selected: false },
             { id: 10, name: 'Pre-paid online ticket', selected: false },
+            { id: 11, name: 'Voucher - September', selected: false }
         ];
 
         if (hasMembership) {
