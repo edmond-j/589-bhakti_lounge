@@ -69,23 +69,8 @@ export function LoginPanel() {
         <button data-testid="login-button" className="tw-btn w-64 mt-8" onClick={login}>
           Login
         </button>
-        {/*                <div className="flex mt-6 justify-center text-xs">
-                    <p className="block">Temporary Entry:</p>
-                    <a className="text-blue-400 hover:text-blue-500" href="/check/check-in">Check In</a>
-                    <span className="mx-2 text-gray-300">/</span>
-                    <a className="text-blue-400 hover:text-blue-500" href="/management/activity">Management</a>
-                </div>*/}
       </form>
     </div>
-    // <div>
-    //     <p>This component demonstrates fetching data from the server.</p>
-    //     <div classNameName="form-group">
-    //         <Link to="/check/check-in">Login</Link>
-    //         <Link to="/check/register">Register</Link>
-    //         <Link to="/management/activity">Activity</Link>
-    //         <br />
-    //         <Link to="/management/event">Event</Link>
-    //     </div>
-    // </div>
+   
   );
 }

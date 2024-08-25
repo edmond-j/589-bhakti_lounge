@@ -8,7 +8,6 @@ import { useLocation } from "react-router-dom";
 import authFetch from "@/utils/authFetch.js";
 
 function NameInput() {
-    //get name data from register page
     const location = useLocation();
     const [suggestions, setCustomerSuggestions] = useState([]);
     const [selectedCustomer, setSelectedCustomer] = useState(location.state?.customer ? location.state?.customer : null);
@@ -20,20 +19,7 @@ function NameInput() {
     const [editableTotalPrice, setEditableTotalPrice] = useState(0);
     const [membershipDetail, setMembershipDetail] = useState("");
     const [isFirstTime, setIsFirstTime] = useState(location.state?.firstTime ? true : false);
-
-    //get name data from register page
-
     const [customerName, setCustomerName] = useState("");
-
-    // useEffect(() => {
-    //     const params = new URLSearchParams(location.search);
-    //     const firstname = params.get('firstname');
-    //     if (firstname) {
-    //         setCustomerName(firstname);
-    //         setIsFirstTime(true);
-    //     }
-    //     console.log("first time? " + isFirstTime)
-    // }, [location]);
 
     useEffect(() => {
         if (customerName && customerName.length > 1) {
@@ -152,8 +138,8 @@ function NameInput() {
     };
 
     const handleBackClick = () => {
-        setSelectedCustomer(null); // 清空选中的客户信息
-        setShowCustomerDetails(false); // 隐藏会员详细信息
+        setSelectedCustomer(null); 
+        setShowCustomerDetails(false); 
         setIsFirstTime(false);
     };
 
@@ -182,7 +168,7 @@ function NameInput() {
                 activitiesId: selectedActivities.map((activity) => activity.id),
                 eventId: selectedEvents.length > 0 ? selectedEvents[0].id : null,
                 totalPrice: parseFloat(editableTotalPrice),
-                isFirstTime: isFirstTime, // 这个值根据实际业务逻辑进行设置
+                isFirstTime: isFirstTime, 
             };
             try {
                 const response = await authFetch("/api/v1/Checkin", {
@@ -232,7 +218,8 @@ function NameInput() {
             selectedPayment.id === 6 ||
             selectedPayment.id === 8 ||
             selectedPayment.id === 9 ||
-            selectedPayment.id === 10 
+            selectedPayment.id === 10 ||
+            selectedPayment.id === 11 
         ) {
             newTotalPrice = 0;
         } else {
