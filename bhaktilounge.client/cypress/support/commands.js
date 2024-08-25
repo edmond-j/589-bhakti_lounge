@@ -38,7 +38,7 @@ Cypress.Commands.add('loginAndGetToken', (username, password) => {
     const token = Cypress.env('auth_token');
     cy.request({
       method: 'DELETE',
-      url: `https://localhost:7106/api/v1/Customer/delete-all?email=${email}`,
+      url: `https://localhost:7106/api/v1/Customer/delete-by-email?email=${email}`,
       headers: {
         'Authorization': `Bearer ${token}`
       }

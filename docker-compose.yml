@@ -12,6 +12,7 @@ services:
     depends_on:
       - postgres
     environment:
+      PROD_DSN: ${PROD_DSN}
       PROFILE: PRODUCTION
   metabase:
     image: "metabase/metabase"

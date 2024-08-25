@@ -1,40 +1,38 @@
-import React from 'react';
-import { MdOutlineKeyboardArrowDown } from 'react-icons/md';
-import { FaSortAmountDown } from 'react-icons/fa';
-import { IoMdAdd } from 'react-icons/io';
-import authFetch from '@/utils/authFetch.js';
+import React, { useEffect } from "react";
+import { MdOutlineKeyboardArrowDown } from "react-icons/md";
+import { FaSortAmountDown } from "react-icons/fa";
+import { IoMdAdd } from "react-icons/io";
+import authFetch from "@/utils/authFetch.js";
+import { itemHighlight } from "@/pages/Management/method.js";
 
-function ItemList({ type, items, setItem, setSelectedItem }) {
+function ItemList({ type, items, setItems, setSelectedItem }) {
     function createNew() {
         const requestOptions = {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
             body: JSON.stringify({}),
         };
         authFetch(`/api/v1/${type}`, requestOptions)
             .then((response) => response.json())
             .then((data) => {
-                console.log('New Activity Created:', data);
-                // refreshData().then(() => {
-                // });
-                setItem((prevItems) => [...prevItems, data]);
+                console.log("New Activity Created:", data);
+                setItems((prevItems) => [...prevItems, data]);
                 setSelectedItem(data); // Ensure refreshData() is complete
             })
-            .catch((error) => console.error('Error:', error));
-        // onAdd(newData);
+            .catch((error) => console.error("Error:", error));
     }
 
     function sortByName() {
-        // const box=document.getElementById("sortButtonBox")
-        // box.style="display:none"
         const sortedItems = items.sort((a, b) => a.name.localeCompare(b.name));
-        setItem(sortedItems);
+        setItems([...sortedItems]);
+        console.log(sortedItems[0]);
         setSelectedItem(sortedItems[0]);
     }
 
     function sortByID() {
         const sortedItems = items.sort((a, b) => a.id - b.id);
-        setItem(sortedItems);
+        setItems([...sortedItems]);
+        console.log(sortedItems);
         setSelectedItem(sortedItems[0]);
     }
 
@@ -46,11 +44,20 @@ function ItemList({ type, items, setItem, setSelectedItem }) {
                     <span className="font-bold">Sort By</span>
                     <MdOutlineKeyboardArrowDown className="w-5 h-5" />
                 </div>
-                <div id="sortButtonBox" className="absolute z-10 flex-col items-start hidden w-full pb-1 bg-white shadow-lg group-focus:flex">
-                    <a className="w-full px-4 py-2 text-left hover:bg-gray-300" onClick={sortByName}>
+                <div
+                    id="sortButtonBox"
+                    className="absolute z-10 flex-col items-start hidden w-full pb-1 bg-white shadow-lg group-focus:flex"
+                >
+                    <a
+                        className="w-full px-4 py-2 text-left hover:bg-gray-300"
+                        onClick={sortByName}
+                    >
                         by Name
                     </a>
-                    <a className="w-full px-4 py-2 text-left hover:bg-gray-300" onClick={sortByID}>
+                    <a
+                        className="w-full px-4 py-2 text-left hover:bg-gray-300"
+                        onClick={sortByID}
+                    >
                         by Created Time
                     </a>
                 </div>
@@ -59,24 +66,32 @@ function ItemList({ type, items, setItem, setSelectedItem }) {
                 <div className="flex flex-col max-h-95 overflow-y-auto overflow-x-hidden">
                     {items.length > 0 ? (
                         <ul id="mgmt-itemlist">
-                            {items.map((item) => (
-                                <React.Fragment key={item.id}>
-                                    <li
-                                        className="flex items-center flex-shrink-0 h-9 px-4 my-1 text-sm font-medium rounded-lg text-nowrap hover:bg-gray-300"
-                                        id={`item-${item.id}`}
-                                        tabIndex="0"
-                                        onClick={() => setSelectedItem(item)}>
-                                        {item.name}
-                                    </li>
-                                    <hr />
-                                </React.Fragment>
-                            ))}
+                            {items.map((item) => {
+                                return (
+                                    <React.Fragment key={item.id}>
+                                        <li
+                                            className="flex items-center flex-shrink-0 h-9 px-4 my-1 text-sm font-medium rounded-lg text-nowrap hover:bg-gray-300"
+                                            id={`item-${item.id}`}
+                                            tabIndex="0"
+                                            onClick={() => setSelectedItem(item)}
+                                        >
+                                            {item.name}
+                                        </li>
+                                        <hr />
+                                    </React.Fragment>
+                                );
+                            })}
                         </ul>
                     ) : (
-                        <label className="self-center font-bold text-2xl text-gray-400 mt-40">(Empty)</label>
+                        <label className="self-center font-bold text-2xl text-gray-400 mt-40">
+                            (Empty)
+                        </label>
                     )}
                 </div>
-                <button className="tw-btn flex flex-shrink-0 mt-auto rounded" onClick={createNew}>
+                <button
+                    className="tw-btn flex flex-shrink-0 mt-auto rounded"
+                    onClick={createNew}
+                >
                     <IoMdAdd className="w-5 h-5 mr-2" />
                     Add New
                 </button>

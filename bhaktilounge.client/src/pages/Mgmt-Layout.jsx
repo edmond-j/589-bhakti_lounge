@@ -16,7 +16,7 @@ function MgmtLayout() {
                 {/*</ProtectedRoute>*/}
                 <div className="mt-28">
                     <ToastContainer
-                        position="bottom-right"
+                        position="top-right"
                         autoClose={1500}
                         transition={Zoom}
                     />

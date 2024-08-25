@@ -3,6 +3,7 @@ using BhaktiLounge.Server.Models;
 using BhaktiLounge.Server.Data;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
+using System;
 
 namespace BhaktiLounge.Server.Controllers {
 
@@ -21,7 +22,7 @@ namespace BhaktiLounge.Server.Controllers {
         [HttpGet]
         public async Task<IActionResult> GetAllEvents() {
             try {
-                var events = await _context.Event.OrderBy(a => a.Id).ToListAsync();
+                var events = await _context.Event.OrderByDescending(e => e.Id).Take(15).OrderBy(a => a.Id).ToListAsync();
                 return Ok(events);
             } catch (Exception ex) {
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
@@ -31,12 +32,6 @@ namespace BhaktiLounge.Server.Controllers {
         [Authorize]
         [HttpPost]
         public async Task<ActionResult> AddEvent([FromBody] Event? newItem) {
-            //if (newItem == null) {
-            //    return BadRequest("Activity data is required.");
-            //}
-            //_context.Event.Add(newItem);
-            //await _context.SaveChangesAsync();
-            //return Ok(newItem);
             try {
                 newItem ??= new Event();
                 _context.Event.Add(newItem);
@@ -80,6 +75,7 @@ namespace BhaktiLounge.Server.Controllers {
                 await _context.SaveChangesAsync();
                 return Ok("Item Deleted");
             } catch (Exception ex) {
+                _logger.LogError(ex, "An error occurred while saving the entity changes.");
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
         }

@@ -63,9 +63,6 @@ namespace BhaktiLounge.Server.Controllers {
                 if (target == null) {
                     return NotFound("Item Not Found");
                 }
-                //target.FirstName = updated.FirstName;
-                //target.LastName = updated.LastName;
-                //target.Email = updated.Email;
                 target.SubStartDate = updated.SubStartDate;
                 target.SubEndDate = updated.SubEndDate;
                 target.PassRemain = updated.PassRemain;
@@ -77,7 +74,7 @@ namespace BhaktiLounge.Server.Controllers {
             }
         }
 
-        [HttpDelete("delete-all")]
+        [HttpDelete("delete-by-email")]
         public async Task<ActionResult> DeleteCustomer(string email) {
             try {
                 var toDel = _context.Customer.Where(u => u.Email == email).ToList();

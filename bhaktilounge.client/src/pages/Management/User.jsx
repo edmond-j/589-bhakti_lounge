@@ -2,12 +2,15 @@ import React from "react";
 
 import ToolBar from "../../components/management/ToolBar";
 import { useState, useEffect } from "react";
+import { useSelector } from "react-redux";
 import { MdOutlineDeleteForever } from "react-icons/md";
 import { toast } from "react-toastify";
 import UserSignupPanel from "@/components/management/UserSignupPanel.jsx";
 import authFetch from "@/utils/authFetch.js";
 
+
 function User() {
+    const currentUser = useSelector((state) => state.userName);
     const [users, setUsers] = useState([]);
     async function populateData() {
         authFetch(`/api/v1/Auth/user-list`)
@@ -23,6 +26,10 @@ function User() {
     }, []);
 
     function deleteUser(userToDel) {
+        if (userToDel.name == currentUser.value) {
+            toast.error("A user cannot delete itself");
+            return;
+        }
         const option = {
             method: "POST",
             headers: { "Content-Type": "application/json" },
@@ -34,7 +41,7 @@ function User() {
             if (response.ok) {
                 console.log(response);
                 toast.success(userToDel.name + " has been deleted.");
-                //在列表中删除
+                //delete in the list
                 setUsers((currentUsers) => currentUsers.filter((user) => user !== userToDel));
             }
         });
@@ -43,11 +50,9 @@ function User() {
     return (
         <div className="flex-grow bg-gray-200 rounded-r-2xl">
             <ToolBar title="User" />
-            <UserSignupPanel populateData={populateData}/>
-            {/* <hr className="border border-gray-400 mx-12 my-6" /> */}
+            <UserSignupPanel populateData={populateData} />
             <hr className=" mx-12 my-6" />
 
-            {/* Table */}
             <div className="mx-12">
                 <p className=" text-lg font-bold mb-2">Existing Users</p>
                 <div className="relative overflow-x-auto drop-shadow-md sm:rounded-lg ">
