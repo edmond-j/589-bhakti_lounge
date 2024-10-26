@@ -55,11 +55,56 @@ public class CheckinController : ControllerBase
                 .Where(c => c.ActivitiesId.Any(a => dinnerTimeIds.Contains(a)) && c.ActivitiesId.Any(a => activityIncludeDinnerIds.Contains(a)))
                 .ToList();
 
+        var activityIds = todayCheckins
+            .SelectMany(c => c.ActivitiesId)
+            .Distinct()
+            .ToList();
+
+        var activityNames = await _context.Activity
+            .Where(a => activityIds.Contains(a.Id) && !a.Name.ToLower().Contains("takeaway") && !a.Name.ToLower().Contains("dinner"))
+            .ToDictionaryAsync(a => a.Id, a => a.Name);
+
+        var checkinsByActivity = todayCheckins
+            .SelectMany(c => c.ActivitiesId)
+            .GroupBy(a => a)
+            .Select(g => new
+            {
+                ActivityId = g.Key,
+                CheckinCount = g.Count(),
+                ActivityName = activityNames.GetValueOrDefault(g.Key)
+            })
+            .Where(result => result.ActivityName != null)
+            .ToList();
+
+        var eventIds = todayCheckins
+                .Where(c => c.EventId.HasValue)
+                .Select(c => c.EventId.Value)
+                .Distinct()
+                .ToList();
+
+        var eventNames = await _context.Event
+                .Where(e => eventIds.Contains(e.Id))
+                .ToDictionaryAsync(e => e.Id, e => e.Name);
+
+        var checkinsByEvent = todayCheckins
+                .Where(c => c.EventId.HasValue)
+                .GroupBy(c => c.EventId)
+                .Select(g => new
+                {
+                    EventId = g.Key,
+                    CheckinCount = g.Count(),
+                    EventName = eventNames.GetValueOrDefault(g.Key.Value)
+                })
+                .Where(result => result.EventName != null)
+                .ToList();
+
         var result = new
         {
             TotalCheckIns = todayCheckins.Count(),
             DineInDinners = totalDinnerCheckins.Count() - takeawayDinnerCheckins.Count(),
-            TakeawayDinners = takeawayDinnerCheckins.Count()
+            TakeawayDinners = takeawayDinnerCheckins.Count(),
+            CheckinsByActivity = checkinsByActivity,
+            CheckinsByEvent = checkinsByEvent
         };
         return Ok(result);
     }
