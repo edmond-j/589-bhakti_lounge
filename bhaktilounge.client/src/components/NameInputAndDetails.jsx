@@ -138,8 +138,8 @@ function NameInput() {
     };
 
     const handleBackClick = () => {
-        setSelectedCustomer(null); 
-        setShowCustomerDetails(false); 
+        setSelectedCustomer(null);
+        setShowCustomerDetails(false);
         setIsFirstTime(false);
     };
 
@@ -168,7 +168,7 @@ function NameInput() {
                 activitiesId: selectedActivities.map((activity) => activity.id),
                 eventId: selectedEvents.length > 0 ? selectedEvents[0].id : null,
                 totalPrice: parseFloat(editableTotalPrice),
-                isFirstTime: isFirstTime, 
+                isFirstTime: isFirstTime,
             };
             try {
                 const response = await authFetch("/api/v1/Checkin", {
@@ -219,7 +219,9 @@ function NameInput() {
             selectedPayment.id === 8 ||
             selectedPayment.id === 9 ||
             selectedPayment.id === 10 ||
-            selectedPayment.id === 11 
+            selectedPayment.id === 11 ||
+            selectedPayment.id === 12 ||
+            selectedPayment.id === 13
         ) {
             newTotalPrice = 0;
         } else {
@@ -280,7 +282,7 @@ function NameInput() {
                         />
                         <label>Email</label>
                         <input
-                            id="detail-email-input"    
+                            id="detail-email-input"
                             type="text"
                             placeholder="Email"
                             value={selectedCustomer.email}
