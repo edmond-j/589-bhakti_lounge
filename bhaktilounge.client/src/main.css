@@ -11,9 +11,9 @@
     -moz-osx-font-smoothing: grayscale;
 }
 
-/* div{
-  border: 1px solid lightblue;
-} */
+div {
+    border: 1px solid lightblue;
+}
 
 .chk-body {
     margin: 0;
@@ -60,7 +60,6 @@ h2 {
 .form-group label {
     display: block;
     margin: 4px;
-
 }
 
 .form-group input:not([type="checkbox"]),
@@ -93,6 +92,13 @@ h2 {
     gap: 20px;
 }
 
+.button-container-header {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 30px;
+    gap: 20px;
+}
+
 .info-value {
     padding: 0.5rem;
     font-size: 1rem;
@@ -109,7 +115,8 @@ h2 {
     min-width: 640px;
     min-height: 500px;
     margin: 0 auto;
-    padding: 2rem;
+    padding-left: 2rem;
+    padding-right: 2rem;
     text-align: center;
     font-family: "Poppins", sans-serif;
     color: #374151;
@@ -184,12 +191,12 @@ h2 {
     color: #999;
 }
 
-.w-64.flex-col label{
+.w-64.flex-col label {
     font-size: small;
     font-weight: bold;
 }
 
-.react-select__value-container{
+.react-select__value-container {
     /* background-color: #333; */
     border-radius: 8px;
 }

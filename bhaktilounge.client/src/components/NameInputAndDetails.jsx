@@ -264,20 +264,12 @@ function NameInput() {
             {showDetails && selectedCustomer && (
                 <>
                     <div className="customer-details">
-                        <h3>Existing Customer</h3>
 
-                        <label>First Name</label>
+                        <label>Full Name</label>
                         <input
                             type="text"
-                            placeholder="First Name"
-                            value={selectedCustomer.firstName}
-                            readOnly
-                        />
-                        <label>Last Name</label>
-                        <input
-                            type="text"
-                            placeholder="Last Name"
-                            value={selectedCustomer.lastName}
+                            placeholder="Full Name"
+                            value={selectedCustomer.firstName + " " + selectedCustomer.lastName}
                             readOnly
                         />
                         <label>Email</label>
@@ -297,7 +289,7 @@ function NameInput() {
                             readOnly
                         />
                         <button className="tw-btn mb-4" onClick={subscribe}>
-                            Buy Membership
+                            Upgrade
                         </button>
                         <ActivitySelector onActivitySelect={handleSelectedActivities} />
                         <EventSelector onEventSelect={handleSelectedEvents} />
