@@ -9,6 +9,7 @@ import Dashboard from './pages/Management/Dashboard.jsx';
 import Activity from './pages/Management/Activity.jsx';
 import Event from './pages/Management/Event.jsx';
 import Membership from './pages/Management/Membership.jsx';
+import Payment from './pages/Management/Payment.jsx';
 import Acquisition from './pages/Management/Acquisition.jsx';
 import User from './pages/Management/User.jsx';
 import NotFound from './pages/Management/NotFound.jsx';
@@ -45,6 +46,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
                         <Route path='activity' element={<Activity />} />
                         <Route path='event' element={<Event />} />
                         <Route path='membership' element={<Membership />} />
+                        <Route path='payment' element={<Payment />} />
                         <Route path='acquisition' element={<Acquisition />} />
                         <Route path='user' element={<User />} />
                         <Route path='*' element={<NotFound />} />

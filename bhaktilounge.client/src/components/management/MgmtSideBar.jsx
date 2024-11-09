@@ -6,6 +6,8 @@ import { MdOutlineDisplaySettings, MdOutlineEmojiEvents } from "react-icons/md";
 import { FaPeopleGroup } from "react-icons/fa6";
 import { FaUserLock } from "react-icons/fa";
 import { ImExit } from "react-icons/im";
+import { FaMoneyCheckDollar } from "react-icons/fa6";
+
 
 function MgmtSideBar() {
     let linkClass = ({ isActive }) =>
@@ -40,6 +42,10 @@ function MgmtSideBar() {
                     <NavLink className={linkClass} to="membership">
                         <FaPeopleGroup className="tw-sidebar-icon" />
                         <span className="tw-sidebar-item">Membership</span>
+                    </NavLink>
+                    <NavLink className={linkClass} to="payment">
+                        <FaMoneyCheckDollar  className="tw-sidebar-icon" />
+                        <span className="tw-sidebar-item">Payment</span>
                     </NavLink>
                     <NavLink className={linkClass} to="acquisition">
                         <MdOutlineDisplaySettings className="tw-sidebar-icon" />

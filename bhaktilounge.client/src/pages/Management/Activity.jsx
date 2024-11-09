@@ -114,7 +114,7 @@ function Activity() {
               value={name}
               onChange={(e) => setName(e.target.value)}
               className="tw-input"
-              maxLength="30"
+              maxLength="60"
             />
             <label htmlFor="price">Price (NZD)*</label>
             <input

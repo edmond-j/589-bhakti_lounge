@@ -40,18 +40,5 @@ namespace BhaktiLounge.Server.Controllers {
             };
             return Ok(result);
         }
-
-        [HttpGet("LastVisit")]
-        public async Task<IActionResult> GetLastVisit(int customerId) {
-            var checkin = await _context.Checkin.Where(c => c.CustomerId == customerId).OrderBy(c => c.Id).OrderByDescending(c => c.Id).FirstOrDefaultAsync();
-            if (checkin != null) {
-                var lastDay = checkin.Date;
-                var todayDate = DateOnly.FromDateTime(DateTime.Now); ;
-                var days = todayDate.DayNumber - lastDay.DayNumber;
-                return Ok(days);
-            } else {
-                return Ok("no record");
-            }
-        }
     }
 }

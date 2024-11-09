@@ -10,7 +10,9 @@ import authFetch from "@/utils/authFetch.js";
 function NameInput() {
     const location = useLocation();
     const [suggestions, setCustomerSuggestions] = useState([]);
-    const [selectedCustomer, setSelectedCustomer] = useState(location.state?.customer ? location.state?.customer : null);
+    const [selectedCustomer, setSelectedCustomer] = useState(
+        location.state?.customer ? location.state?.customer : null
+    );
     const [hasMembership, setHasMembership] = useState(false);
     const [showDetails, setShowCustomerDetails] = useState(location.state?.customer ? true : false);
     const [selectedActivities, setSelectedActivities] = useState([]);
@@ -20,6 +22,8 @@ function NameInput() {
     const [membershipDetail, setMembershipDetail] = useState("");
     const [isFirstTime, setIsFirstTime] = useState(location.state?.firstTime ? true : false);
     const [customerName, setCustomerName] = useState("");
+    const [lastVisit, setLastVisit] = useState("unknown");
+    const [lastDay, setLastDay] = useState("unknown");
 
     useEffect(() => {
         if (customerName && customerName.length > 1) {
@@ -77,9 +81,8 @@ function NameInput() {
             setCustomerName("");
             navigate("/check/register");
         } else if (customerSuggestion.id === -2) {
-            return
-        }
-        else {
+            return;
+        } else {
             setSelectedCustomer(customerSuggestion);
             setShowCustomerDetails(true);
             setCustomerSuggestions([]);
@@ -90,6 +93,7 @@ function NameInput() {
 
     useEffect(() => {
         if (selectedCustomer !== null) {
+            getLastVisited(selectedCustomer.id);
             if (selectedCustomer.subEndDate) {
                 const today = new Date();
                 const subEndDate = new Date(selectedCustomer.subEndDate);
@@ -114,10 +118,16 @@ function NameInput() {
         }
     }, [selectedCustomer]);
 
+    const getLastVisited = async (id) => {
+        const response = await authFetch(`/api/v1/Customer/LastVisit?customerId=${id}`);
+        const data = await response.json();
+        console.log(data)
+        setLastVisit(data.days);
+        setLastDay(data.lastDay)
+    };
+
     const subscribe = () => {
-        navigate(
-            `/check/subscribe/${selectedCustomer.id}`,
-        );
+        navigate(`/check/subscribe/${selectedCustomer.id}`);
     };
 
     const handleSelectedActivities = (selected) => {
@@ -144,22 +154,19 @@ function NameInput() {
     };
 
     const isCheckInEnabled =
-        (selectedEvents.length > 0 || selectedActivities.length > 0) &&
-        selectedPayment.id !== null;
+        (selectedEvents.length > 0 || selectedActivities.length > 0) && selectedPayment.id !== null;
 
     const handleCheckInClick = async () => {
         if (isCheckInEnabled) {
             const date = new Date();
-            const formattedDate = `${date.getFullYear()}-${(date.getMonth() + 1)
+            const formattedDate = `${date.getFullYear()}-${(date.getMonth() + 1).toString().padStart(2, "0")}-${date
+                .getDate()
                 .toString()
-                .padStart(2, "0")}-${date.getDate().toString().padStart(2, "0")}`;
-            const formattedTime = `${date
-                .getHours()
+                .padStart(2, "0")}`;
+            const formattedTime = `${date.getHours().toString().padStart(2, "0")}:${date
+                .getMinutes()
                 .toString()
-                .padStart(2, "0")}:${date
-                    .getMinutes()
-                    .toString()
-                    .padStart(2, "0")}:${date.getSeconds().toString().padStart(2, "0")}`;
+                .padStart(2, "0")}:${date.getSeconds().toString().padStart(2, "0")}`;
             const newCheckin = {
                 date: formattedDate,
                 time: formattedTime,
@@ -180,12 +187,7 @@ function NameInput() {
                 });
                 if (response.ok) {
                     console.log("Check-in successful:", await response.json());
-                    alert(
-                        selectedCustomer.firstName +
-                        " " +
-                        selectedCustomer.lastName +
-                        " has been checked in! ",
-                    );
+                    alert(selectedCustomer.firstName + " " + selectedCustomer.lastName + " has been checked in! ");
                     navigate("/check/check-in", { state: { firstTime: false } });
                     handleBackClick();
                     window.location.reload();
@@ -201,31 +203,26 @@ function NameInput() {
     };
 
     const calculateTotalPrice = () => {
-        const activitiesPrice = selectedActivities.reduce(
-            (sum, activity) => sum + (activity.price || 0),
-            0,
-        );
-        const eventsPrice = selectedEvents.reduce(
-            (sum, event) => sum + (event.price || 0),
-            0,
-        );
-        let newTotalPrice;
-        if (selectedPayment.id === 7) {
-            newTotalPrice = 7.50;
+        const activitiesPrice = selectedActivities.reduce((sum, activity) => sum + (activity.price || 0), 0);
+        const eventsPrice = selectedEvents.reduce((sum, event) => sum + (event.price || 0), 0);
+        let newTotalPrice = activitiesPrice + eventsPrice;
+        if (selectedPayment.fixedPriceEnabled == true) {
+            newTotalPrice = selectedPayment.fixedPrice;
         } else if (
-            selectedPayment.id === 1 ||
-            selectedPayment.id === 2 ||
-            selectedPayment.id === 6 ||
-            selectedPayment.id === 8 ||
-            selectedPayment.id === 9 ||
-            selectedPayment.id === 10 ||
-            selectedPayment.id === 11 ||
-            selectedPayment.id === 12 ||
-            selectedPayment.id === 13
+            selectedPayment.deductEnabled == true
+            //selectedPayment.id === 1 ||
+            //selectedPayment.id === 2 ||
+            //selectedPayment.id === 6 ||
+            //selectedPayment.id === 8 ||
+            //selectedPayment.id === 9 ||
+            //selectedPayment.id === 10 ||
+            //selectedPayment.id === 11 ||
+            //selectedPayment.id === 12 ||
+            //selectedPayment.id === 13
         ) {
-            newTotalPrice = 0;
-        } else {
-            newTotalPrice = activitiesPrice + eventsPrice;
+            newTotalPrice = newTotalPrice - selectedPayment.deduct;
+        } else if (selectedPayment.discountEnabled == true) {
+            newTotalPrice = newTotalPrice * (1 - selectedPayment.discount);
         }
         setEditableTotalPrice(newTotalPrice);
     };
@@ -249,12 +246,8 @@ function NameInput() {
                     {suggestions.length > 0 && (
                         <ul className="suggestions-list">
                             {suggestions.map((suggestion) => (
-                                <li
-                                    key={suggestion.id}
-                                    onClick={() => handleCustomerSuggestionClick(suggestion)}
-                                >
-                                    {suggestion.firstName} {suggestion.lastName} (
-                                    {suggestion.email})
+                                <li key={suggestion.id} onClick={() => handleCustomerSuggestionClick(suggestion)}>
+                                    {suggestion.firstName} {suggestion.lastName} ({suggestion.email})
                                 </li>
                             ))}
                         </ul>
@@ -264,7 +257,6 @@ function NameInput() {
             {showDetails && selectedCustomer && (
                 <>
                     <div className="customer-details">
-
                         <label>Full Name</label>
                         <input
                             type="text"
@@ -272,6 +264,7 @@ function NameInput() {
                             value={selectedCustomer.firstName + " " + selectedCustomer.lastName}
                             readOnly
                         />
+                        <label>Last Visited: { lastDay} ({lastVisit} days ago)</label>
                         <label>Email</label>
                         <input
                             id="detail-email-input"
@@ -293,17 +286,14 @@ function NameInput() {
                         </button>
                         <ActivitySelector onActivitySelect={handleSelectedActivities} />
                         <EventSelector onEventSelect={handleSelectedEvents} />
-                        <PaymentSelector
-                            onPaymentSelect={handleSelectedPayment}
-                            hasMembership={hasMembership}
-                        />
+                        <PaymentSelector onPaymentSelect={handleSelectedPayment} hasMembership={hasMembership} />
                         <label>Total Price</label>
-                        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                            <label>$</label>  {/* Reduced marginRight */}
+                        <div style={{ display: "flex", alignItems: "center", justifyContent: "center" }}>
+                            <label>$</label> {/* Reduced marginRight */}
                             <input
                                 type="number"
                                 className="total-price-input"
-                                style={{ width: '100px', margin: '0' }} // Set specific width for the input
+                                style={{ width: "100px", margin: "0" }} // Set specific width for the input
                                 value={editableTotalPrice}
                                 onChange={(e) => setEditableTotalPrice(parseFloat(e.target.value))}
                             />
@@ -317,8 +307,7 @@ function NameInput() {
                             id="detail-checkin-button"
                             className={`tw-btn ${isCheckInEnabled ? "enabled" : "disabled"}`}
                             onClick={handleCheckInClick}
-                            disabled={!isCheckInEnabled}
-                        >
+                            disabled={!isCheckInEnabled}>
                             CheckIn
                         </button>
                     </span>

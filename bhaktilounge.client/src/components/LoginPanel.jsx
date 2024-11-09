@@ -55,7 +55,7 @@ export function LoginPanel() {
           data-testid="username-input"
           className="tw-input"
           type="text"
-          value={username}
+          value={username || ""} 
           onChange={handleUsernameChange}
         />
         <label className="font-semibold text-sm mt-3">Password</label>
@@ -63,7 +63,7 @@ export function LoginPanel() {
           data-testid="password-input"
           className="tw-input"
           type="password"
-          value={password}
+          value={password || ""}
           onChange={handlePasswordChange}
         />
         <button data-testid="login-button" className="tw-btn w-64 mt-8" onClick={login}>

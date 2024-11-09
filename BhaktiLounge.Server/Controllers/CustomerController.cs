@@ -43,6 +43,23 @@ namespace BhaktiLounge.Server.Controllers {
             return Ok(customer);
         }
 
+                [HttpGet("LastVisit")]
+        public async Task<IActionResult> GetLastVisit(int customerId) {
+            var checkin = await _context.Checkin.Where(c => c.CustomerId == customerId).OrderBy(c => c.Id).OrderByDescending(c => c.Id).FirstOrDefaultAsync();
+            if (checkin != null) {
+                var lastDay = checkin.Date;
+                var todayDate = DateOnly.FromDateTime(DateTime.Now); 
+                var days = todayDate.DayNumber - lastDay.DayNumber;
+                var result=new {
+                    Days=days, 
+                    LastDay=lastDay,
+                    };
+                return Ok(result);
+            } else {
+                return Ok("no record");
+            }
+        }
+
         //New Customer registration
         [HttpPost]
         public async Task<IActionResult> Register([FromBody] Customer newItem) {

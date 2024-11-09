@@ -16,10 +16,7 @@ function Dashboard() {
                     </div>
                     <p className="text-gray-800 text-3xl font-semibold">{title}</p>
                     <p className="text-gray-600 mt-3">{article}</p>
-                    <a
-                        className="text-blue-600 hover:mouse-pointer"
-                        href={`${window.location.origin}/metabase`}
-                    >
+                    <a className="text-blue-600 hover:mouse-pointer" href={`${window.location.origin}/metabase`}>
                         Metabase
                     </a>
                 </div>

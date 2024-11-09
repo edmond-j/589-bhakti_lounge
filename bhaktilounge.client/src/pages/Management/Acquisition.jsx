@@ -87,7 +87,7 @@ function Acquisition() {
               value={name}
               onChange={(e) => setName(e.target.value)}
               className=" tw-input"
-              maxLength="30"
+              maxLength="60"
             />
 
             <OptionButton updateData={handleUpdate} deleteData={handleDelete} />

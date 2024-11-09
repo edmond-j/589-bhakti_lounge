@@ -1,29 +1,44 @@
 import { useEffect, useState } from 'react';
+import authFetch from "@/utils/authFetch.js";
+
 
 function PaymentSelector({ onPaymentSelect, hasMembership }) {
     const [payments, setPayments] = useState([]);
     const [placeholder, setPlaceholder] = useState("Select Payments ▼");
     useEffect(() => {
-        const defaultPayments = [
-            { id: 2, name: 'Class pass', selected: false },
-            { id: 3, name: 'Cash', selected: false },
-            { id: 4, name: 'Card', selected: false },
-            { id: 5, name: 'Online bank transfer', selected: false },
-            { id: 6, name: 'Service exchange', selected: false },
-            { id: 7, name: 'Devotee - $7.50 payment', selected: false },
-            { id: 8, name: 'Devotee - no payment', selected: false },
-            { id: 9, name: 'Using Momo 10 trip', selected: false },
-            { id: 10, name: 'Pre-paid online ticket', selected: false },
-            { id: 11, name: 'Voucher - September', selected: false },
-            { id: 12, name: 'Sankirtan flyer-free first time', selected: false },
-            { id: 13, name: 'Free pass', selected: false }
-        ];
+        const fetchPayments = async () => {
+            //const defaultPayments = [
+            //    { id: 2, name: 'Class pass', fixedPriceEnabled: true, fixedPrice: 0, deuctEnabled: false, deduct: null, discountEnabled: false, discount: null, selected: false },
+            //    { id: 3, name: 'Cash', fixedPriceEnabled: false, fixedPrice: null, deuctEnabled: false, deduct: null, discountEnabled: false, discount: null, selected: false },
+            //    { id: 4, name: 'Card', fixedPriceEnabled: false, fixedPrice: null, deuctEnabled: false, deduct: null, discountEnabled: false, discount: null, selected: false },
+            //    { id: 5, name: 'Online bank transfer', fixedPriceEnabled: false, fixedPrice: null, deuctEnabled: false, deduct: null, discountEnabled: false, discount: null, selected: false },
+            //    { id: 6, name: 'Service exchange', fixedPriceEnabled: true, fixedPrice: 0, deuctEnabled: false, deduct: null, discountEnabled: false, discount: null, selected: false },
+            //    { id: 7, name: 'Devotee - $7.50 payment', fixedPriceEnabled: true, fixedPrice: 7.5, deuctEnabled: false, deduct: null, discountEnabled: false, discount: null, selected: false },
+            //    { id: 8, name: 'Devotee - no payment', fixedPriceEnabled: true, fixedPrice: 0, deuctEnabled: false, deduct: null, discountEnabled: false, discount: null, selected: false },
+            //    { id: 9, name: 'Using Momo 10 trip', fixedPriceEnabled: true, fixedPrice: 0, deuctEnabled: false, deduct: null, discountEnabled: false, discount: null, selected: false },
+            //    { id: 10, name: 'Pre-paid online ticket', fixedPriceEnabled: true, fixedPrice: 0, deuctEnabled: false, deduct: null, discountEnabled: false, discount: null, selected: false },
+            //    { id: 11, name: 'Voucher - September', fixedPriceEnabled: true, fixedPrice: 0, deuctEnabled: false, deduct: null, discountEnabled: false, discount: null, selected: false },
+            //    { id: 12, name: 'Sankirtan flyer-free first time', fixedPriceEnabled: true, fixedPrice: 0, deuctEnabled: false, deduct: null, discountEnabled: false, discount: null, selected: false },
+            //    { id: 13, name: 'Free pass', fixedPriceEnabled: true, fixedPrice: 0, deuctEnabled: false, deduct: null, discountEnabled: false, discount: null, selected: false },
+            //    { id: 14, name: '50%', fixedPriceEnabled: false, fixedPrice: null, deuctEnabled: false, deduct: null, discountEnabled: true, discount: 0.5, selected: false }
+            //];
 
-        if (hasMembership) {
-            defaultPayments.unshift({ id: 1, name: 'Membership', selected: false });
+            const response = await authFetch("/api/v1/payment"); 
+            console.log(response)
+            const data = await response.json();
+
+            const defaultPayments = data.map(payment => ({
+                ...payment,
+                selected: false
+            }));
+
+            if (hasMembership) {
+                defaultPayments.unshift({ id: 1, name: 'Membership', fixedPriceEnabled: true, fixedPrice: 0, deuctEnabled: false, deduct: null, discountEnabled: false, discount: null, selected: false });
+            }
+
+            setPayments(defaultPayments);
         }
-
-        setPayments(defaultPayments);
+        fetchPayments();
     }, [hasMembership]);
 
     const [showList, setShowList] = useState(false);
