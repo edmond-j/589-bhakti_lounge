@@ -6,44 +6,44 @@ import { setUserRole } from "@/services/userRoleSlice.js";
 import { useNavigate } from "react-router-dom";
 
 export function LoginPanel() {
-  const [username, setUsername] = useState();
-  const [password, setPassword] = useState();
-  const dispatch = useDispatch();
-  const handleUsernameChange = (event) => {
-    setUsername(event.target.value);
-  };
-
-  const handlePasswordChange = (event) => {
-    setPassword(event.target.value);
-  };
-  const navigate = useNavigate();
-
-  const login = (event) => {
-    event.preventDefault();
-    let newData = {
-      username: username,
-      password: password,
-    };
-    const requestOptions = {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(newData),
+    const [username, setUsername] = useState();
+    const [password, setPassword] = useState();
+    const dispatch = useDispatch();
+    const handleUsernameChange = (event) => {
+        setUsername(event.target.value);
     };
 
-    fetch("/api/v1/Auth/login", requestOptions)
-      .then((response) => response.json())
-      .then((data) => {
-        console.log("Login Successful:", data);
-        dispatch(setToken(data.token));
-        dispatch(setUserName(data.userName));
-        dispatch(setUserRole(data.userRole));
-        navigate("/check/check-in");
-      })
-      .catch((error) => {
-        console.error("Error:", error);
-        alert("Authentication failed!");
-      });
-  };
+    const handlePasswordChange = (event) => {
+        setPassword(event.target.value);
+    };
+    const navigate = useNavigate();
+
+    const login = (event) => {
+        event.preventDefault();
+        let newData = {
+            username: username,
+            password: password,
+        };
+        const requestOptions = {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(newData),
+        };
+
+        fetch("/api/v1/Auth/login", requestOptions)
+            .then((response) => response.json())
+            .then((data) => {
+                console.log("Login Successful:", data);
+                dispatch(setToken(data.token));
+                dispatch(setUserName(data.userName));
+                dispatch(setUserRole(data.userRole));
+                navigate("/check/check-in");
+            })
+            .catch((error) => {
+                console.error("Error:", error);
+                alert("Authentication failed!");
+            });
+    };
 
   return (
     <div className="flex flex-col items-center justify-center w-screen h-screen bg-gray-200 text-gray-700">
