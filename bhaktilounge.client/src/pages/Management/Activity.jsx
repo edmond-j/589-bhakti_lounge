@@ -14,7 +14,7 @@ function Activity() {
   const [isLoading, setLoading] = useState(true);
 
   async function populateData() {
-    authFetch("/api/v1/activity")
+    authFetch("/api/v1/activities")
       .then((response) => response.json())
       .then((data) => {
         setLoading(false);
