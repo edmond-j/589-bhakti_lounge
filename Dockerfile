@@ -2,21 +2,17 @@
 
 FROM node:22 AS build-frontend
 WORKDIR /app
-# Copy everything
-COPY ./bhaktilounge.client ./
-# Restore as distinct layers
+COPY ./bhaktilounge.client/*.json ./
 RUN npm install
-# Build and publish a release
+COPY ./bhaktilounge.client ./
 RUN npm run build
 
 
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build-backend
 WORKDIR /app
-# Copy everything
-COPY ./BhaktiLounge.Server/ /app/
-# Restore as distinct layers
+COPY ./BhaktiLounge.Server/*.csproj .
 RUN dotnet restore
-# Build and publish a release
+COPY ./BhaktiLounge.Server/ .
 RUN dotnet publish -c Release -o out
 
 # Build runtime image
