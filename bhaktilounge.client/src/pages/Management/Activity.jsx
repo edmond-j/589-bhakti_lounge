@@ -86,12 +86,12 @@ function Activity() {
           includeYoga,
           includeDinner,
         };
-        updateData("activity", newData, items, setItems, setSelectedItem);
+        updateData("activities", newData, items, setItems, setSelectedItem);
       };
 
       const handleDelete = () => {
         deleteData(
-          "activity",
+          "activities",
           items,
           setItems,
           selectedItem,
@@ -182,7 +182,7 @@ function Activity() {
   return (
     <>
       <ItemList
-        type={"activity"}
+        type={"activities"}
         items={items}
         setItems={setItems}
         setSelectedItem={setSelectedItem}
