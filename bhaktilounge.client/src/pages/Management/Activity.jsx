@@ -14,7 +14,7 @@ function Activity() {
   const [isLoading, setLoading] = useState(true);
 
   async function populateData() {
-    authFetch("/api/v1/activity")
+    authFetch("/api/v1/activities")
       .then((response) => response.json())
       .then((data) => {
         setLoading(false);
@@ -86,12 +86,12 @@ function Activity() {
           includeYoga,
           includeDinner,
         };
-        updateData("activity", newData, items, setItems, setSelectedItem);
+        updateData("activities", newData, items, setItems, setSelectedItem);
       };
 
       const handleDelete = () => {
         deleteData(
-          "activity",
+          "activities",
           items,
           setItems,
           selectedItem,
@@ -182,7 +182,7 @@ function Activity() {
   return (
     <>
       <ItemList
-        type={"activity"}
+        type={"activities"}
         items={items}
         setItems={setItems}
         setSelectedItem={setSelectedItem}

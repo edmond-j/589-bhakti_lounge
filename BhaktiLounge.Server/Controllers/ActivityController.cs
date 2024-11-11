@@ -9,6 +9,7 @@ using Microsoft.EntityFrameworkCore;
 namespace BhaktiLounge.Server.Controllers {
     [Authorize (Roles = "Manager")]
     [Route("api/v1/[controller]")]
+    [Route("api/v1/activities")] //"api/v1/activity" trigers uBlock policy while in https env, so use "activities" in Activity.jsx to avoid
     [ApiController]
     public class ActivityController : ControllerBase {
         private readonly ApplicationDbContext _context;
