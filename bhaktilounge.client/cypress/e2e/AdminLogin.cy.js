@@ -1,6 +1,6 @@
 describe("Authenticated User Tests", () => {
-    const username = "admin";
-    const password = "Password123!";
+    const username = "";
+    const password = "";
 
     before(() => {
         cy.loginAndGetToken(username, password);
@@ -36,7 +36,7 @@ describe("Authenticated User Tests", () => {
         cy.get("#register-lastname-input").type("user");
         cy.get("#register-email-input").type("testuser@gg.com");
         cy.get("#register-pronouns-select").select("he");
-        cy.get("#register-channel-select").select("Other");
+        cy.get("#register-channel-select").select(0);
         cy.get("#register-signup-button").click();
         cy.on("window:alert", (str) => {
             expect(str).to.contain("registered");

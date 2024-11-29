@@ -6,6 +6,7 @@ import OptionButton from "../../components/management/OptionButton";
 import { itemHighlight, updateData, deleteData } from "./method";
 import spinner from "/spinner.svg";
 import authFetch from "@/utils/authFetch.js";
+import { toast } from "react-toastify";
 
 function Payment() {
   const [items, setItems] = useState([]);
@@ -67,7 +68,22 @@ function Payment() {
       const [discountEnabled, setDiscountEnabled] = useState(selectedItem.discountEnabled);
       const [discount, setDiscount] = useState(selectedItem.discount);
 
-      function handleUpdate() {
+        function handleUpdate() {
+            if (fixedPrice < 0) {
+                toast.error(`Update failed: fixed price should be bigger than 0`);
+                setFixedPrice(0);
+                return
+            }
+            if (deduct < 0) {
+                toast.error(`Update failed: deduct amount should be bigger than 0`);
+                setDeduct(0);
+                return
+            }
+            if (discount < 0 || discount > 1) {
+                toast.error(`Update failed: discount rate should be bigger than 0 and less than 1`);
+                setDiscount(0);
+                return
+            }
         let newData = {
           id: selectedItem.id,
           name,
@@ -78,7 +94,7 @@ function Payment() {
           discountEnabled: discountEnabled || false,
           discount: discount || 0
         };
-        console.log("payment", newData);
+        //console.log("payment", newData);
         updateData("payment", newData, items, setItems, setSelectedItem);
       }
 
@@ -168,6 +184,7 @@ function Payment() {
               onChange={(e) => setDiscount(e.target.value)}
               className=" tw-input"
               min="0"
+              max="1"
               disabled={!discountEnabled}
             />
             <p className="-mt-2 text-xs font-normal" htmlFor="discount">e.g.: 0.2 means 20% off</p>
