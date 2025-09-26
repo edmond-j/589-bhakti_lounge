@@ -55,6 +55,7 @@ export function LoginPanel() {
           data-testid="username-input"
           className="tw-input"
           type="text"
+          placeholder="edmond"
           value={username || ""} 
           onChange={handleUsernameChange}
         />
@@ -63,6 +64,7 @@ export function LoginPanel() {
           data-testid="password-input"
           className="tw-input"
           type="password"
+          placeholder="Test-2025"
           value={password || ""}
           onChange={handlePasswordChange}
         />
