@@ -48,14 +48,14 @@ export function LoginPanel() {
   return (
     <div className="flex flex-col items-center justify-center w-screen h-screen bg-gray-200 text-gray-700">
       <h2 className="">Welcome to Bhakti Lounge</h2>
-      <h3 className="">Check In System</h3>
+      <h3 className="">Check In System Demo</h3>
       <form className="flex flex-col bg-white rounded shadow-lg p-12 mt-12">
         <label className="font-semibold text-sm">Username</label>
         <input
           data-testid="username-input"
           className="tw-input"
           type="text"
-          placeholder="edmond"
+        //   placeholder="edmond"
           value={username || ""} 
           onChange={handleUsernameChange}
         />
@@ -64,7 +64,7 @@ export function LoginPanel() {
           data-testid="password-input"
           className="tw-input"
           type="password"
-          placeholder="Test-2025"
+        //   placeholder="Test-2025"
           value={password || ""}
           onChange={handlePasswordChange}
         />
