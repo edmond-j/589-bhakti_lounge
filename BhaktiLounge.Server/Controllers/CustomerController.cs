@@ -43,17 +43,17 @@ namespace BhaktiLounge.Server.Controllers {
             return Ok(customer);
         }
 
-                [HttpGet("LastVisit")]
+        [HttpGet("LastVisit")]
         public async Task<IActionResult> GetLastVisit(int customerId) {
             var checkin = await _context.Checkin.Where(c => c.CustomerId == customerId).OrderBy(c => c.Id).OrderByDescending(c => c.Id).FirstOrDefaultAsync();
             if (checkin != null) {
                 var lastDay = checkin.Date;
-                var todayDate = DateOnly.FromDateTime(DateTime.Now); 
+                var todayDate = DateOnly.FromDateTime(DateTime.Now);
                 var days = todayDate.DayNumber - lastDay.DayNumber;
-                var result=new {
-                    Days=days, 
-                    LastDay=lastDay,
-                    };
+                var result = new {
+                    Days = days,
+                    LastDay = lastDay,
+                };
                 return Ok(result);
             } else {
                 return Ok("no record");
@@ -64,6 +64,15 @@ namespace BhaktiLounge.Server.Controllers {
         [HttpPost]
         public async Task<IActionResult> Register([FromBody] Customer newItem) {
             try {
+                var emailExisting = await _context.Customer.FirstOrDefaultAsync(c => c.Email == newItem.Email);
+                if (emailExisting != null) {
+                    // 返回 400 错误，提示重复
+                    return BadRequest($"{newItem.Email} already exists.");
+                }
+                var nameExisting = await _context.Customer.FirstOrDefaultAsync(c => c.FirstName == newItem.FirstName && c.LastName == newItem.LastName);
+                if (nameExisting != null) {
+                    return BadRequest($"{newItem.FirstName} {newItem.LastName} already exists");
+                }
                 _context.Customer.Add(newItem);
                 await _context.SaveChangesAsync();
                 return Ok(newItem);
