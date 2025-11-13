@@ -20,5 +20,6 @@ FROM mcr.microsoft.com/dotnet/aspnet:8.0  AS final
 WORKDIR /app
 COPY --from=build-frontend /app/dist/ ./wwwroot
 COPY --from=build-backend /app/out/ .
+RUN ln -snf /usr/share/zoneinfo/Pacific/Auckland /etc/localtime
 EXPOSE 8080
 ENTRYPOINT ["dotnet", "BhaktiLounge.Server.dll"]
